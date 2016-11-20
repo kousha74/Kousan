@@ -41,7 +41,7 @@ class GameEnagin {
     let MOVE_DIRECTION_NONE:Int = 0
     let MOVE_DIRECTION_HORIZONTAL:Int = 1
     let MOVE_DIRECTION_VERTICAL:Int = 2
-    let MOVE_DETECTION_PIXELS:Int =	3
+    let MOVE_DETECTION_PIXELS:Int =	20
     
     let DIRECTION_UP:Int = 0
     let DIRECTION_DOWN:Int = 1
@@ -75,16 +75,14 @@ class GameEnagin {
         touchPos.x = pos.x
         touchPos.y = pos.y
         
-        touchedCell.x = floor(( touchPos.x - gameModel.GetViewOffset().x )/CGFloat(gameModel.GetCellSize()) )
-        touchedCell.y = floor(( touchPos.y - gameModel.GetViewOffset().y )/CGFloat(gameModel.GetCellSize()) )
-        
-        touchedTile = gameModel.GetTile(pos: touchedCell)
-        
-        if ( (touchedTile != nil) && ( (touchedTile?.GetFlag(flag: TileNode.IS_LOCKED ))! == false ) ){
+        if !isProcessing && !dragging
+        {
+            touchedCell.x = floor(( touchPos.x - gameModel.GetViewOffset().x )/CGFloat(gameModel.GetCellSize()) )
+            touchedCell.y = floor(( touchPos.y - gameModel.GetViewOffset().y )/CGFloat(gameModel.GetCellSize()) )
+            
+            touchedTile = gameModel.GetTile(pos: touchedCell)
+            
             dragging = true
-        }
-        else{
-            dragging = false
         }
     }
     
@@ -217,24 +215,36 @@ class GameEnagin {
         
         if ( abs(deltaX) > abs(deltaY) ){
             //Horizontal Move
-            return ( (deltaX > 0) ? .Right : .Left )
+            if abs(deltaX) > CGFloat(MOVE_DETECTION_PIXELS) {
+                return ( (deltaX > 0) ? .Right : .Left )
+            }
+            else{
+                return .None
+            }
+            
         }
         else{
-            return ( (deltaY > 0) ? .Up : .Down )
+            if abs(deltaY) > CGFloat(MOVE_DETECTION_PIXELS) {
+                return ( (deltaY > 0) ? .Up : .Down )
+            }
+            else{
+                return .None
+            }
         }
     }
     
     func OnRelease(pos:CGPoint)->Bool{
         
-        if ( !isProcessing ){
-            
-            isProcessing = true
-            
-            shouldAddTile = true
+        if  !isProcessing && dragging {
             
             m_direction = GetDirection(touchPos: touchPos, releasePos: pos)
             
-            PushAgainstTheWall()
+            if ( m_direction != .None ) {
+                dragging = false
+                isProcessing = true
+                shouldAddTile = true
+                PushAgainstTheWall()
+            }
         }
         
         return false
@@ -526,7 +536,7 @@ class GameEnagin {
         shape.path = path
         shape.strokeColor = UIColor.darkGray
         shape.lineWidth = 5
-        shape.zPosition = 1.0
+        shape.zPosition = 2.0
         m_GameSceneProtocol?.onAddChild(child: shape)
         
         let fadeoutAction = SKAction.fadeOut(withDuration: 2)
