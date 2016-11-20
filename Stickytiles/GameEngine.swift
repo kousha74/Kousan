@@ -327,6 +327,10 @@ class GameEnagin {
         }
     }
     
+    func SameColor(tile1:TileNode, tile2:TileNode)->Bool{
+        //TBD
+        return ( tile1.GetID() == tile2.GetID() )
+    }
     func DeleteTile(tile:TileNode){
         gameModel.RemoveTile(tile: tile)
         let fadeoutAction = SKAction.fadeOut(withDuration: GameModel.delay)
@@ -380,8 +384,7 @@ class GameEnagin {
             case .Four:
                 for tile2 in gameModel.GetTiles(){
                     
-                    if ( tile2.GetID() == tile.GetID()) /*TBD*/
-                    {
+                    if SameColor(tile1: tile, tile2: tile2){
                         tile2.SetFlag(flag: TileNode.IS_VISITED, isSet: true )
                         if ( tile2.GetClusterType() == TileNode.ClusterType.None ){
                             //delete the tile
@@ -430,8 +433,7 @@ class GameEnagin {
                 var tileFound = false
                 for tile2 in gameModel.GetTiles(){
                     
-                    if ( tile2.GetID() == tile.GetID()) /*TBD*/
-                    {
+                    if SameColor(tile1: tile, tile2: tile2 ){
                         if ( tile2.GetClusterType() == TileNode.ClusterType.None ){
                             AddTempLine(row1: tile.GetRow(), col1: tile.GetCol(), row2: tile2.GetRow(), col2: tile2.GetCol() )
                             tileFound = true
