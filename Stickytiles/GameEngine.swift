@@ -319,16 +319,10 @@ class GameEnagin {
     }
     
     func DeleteTile(tile:TileNode){
-        
-        if ( !tile.GetFlag(flag: TileNode.IS_DELETED )){
-            tile.SetFlag(flag: TileNode.IS_DELETED, isSet: true )
-            let fadeoutAction = SKAction.fadeOut(withDuration: GameModel.delay)
-            let actionMoveDone = SKAction.removeFromParent()
-            let actionFinalize = SKAction.run {
-                self.gameModel.RemoveTile(tile: tile)
-            }
-            tile.sprite?.run( SKAction.sequence([fadeoutAction,actionMoveDone,actionFinalize]))
-        }
+        gameModel.RemoveTile(tile: tile)
+        let fadeoutAction = SKAction.fadeOut(withDuration: GameModel.delay)
+        let actionMoveDone = SKAction.removeFromParent()
+        tile.sprite?.run( SKAction.sequence([fadeoutAction,actionMoveDone]))
     }
     
     @objc func ProcessSpecialNodes(){
@@ -345,16 +339,13 @@ class GameEnagin {
                     
                     if let temp = gameModel.GetTile(pos: CGPoint(x:CGFloat(col), y:tile.pos.y)) {
                         let tile2 = temp
-                        if !( tile2.GetFlag(flag: TileNode.IS_DELETED ))
-                        {
-                            tile2.SetFlag(flag: TileNode.IS_VISITED, isSet: true )
-                            if ( tile2.GetClusterType() == TileNode.ClusterType.None ){
-                                //delete the tile
-                                DeleteTile(tile: tile2 )
-                            }
-                            else{
-                                tile2.SetFlag(flag: TileNode.TBP, isSet: true)
-                            }
+                        tile2.SetFlag(flag: TileNode.IS_VISITED, isSet: true )
+                        if ( tile2.GetClusterType() == TileNode.ClusterType.None ){
+                            //delete the tile
+                            DeleteTile(tile: tile2 )
+                        }
+                        else{
+                            tile2.SetFlag(flag: TileNode.TBP, isSet: true)
                         }
                     }
                 }
@@ -365,16 +356,13 @@ class GameEnagin {
                     
                     if let temp = gameModel.GetTile(pos: CGPoint(x:tile.pos.x, y: CGFloat(row))) {
                         let tile2 = temp
-                        if !( tile2.GetFlag(flag: TileNode.IS_DELETED ))
-                        {
-                            tile2.SetFlag(flag: TileNode.IS_VISITED, isSet: true )
-                            if ( tile2.GetClusterType() == TileNode.ClusterType.None ){
-                                //delete the tile
-                                DeleteTile(tile: tile2 )
-                            }
-                            else{
-                                tile2.SetFlag(flag: TileNode.TBP, isSet: true)
-                            }
+                        tile2.SetFlag(flag: TileNode.IS_VISITED, isSet: true )
+                        if ( tile2.GetClusterType() == TileNode.ClusterType.None ){
+                            //delete the tile
+                            DeleteTile(tile: tile2 )
+                        }
+                        else{
+                            tile2.SetFlag(flag: TileNode.TBP, isSet: true)
                         }
                     }
                 }
@@ -383,7 +371,7 @@ class GameEnagin {
             case .Four:
                 for tile2 in gameModel.GetTiles(){
                     
-                    if !( tile2.GetFlag(flag: TileNode.IS_DELETED )) && ( tile2.GetID() == tile.GetID()) /*TBD*/
+                    if ( tile2.GetID() == tile.GetID()) /*TBD*/
                     {
                         tile2.SetFlag(flag: TileNode.IS_VISITED, isSet: true )
                         if ( tile2.GetClusterType() == TileNode.ClusterType.None ){
@@ -433,7 +421,7 @@ class GameEnagin {
                 var tileFound = false
                 for tile2 in gameModel.GetTiles(){
                     
-                    if !( tile2.GetFlag(flag: TileNode.IS_DELETED )) && ( tile2.GetID() == tile.GetID()) /*TBD*/
+                    if ( tile2.GetID() == tile.GetID()) /*TBD*/
                     {
                         if ( tile2.GetClusterType() == TileNode.ClusterType.None ){
                             AddTempLine(row1: tile.GetRow(), col1: tile.GetCol(), row2: tile2.GetRow(), col2: tile2.GetCol() )
