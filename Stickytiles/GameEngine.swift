@@ -311,7 +311,6 @@ class GameEnagin {
         else if shouldAddTile {
             shouldAddTile = false
             AddTile()
-            FindClusters()
         }
         else{
             isProcessing = false
@@ -442,10 +441,14 @@ class GameEnagin {
     }
 
     func AddTile(){
-        let tile = gameModel.AddTile()
         
-        if tile != nil {
-            m_GameSceneProtocol?.onNewTile(tile: tile!)
+        if let tile = gameModel.AddTile() {
+            m_GameSceneProtocol?.onNewTile(tile: tile)
+            tile.sprite?.alpha = 0.0
+            
+            let fadeinAction = SKAction.fadeIn(withDuration: GameModel.delay )
+            let clusterAction = SKAction.run { self.FindClusters() }
+            tile.sprite?.run( SKAction.sequence( [ fadeinAction, clusterAction] ))
         }
     }
     
