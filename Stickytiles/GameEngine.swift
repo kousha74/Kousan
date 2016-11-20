@@ -311,11 +311,11 @@ class GameEnagin {
             }
             
             if ( gameModel.FindFlag(flag: TileNode.TBP, isSet: true) != nil ){
-                Timer.scheduledTimer(timeInterval: TimeInterval( GameModel.delay + 0.1 /*TBD*/), target: self, selector:#selector(GameEnagin.ProcessSpecialNodes), userInfo: nil, repeats: false)
+                Timer.scheduledTimer(timeInterval: TimeInterval( GameModel.delay ), target: self, selector:#selector(GameEnagin.ProcessSpecialNodes), userInfo: nil, repeats: false)
                 MarkSpecialNodes()
             }
             else{
-                Timer.scheduledTimer(timeInterval: TimeInterval( GameModel.delay + 0.1 /*TBD*/), target: self, selector:#selector(GameEnagin.PushAgainstTheWall), userInfo: nil, repeats: false)
+                Timer.scheduledTimer(timeInterval: TimeInterval( GameModel.delay ), target: self, selector:#selector(GameEnagin.PushAgainstTheWall), userInfo: nil, repeats: false)
             }
         }
         else if shouldAddTile {
@@ -404,7 +404,7 @@ class GameEnagin {
 
         }
         else{
-            Timer.scheduledTimer(timeInterval: TimeInterval( GameModel.delay + 0.1 /*TBD*/), target: self, selector:#selector(GameEnagin.PushAgainstTheWall), userInfo: nil, repeats: false)
+            Timer.scheduledTimer(timeInterval: TimeInterval( GameModel.delay ), target: self, selector:#selector(GameEnagin.PushAgainstTheWall), userInfo: nil, repeats: false)
         }
     }
 
@@ -539,7 +539,7 @@ class GameEnagin {
         shape.zPosition = 2.0
         m_GameSceneProtocol?.onAddChild(child: shape)
         
-        let fadeoutAction = SKAction.fadeOut(withDuration: 2)
+        let fadeoutAction = SKAction.fadeOut(withDuration: GameModel.delay )
         let removeAction = SKAction.removeFromParent()
         shape.run(SKAction.sequence([ fadeoutAction, removeAction]))
     }
