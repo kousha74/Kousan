@@ -485,7 +485,7 @@
 				INFOPLIST_FILE = Stickytiles/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.parspicks.stickytile;
+				PRODUCT_BUNDLE_IDENTIFIER = com.parspicks.Jumbo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_INSTALL_OBJC_HEADER = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = /Users/KoushaNejad/GitHub/MatchAll/Stickytiles/framework_bridging.h;
@@ -506,7 +506,7 @@
 				INFOPLIST_FILE = Stickytiles/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.parspicks.stickytile;
+				PRODUCT_BUNDLE_IDENTIFIER = com.parspicks.Jumbo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = /Users/KoushaNejad/GitHub/MatchAll/Stickytiles/framework_bridging.h;
 				SWIFT_VERSION = 3.0;
