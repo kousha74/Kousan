@@ -50,7 +50,7 @@ class GameModel {
     private var audioPlayerLaser : AVAudioPlayer?
     private var audioPlayerChime : AVAudioPlayer?
     
-    private let COLOR_COUNT = 4
+    private let COLOR_COUNT = 6
     
     let boardSize : Int = 6
     

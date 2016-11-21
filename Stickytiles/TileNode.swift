@@ -96,17 +96,17 @@ class TileNode {
         case .None:
             switch(id){
             case 1:
-                return "red"
+                return "Apple"
             case 2:
-                return "green"
+                return "Apricot"
             case 3:
-                return "blue"
+                return "Cherry"
             case 4:
-                return "yellow"
+                return "Kiwi"
             case 5:
-                return "cyan"
+                return "Lemon"
             case 6:
-                return "magenta"
+                return "Orange"
             default:
                 return "gray"
                 
@@ -115,78 +115,74 @@ class TileNode {
         case .Row:
             switch(id){
             case 1:
-                return "redR"
+                return "AppleR"
             case 2:
-                return "greenR"
+                return "ApricotR"
             case 3:
-                return "blueR"
+                return "CherryR"
             case 4:
-                return "yellowR"
+                return "KiwiR"
             case 5:
-                return "cyan"
+                return "LemonR"
             case 6:
-                return "magenta"
+                return "OrangeR"
             default:
                 return "gray"
-                
             }
             
         case .Col:
             switch(id){
             case 1:
-                return "redC"
+                return "AppleC"
             case 2:
-                return "greenC"
+                return "ApricotC"
             case 3:
-                return "blueC"
+                return "CherryC"
             case 4:
-                return "yellowC"
+                return "KiwiC"
             case 5:
-                return "cyan"
+                return "LemonC"
             case 6:
-                return "magenta"
+                return "OrangeC"
             default:
                 return "gray"
-                
             }
             
         case .Four:
             switch(id){
             case 1:
-                return "red4"
+                return "Apple4"
             case 2:
-                return "green4"
+                return "Apricot4"
             case 3:
-                return "blue4"
+                return "Cherry4"
             case 4:
-                return "yellow4"
+                return "Kiwi4"
             case 5:
-                return "cyan"
+                return "Lemon4"
             case 6:
-                return "magenta"
+                return "Orange4"
             default:
                 return "gray"
-                
             }
             
         default:
         
             switch(id){
             case 1:
-                return "red"
+                return "Apple"
             case 2:
-                return "green"
+                return "Apricot"
             case 3:
-                return "blue"
+                return "Cherry"
             case 4:
-                return "yellow"
+                return "Kiwi"
             case 5:
-                return "cyan"
+                return "Lemon"
             case 6:
-                return "magenta"
+                return "Orange"
             default:
                 return "gray"
-                
             }
         }
         
