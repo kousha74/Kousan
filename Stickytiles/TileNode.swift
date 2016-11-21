@@ -111,7 +111,6 @@ class TileNode {
                 return "gray"
                 
             }
-            break
             
         case .Row:
             switch(id){
@@ -131,7 +130,6 @@ class TileNode {
                 return "gray"
                 
             }
-            break
             
         case .Col:
             switch(id){
@@ -151,7 +149,6 @@ class TileNode {
                 return "gray"
                 
             }
-            break
             
         case .Four:
             switch(id){
@@ -171,7 +168,6 @@ class TileNode {
                 return "gray"
                 
             }
-            break
             
         default:
         
@@ -192,7 +188,6 @@ class TileNode {
                 return "gray"
                 
             }
-            break
             
         }
         
