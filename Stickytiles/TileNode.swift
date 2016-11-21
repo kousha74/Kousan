@@ -15,7 +15,7 @@ class TileNode {
     static let IS_MOVING:Int = 0
     static let IS_VISITED:Int = 1
     static let IS_LOCKED:Int = 2
-    static let IS_DELETED:Int = 3 
+    static let DeleteMe:Int = 3 //TBD
     static let TBP:Int = 4 //to be processed
     var flags = [false,false,false,false,false]
     
@@ -188,7 +188,6 @@ class TileNode {
                 return "gray"
                 
             }
-            
         }
         
   /*      if ( clusterType != .None ) {
