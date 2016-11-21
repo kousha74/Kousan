@@ -328,9 +328,9 @@ class GameEnagin {
     }
     
     func SameColor(tile1:TileNode, tile2:TileNode)->Bool{
-        //TBD
-        return ( tile1.GetID() == tile2.GetID() )
+        return ( tile1.GetID() == tile2.GetID() ) && ( tile1.GetID() < TileNode.BUBBLE_ID )
     }
+    
     func DeleteTile(tile:TileNode){
         gameModel.RemoveTile(tile: tile)
         let fadeoutAction = SKAction.fadeOut(withDuration: GameModel.delay)
@@ -466,8 +466,17 @@ class GameEnagin {
     
     func GetClusterType(cluster:[TileNode])->TileNode.ClusterType{
         
-        if cluster.count == 4{
+        switch (cluster.count){
+        case 0:
+            return .None
+        case 1:
+            return .None
+        case 2:
+            return .None
+        case 3:
+            return .None
             
+        case 4:
             //check if all in the same row
             let row = Int(cluster[0].pos.y)
             
@@ -483,9 +492,17 @@ class GameEnagin {
             }
             
             return .Four
-        }
         
-        return .None
+        case 5:
+            return .Five
+            
+        case 6:
+            return .Six
+            
+        default:
+            return .Six
+        
+        }
     }
     
     func FindClusterAtTile( tile:TileNode )->[TileNode]{
@@ -497,26 +514,29 @@ class GameEnagin {
         cluster.append(tile)
         queue.append(tile)
         
-        var newTilePos = CGPoint(x: 0, y: 0)
-        
-        let id = tile.GetID()
-        
-        while ( !queue.isEmpty )
-        {
-            let currentTile = queue[0]
-            queue.remove(at: 0)
+        // special tiles don't form a cluster
+        if ( tile.GetID() < TileNode.BUBBLE_ID ){
+            var newTilePos = CGPoint(x: 0, y: 0)
             
-            for pos in direction_vector {
+            let id = tile.GetID()
+            
+            while ( !queue.isEmpty )
+            {
+                let currentTile = queue[0]
+                queue.remove(at: 0)
                 
-                newTilePos.x = currentTile.pos.x + pos.x
-                newTilePos.y = currentTile.pos.y + pos.y
-            
-                if let newTile = gameModel.GetTile(pos: newTilePos){
-                    if ( !newTile.GetFlag(flag: TileNode.IS_VISITED ) ) && ( newTile.GetID() == id )
-                    {
-                        newTile.SetFlag(flag: TileNode.IS_VISITED, isSet: true )
-                        cluster.append(newTile)
-                        queue.append(newTile)
+                for pos in direction_vector {
+                    
+                    newTilePos.x = currentTile.pos.x + pos.x
+                    newTilePos.y = currentTile.pos.y + pos.y
+                
+                    if let newTile = gameModel.GetTile(pos: newTilePos){
+                        if ( !newTile.GetFlag(flag: TileNode.IS_VISITED ) ) && ( newTile.GetID() == id )
+                        {
+                            newTile.SetFlag(flag: TileNode.IS_VISITED, isSet: true )
+                            cluster.append(newTile)
+                            queue.append(newTile)
+                        }
                     }
                 }
             }

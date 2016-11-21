@@ -12,6 +12,12 @@ import SpriteKit
 class TileNode {
     
     // MARK : constants
+    static let BUBBLE_ID = 10
+    static let STAR5_ID = 11
+    static let STAR7_ID = 12
+    static let CHOLOLATE_ID = 13
+    static let BLOCKER_ID = 14
+    
     static let IS_MOVING:Int = 0
     static let IS_VISITED:Int = 1
     static let IS_LOCKED:Int = 2
@@ -59,6 +65,20 @@ class TileNode {
     
     func SetClusterType( type:ClusterType ){
         clusterType = type
+        
+        switch ( clusterType ){
+        case .Five:
+            id = TileNode.STAR5_ID
+            break
+            
+        case .Six:
+            id = TileNode.STAR7_ID
+            break
+            
+        default:
+            break
+        }
+        
         sprite?.texture = SKTexture(imageNamed:GetTileImage())
     }
     
@@ -91,6 +111,25 @@ class TileNode {
     }
     
     func GetTileImage()->String{
+        
+        //special tiles
+        if ( id >= TileNode.BUBBLE_ID ) {
+            switch(id){
+            case TileNode.BUBBLE_ID:
+                return "bubble"
+            case TileNode.STAR5_ID:
+                return "Star5"
+            case TileNode.STAR7_ID:
+                return "Star7"
+            case TileNode.CHOLOLATE_ID:
+                return "chocolate"
+            case TileNode.BLOCKER_ID:
+                return "texture1"
+            default:
+                return "gray"
+                
+            }
+        }
         
         switch clusterType {
         case .None:
@@ -185,45 +224,6 @@ class TileNode {
                 return "gray"
             }
         }
-        
-  /*      if ( clusterType != .None ) {
-            switch(id){
-            case 1:
-                return "redLock"
-            case 2:
-                return "greenLocked"
-            case 3:
-                return "blueLock"
-            case 4:
-                return "yellowLocked"
-            case 5:
-                return "cyanLocked"
-            case 6:
-                return "magentaLocked"
-            default:
-                return "grayLocked"
-                
-            }
-        }
-        else {
-            switch(id){
-            case 1:
-                return "red"
-            case 2:
-                return "green"
-            case 3:
-                return "blue"
-            case 4:
-                return "yellow"
-            case 5:
-                return "cyan"
-            case 6:
-                return "magenta"
-            default:
-                return "gray"
-                
-            }
-        }*/
     }
     
     func Occupies( pos: CGPoint )->Bool

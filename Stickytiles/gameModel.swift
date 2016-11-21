@@ -210,7 +210,20 @@ class GameModel {
         let tile = GetEmptyTile()
         
         if let emptyCell = FindEmptyCell(){
-            tile.SetID(Id: Int(arc4random_uniform(UInt32(COLOR_COUNT))) + 1)
+            
+            //TBD
+            // +2 for bubble and chocolate
+            var Id = Int(arc4random_uniform(UInt32(COLOR_COUNT+2))) + 1
+            
+            if ( Id == COLOR_COUNT + 1 ){
+                Id = 10
+            }
+            
+            if ( Id == COLOR_COUNT + 2 ){
+                Id = 13
+            }
+            
+            tile.SetID(Id: Id)
             tile.SetRowAndCol(row: Int(emptyCell.y), col: Int(emptyCell.x), cellSize: cellSize, viewOffset: viewOffset)
             gameTiles.append(tile)
             return tile
