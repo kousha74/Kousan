@@ -300,6 +300,7 @@ class GameModel {
         return gameTiles
     }
     
+    //TBD: get row and col
     func GetTile( pos:CGPoint)->TileNode?{
         for tile in gameTiles {
             if ( tile.Occupies(pos: pos) )

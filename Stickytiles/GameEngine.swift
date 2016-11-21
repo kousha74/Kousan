@@ -54,7 +54,6 @@ class GameEnagin {
     var touchPos = CGPoint(x: 0, y: 0)
     var currentPos = CGPoint(x: 0, y: 0)
     var touchedCell = CGPoint(x: 0, y: 0)
-    var touchedTile:TileNode?
     var m_move_direction:Int
     var m_upper_bound:CGFloat = 0
     var m_lower_bound:CGFloat = 0
@@ -77,11 +76,6 @@ class GameEnagin {
         
         if !isProcessing && !dragging
         {
-            touchedCell.x = floor(( touchPos.x - gameModel.GetViewOffset().x )/CGFloat(gameModel.GetCellSize()) )
-            touchedCell.y = floor(( touchPos.y - gameModel.GetViewOffset().y )/CGFloat(gameModel.GetCellSize()) )
-            
-            touchedTile = gameModel.GetTile(pos: touchedCell)
-            
             dragging = true
         }
     }
@@ -116,10 +110,9 @@ class GameEnagin {
                 {
                     pos.x = CGFloat(col)
                     pos.y = CGFloat(row)
-                    touchedTile = gameModel.GetTile(pos: pos)
                     
-                    if ( touchedTile != nil ){
-                        touchedTile?.Moveto(
+                    if let touchedTile = gameModel.GetTile(pos: pos) {
+                        touchedTile.Moveto(
                             delta_row: targetRow,
                             delta_col: targetCol,
                             cellSize: CGFloat(gameModel.GetCellSize()),
@@ -138,10 +131,9 @@ class GameEnagin {
                 {
                     pos.x = CGFloat(col)
                     pos.y = CGFloat(row)
-                    touchedTile = gameModel.GetTile(pos: pos)
                     
-                    if ( touchedTile != nil ){
-                        touchedTile?.Moveto(
+                    if let touchedTile = gameModel.GetTile(pos: pos){
+                        touchedTile.Moveto(
                             delta_row: targetRow,
                             delta_col: targetCol,
                             cellSize: CGFloat(gameModel.GetCellSize()),
@@ -160,10 +152,9 @@ class GameEnagin {
                 {
                     pos.x = CGFloat(col)
                     pos.y = CGFloat(row)
-                    touchedTile = gameModel.GetTile(pos: pos)
                     
-                    if ( touchedTile != nil ){
-                        touchedTile?.Moveto(
+                    if let touchedTile = gameModel.GetTile(pos: pos){
+                        touchedTile.Moveto(
                             delta_row: targetRow,
                             delta_col: targetCol,
                             cellSize: CGFloat(gameModel.GetCellSize()),
@@ -182,13 +173,12 @@ class GameEnagin {
                 {
                     pos.x = CGFloat(col)
                     pos.y = CGFloat(row)
-                    touchedTile = gameModel.GetTile(pos: pos)
                     
-                    if ( touchedTile != nil ){
+                    if let touchedTile = gameModel.GetTile(pos: pos) {
                         
                         if ( row != targetRow ) || ( col != targetCol ) {
                         
-                        touchedTile?.Moveto(
+                        touchedTile.Moveto(
                             delta_row: targetRow,
                             delta_col: targetCol,
                             cellSize: CGFloat(gameModel.GetCellSize()),
@@ -205,7 +195,8 @@ class GameEnagin {
             break
         }
         
-        Timer.scheduledTimer(timeInterval: TimeInterval( GameModel.delay ), target: self, selector:#selector(GameEnagin.FindClusters), userInfo: nil, repeats: false)
+        Timer.scheduledTimer(timeInterval: TimeInterval( ( m_direction != .None ) ? GameModel.delay : 0.0 ), target: self, selector:#selector(GameEnagin.FindClusters), userInfo: nil, repeats: false)
+        
     }
     
     func GetDirection( touchPos:CGPoint, releasePos:CGPoint)->Direction
@@ -244,6 +235,27 @@ class GameEnagin {
                 isProcessing = true
                 shouldAddTile = true
                 PushAgainstTheWall()
+            }
+            else{
+                //It's a tap
+                touchedCell.x = floor(( touchPos.x - gameModel.GetViewOffset().x )/CGFloat(gameModel.GetCellSize()) )
+                touchedCell.y = floor(( touchPos.y - gameModel.GetViewOffset().y )/CGFloat(gameModel.GetCellSize()) )
+                
+                if let touchedTile = gameModel.GetTile(pos: touchedCell) {
+                    switch touchedTile.GetID() {
+                    case TileNode.STAR5_ID:
+                        touchedTile.SetFlag(flag: TileNode.TBP, isSet: true)
+                        isProcessing = true
+                        shouldAddTile = true
+                        MarkSpecialNodes()
+                        ProcessSpecialNodes()
+                        break
+                        
+                    default:
+                        break
+                    }
+                }
+
             }
         }
         
@@ -304,7 +316,7 @@ class GameEnagin {
         }
         
 
-        if ( clusterFound ){
+        if ( clusterFound ) || ( gameModel.FindFlag(flag: TileNode.TBP, isSet: true) != nil ) {
             
             if (!specialClusterFound){
                 gameModel.SoundWave()
@@ -338,6 +350,44 @@ class GameEnagin {
         tile.sprite?.run( SKAction.sequence([fadeoutAction,actionMoveDone]))
     }
     
+    func DeleteRow( row:Int ){
+        for col in 0...gameModel.boardSize-1{
+            
+            if let temp = gameModel.GetTile(pos: CGPoint(x:CGFloat(col), y: CGFloat(row))) {
+                let tile2 = temp
+                tile2.SetFlag(flag: TileNode.IS_VISITED, isSet: true )
+                if ( tile2.GetClusterType() == TileNode.ClusterType.None ){
+                    //delete the tile
+                    DeleteTile(tile: tile2 )
+                }
+                else{
+                    tile2.SetFlag(flag: TileNode.TBP, isSet: true)
+                }
+            }
+        }
+    }
+    
+    func DeleteCol( col:Int ){
+        for row in 0...gameModel.boardSize-1{
+            
+            if let temp = gameModel.GetTile(pos: CGPoint(x:CGFloat(col), y: CGFloat(row))) {
+                let tile2 = temp
+                tile2.SetFlag(flag: TileNode.IS_VISITED, isSet: true )
+                if ( tile2.GetClusterType() == TileNode.ClusterType.None ){
+                    //delete the tile
+                    DeleteTile(tile: tile2 )
+                }
+                else{
+                    tile2.SetFlag(flag: TileNode.TBP, isSet: true)
+                }
+            }
+        }
+    }
+    
+    func DeleteDiagonally( tile: TileNode ){
+        
+    }
+    
     @objc func ProcessSpecialNodes(){
         
         if  let temp = gameModel.FindFlag(flag: TileNode.TBP, isSet: true) {
@@ -348,37 +398,11 @@ class GameEnagin {
             
             switch ( clusterType ){
             case .Row:
-                for col in 0...gameModel.boardSize-1{
-                    
-                    if let temp = gameModel.GetTile(pos: CGPoint(x:CGFloat(col), y:tile.pos.y)) {
-                        let tile2 = temp
-                        tile2.SetFlag(flag: TileNode.IS_VISITED, isSet: true )
-                        if ( tile2.GetClusterType() == TileNode.ClusterType.None ){
-                            //delete the tile
-                            DeleteTile(tile: tile2 )
-                        }
-                        else{
-                            tile2.SetFlag(flag: TileNode.TBP, isSet: true)
-                        }
-                    }
-                }
+                DeleteRow(row: tile.GetRow() )
                 break
                 
             case .Col:
-                for row in 0...gameModel.boardSize-1{
-                    
-                    if let temp = gameModel.GetTile(pos: CGPoint(x:tile.pos.x, y: CGFloat(row))) {
-                        let tile2 = temp
-                        tile2.SetFlag(flag: TileNode.IS_VISITED, isSet: true )
-                        if ( tile2.GetClusterType() == TileNode.ClusterType.None ){
-                            //delete the tile
-                            DeleteTile(tile: tile2 )
-                        }
-                        else{
-                            tile2.SetFlag(flag: TileNode.TBP, isSet: true)
-                        }
-                    }
-                }
+                DeleteCol(col: tile.GetCol())
                 break
                 
             case .Four:
@@ -396,6 +420,11 @@ class GameEnagin {
                     }
                 }
                 break
+                
+            case .Five:
+                DeleteRow(row: tile.GetRow() )
+                DeleteCol(col: tile.GetCol() )
+                break;
                 
             default:
                 break
@@ -445,6 +474,11 @@ class GameEnagin {
                     gameModel.SoundLaser()
                 }
                 break
+                
+            case .Five:
+                AddTempLine(row1: tile.GetRow(), col1: 0, row2: tile.GetRow(), col2: gameModel.boardSize-1 )
+                AddTempLine(row1: 0, col1: tile.GetCol(), row2: gameModel.boardSize-1, col2: tile.GetCol() )
+                gameModel.SoundLaser()
                 
             default:
                 break
