@@ -112,12 +112,17 @@ class GameEnagin {
                     pos.y = CGFloat(row)
                     
                     if let touchedTile = gameModel.GetTile(pos: pos) {
-                        touchedTile.Moveto(
-                            delta_row: targetRow,
-                            delta_col: targetCol,
-                            cellSize: CGFloat(gameModel.GetCellSize()),
-                            viewOffset: gameModel.GetViewOffset())
-                        targetCol -= 1
+                        if touchedTile.IsBlock(){
+                            targetCol = touchedTile.GetCol() - 1
+                        }
+                        else{
+                            touchedTile.Moveto(
+                                delta_row: targetRow,
+                                delta_col: targetCol,
+                                cellSize: CGFloat(gameModel.GetCellSize()),
+                                viewOffset: gameModel.GetViewOffset())
+                            targetCol -= 1
+                        }
                     }
                 }
             }
@@ -133,12 +138,17 @@ class GameEnagin {
                     pos.y = CGFloat(row)
                     
                     if let touchedTile = gameModel.GetTile(pos: pos){
-                        touchedTile.Moveto(
-                            delta_row: targetRow,
-                            delta_col: targetCol,
-                            cellSize: CGFloat(gameModel.GetCellSize()),
-                            viewOffset: gameModel.GetViewOffset())
-                        targetCol += 1
+                        if touchedTile.IsBlock(){
+                            targetCol = touchedTile.GetCol() + 1
+                        }
+                        else{
+                            touchedTile.Moveto(
+                                delta_row: targetRow,
+                                delta_col: targetCol,
+                                cellSize: CGFloat(gameModel.GetCellSize()),
+                                viewOffset: gameModel.GetViewOffset())
+                            targetCol += 1
+                        }
                     }
                 }
             }
@@ -154,12 +164,17 @@ class GameEnagin {
                     pos.y = CGFloat(row)
                     
                     if let touchedTile = gameModel.GetTile(pos: pos){
-                        touchedTile.Moveto(
-                            delta_row: targetRow,
-                            delta_col: targetCol,
-                            cellSize: CGFloat(gameModel.GetCellSize()),
-                            viewOffset: gameModel.GetViewOffset())
-                        targetRow -= 1
+                        if touchedTile.IsBlock(){
+                            targetRow = touchedTile.GetRow() - 1
+                        }
+                        else{
+                            touchedTile.Moveto(
+                                delta_row: targetRow,
+                                delta_col: targetCol,
+                                cellSize: CGFloat(gameModel.GetCellSize()),
+                                viewOffset: gameModel.GetViewOffset())
+                            targetRow -= 1
+                        }
                     }
                 }
             }
@@ -176,16 +191,18 @@ class GameEnagin {
                     
                     if let touchedTile = gameModel.GetTile(pos: pos) {
                         
-                        if ( row != targetRow ) || ( col != targetCol ) {
-                        
-                        touchedTile.Moveto(
-                            delta_row: targetRow,
-                            delta_col: targetCol,
-                            cellSize: CGFloat(gameModel.GetCellSize()),
-                            viewOffset: gameModel.GetViewOffset())
+                        if touchedTile.IsBlock(){
+                            targetRow = touchedTile.GetRow() + 1
                         }
+                        else{
                         
-                        targetRow += 1
+                            touchedTile.Moveto(
+                                delta_row: targetRow,
+                                delta_col: targetCol,
+                                cellSize: CGFloat(gameModel.GetCellSize()),
+                                viewOffset: gameModel.GetViewOffset())
+                            targetRow += 1
+                        }
                     }
                 }
             }
@@ -367,7 +384,9 @@ class GameEnagin {
                 tile2.SetFlag(flag: TileNode.IS_VISITED, isSet: true )
                 if ( tile2.GetClusterType() == TileNode.ClusterType.None ){
                     //delete the tile
-                    DeleteTile(tile: tile2 )
+                    if !tile2.IsBlock(){
+                        DeleteTile(tile: tile2 )
+                    }
                 }
                 else{
                     tile2.SetFlag(flag: TileNode.TBP, isSet: true)
@@ -384,7 +403,9 @@ class GameEnagin {
                 tile2.SetFlag(flag: TileNode.IS_VISITED, isSet: true )
                 if ( tile2.GetClusterType() == TileNode.ClusterType.None ){
                     //delete the tile
-                    DeleteTile(tile: tile2 )
+                    if !tile2.IsBlock(){
+                        DeleteTile(tile: tile2 )
+                    }
                 }
                 else{
                     tile2.SetFlag(flag: TileNode.TBP, isSet: true)
@@ -401,7 +422,9 @@ class GameEnagin {
                 tile2.SetFlag(flag: TileNode.IS_VISITED, isSet: true )
                 if ( tile2.GetClusterType() == TileNode.ClusterType.None ){
                     //delete the tile
-                    DeleteTile(tile: tile2 )
+                    if !tile2.IsBlock(){
+                        DeleteTile(tile: tile2 )
+                    }
                 }
                 else{
                     tile2.SetFlag(flag: TileNode.TBP, isSet: true)

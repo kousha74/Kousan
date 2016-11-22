@@ -17,6 +17,7 @@ class TileNode {
     static let STAR7_ID = 12
     static let CHOLOLATE_ID = 13
     static let BLOCKER_ID = 14
+    static let BLOCKED_ID = 15
     
     static let IS_MOVING:Int = 0
     static let IS_VISITED:Int = 1
@@ -49,6 +50,9 @@ class TileNode {
         sprite?.position.y = viewOffset.y + (CGFloat(y)+CGFloat(0.5))*CGFloat(cellSize)
     }
     
+    func IsBlock()->Bool{
+        return id == TileNode.BLOCKED_ID || id == TileNode.BLOCKER_ID
+    }
     //Resets the tile to be reused
     func Reset(){
         id = 0
@@ -125,6 +129,8 @@ class TileNode {
                 return "chocolate"
             case TileNode.BLOCKER_ID:
                 return "texture1"
+            case TileNode.BLOCKED_ID:
+                return "Blocked"
             default:
                 return "gray"
                 
