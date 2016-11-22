@@ -258,29 +258,38 @@ class GameEnagin {
                 touchedCell.x = floor(( touchPos.x - gameModel.GetViewOffset().x )/CGFloat(gameModel.GetCellSize()) )
                 touchedCell.y = floor(( touchPos.y - gameModel.GetViewOffset().y )/CGFloat(gameModel.GetCellSize()) )
                 
-                if let touchedTile = gameModel.GetTile(pos: touchedCell) {
-                    switch touchedTile.GetID() {
-                    case TileNode.STAR5_ID:
-                        touchedTile.SetFlag(flag: TileNode.TBP, isSet: true)
-                        isProcessing = true
-                        shouldAddTile = true
-                        MarkSpecialNodes(tile: touchedTile)
-                        Timer.scheduledTimer(timeInterval: TimeInterval( GameModel.delay ), target: self, selector:#selector(GameEnagin.ProcessSpecialNodes), userInfo: nil, repeats: false)
-                        break
+                if gameModel.IsValidPosition(pos: touchedCell){
+                    if let touchedTile = gameModel.GetTile(pos: touchedCell) {
+                        switch touchedTile.GetID() {
+                        case TileNode.STAR5_ID:
+                            touchedTile.SetFlag(flag: TileNode.TBP, isSet: true)
+                            isProcessing = true
+                            shouldAddTile = true
+                            MarkSpecialNodes(tile: touchedTile)
+                            Timer.scheduledTimer(timeInterval: TimeInterval( GameModel.delay ), target: self, selector:#selector(GameEnagin.ProcessSpecialNodes), userInfo: nil, repeats: false)
+                            break
+                            
+                        case TileNode.STAR7_ID:
+                            touchedTile.SetFlag(flag: TileNode.TBP, isSet: true)
+                            isProcessing = true
+                            shouldAddTile = true
+                            MarkSpecialNodes(tile: touchedTile)
+                            Timer.scheduledTimer(timeInterval: TimeInterval( GameModel.delay ), target: self, selector:#selector(GameEnagin.ProcessSpecialNodes), userInfo: nil, repeats: false)
+                            break
                         
-                    case TileNode.STAR7_ID:
-                        touchedTile.SetFlag(flag: TileNode.TBP, isSet: true)
-                        isProcessing = true
-                        shouldAddTile = true
-                        MarkSpecialNodes(tile: touchedTile)
-                        Timer.scheduledTimer(timeInterval: TimeInterval( GameModel.delay ), target: self, selector:#selector(GameEnagin.ProcessSpecialNodes), userInfo: nil, repeats: false)
-                        break
-                        
-                    default:
-                        break
+                        case TileNode.BLOCKER_ID: //touching a blocker removes it
+                            DeleteTile(tile: touchedTile)
+                            break
+                            
+                        default:
+                            break
+                        }
+                    }
+                    else{
+                        RemoveBlockers() //At most one blocker is allowed
+                        AddTile(id: TileNode.BLOCKER_ID, pos: touchedCell)
                     }
                 }
-
             }
         }
         
@@ -362,6 +371,16 @@ class GameEnagin {
         }
         else{
             isProcessing = false
+            RemoveBlockers()
+        }
+    }
+    
+    func RemoveBlockers(){
+        //TBD removes one blocker
+        for tile in gameModel.GetTiles(){
+            if tile.GetID() == TileNode.BLOCKER_ID {
+                DeleteTile(tile: tile)
+            }
         }
     }
     
@@ -594,8 +613,16 @@ class GameEnagin {
             tile.sprite?.alpha = 0.0
             
             let fadeinAction = SKAction.fadeIn(withDuration: GameModel.delay )
-            let clusterAction = SKAction.run { self.FindClusters() }
+            let clusterAction = SKAction.run { self.FindClusters() } //TBD have the caller call this action
             tile.sprite?.run( SKAction.sequence( [ fadeinAction, clusterAction] ))
+        }
+    }
+    
+    func AddTile(id: Int, pos:CGPoint){
+        if let tile = gameModel.AddTile(id: id, pos: pos) {
+            m_GameSceneProtocol?.onNewTile(tile: tile)
+            tile.sprite?.alpha = 0.0
+            tile.sprite?.run( SKAction.fadeIn(withDuration: GameModel.delay ) )
         }
     }
     

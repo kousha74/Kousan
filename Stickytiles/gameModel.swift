@@ -234,6 +234,16 @@ class GameModel {
         return nil
     }
     
+    func AddTile(id: Int, pos:CGPoint)->TileNode?{
+        //First find an empty tile
+        let tile = GetEmptyTile() //TBD
+        tile.SetID(Id: id)
+        tile.SetRowAndCol(row: Int(pos.y), col: Int(pos.x), cellSize: cellSize, viewOffset: viewOffset)
+        gameTiles.append(tile)
+        return tile
+    }
+
+    
     func FindEmptyCell()->CGPoint?{
         var selectedEmptyCell = CGPoint(x: -1, y: -1)
         var emptyCell = CGPoint(x: -1, y: -1)
