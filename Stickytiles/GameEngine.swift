@@ -247,7 +247,7 @@ class GameEnagin {
                         touchedTile.SetFlag(flag: TileNode.TBP, isSet: true)
                         isProcessing = true
                         shouldAddTile = true
-                        MarkSpecialNodes()
+                        MarkSpecialNodes(tile: touchedTile)
                         ProcessSpecialNodes()
                         break
                         
@@ -255,7 +255,7 @@ class GameEnagin {
                         touchedTile.SetFlag(flag: TileNode.TBP, isSet: true)
                         isProcessing = true
                         shouldAddTile = true
-                        MarkSpecialNodes()
+                        MarkSpecialNodes(tile: touchedTile)
                         ProcessSpecialNodes()
                         break
                         
@@ -323,16 +323,17 @@ class GameEnagin {
             }
         }
         
-
-        if ( clusterFound ) || ( gameModel.FindFlag(flag: TileNode.TBP, isSet: true) != nil ) {
+        let tile2 = gameModel.FindFlag(flag: TileNode.TBP, isSet: true)
+        
+        if ( clusterFound ) || ( tile2 != nil ) {
             
             if (!specialClusterFound){
                 gameModel.SoundWave()
             }
             
-            if ( gameModel.FindFlag(flag: TileNode.TBP, isSet: true) != nil ){
+            if ( tile2 != nil ){
                 Timer.scheduledTimer(timeInterval: TimeInterval( GameModel.delay ), target: self, selector:#selector(GameEnagin.ProcessSpecialNodes), userInfo: nil, repeats: false)
-                MarkSpecialNodes()
+                MarkSpecialNodes( tile: tile2! )
             }
             else{
                 Timer.scheduledTimer(timeInterval: TimeInterval( GameModel.delay ), target: self, selector:#selector(GameEnagin.PushAgainstTheWall), userInfo: nil, repeats: false)
@@ -411,9 +412,7 @@ class GameEnagin {
     
     @objc func ProcessSpecialNodes(){
         
-        if  let temp = gameModel.FindFlag(flag: TileNode.TBP, isSet: true) {
-            
-            let tile = temp
+        if let tile = gameModel.FindFlag(flag: TileNode.TBP, isSet: true){
             
             let clusterType = tile.GetClusterType()
             
@@ -459,109 +458,109 @@ class GameEnagin {
             
             tile.SetFlag(flag: TileNode.TBP, isSet: false)
             DeleteTile(tile: tile )
-            MarkSpecialNodes()
-            ProcessSpecialNodes()
-
-        }
-        else{
-            Timer.scheduledTimer(timeInterval: TimeInterval( GameModel.delay ), target: self, selector:#selector(GameEnagin.PushAgainstTheWall), userInfo: nil, repeats: false)
+            
+            if let tile2 = gameModel.FindFlag(flag: TileNode.TBP, isSet: true) {
+                //We have more to process
+                MarkSpecialNodes(tile: tile2)
+                ProcessSpecialNodes()
+            }
+            else{
+                Timer.scheduledTimer(timeInterval: TimeInterval( GameModel.delay ), target: self, selector:#selector(GameEnagin.PushAgainstTheWall), userInfo: nil, repeats: false)
+                
+            }
         }
     }
 
     /* TBD special case: cascading delete*/
-    @objc func MarkSpecialNodes(){
+    func MarkSpecialNodes(tile:TileNode){
         
-        if let tile = gameModel.FindFlag(flag: TileNode.TBP, isSet: true) {
+        let clusterType = tile.GetClusterType()
+        
+        switch ( clusterType ){
+        case .Row:
+            AddTempLine(row1: tile.GetRow(), col1: 0, row2: tile.GetRow(), col2: gameModel.boardSize-1 )
+            gameModel.SoundLaser()
+            break
             
-            let clusterType = tile.GetClusterType()
+        case .Col:
+            AddTempLine(row1: 0, col1: tile.GetCol(), row2: gameModel.boardSize-1, col2: tile.GetCol() )
+            gameModel.SoundLaser()
+            break
             
-            switch ( clusterType ){
-            case .Row:
-                AddTempLine(row1: tile.GetRow(), col1: 0, row2: tile.GetRow(), col2: gameModel.boardSize-1 )
-                gameModel.SoundLaser()
-                break
+        case .Four:
+            var tileFound = false
+            for tile2 in gameModel.GetTiles(){
                 
-            case .Col:
-                AddTempLine(row1: 0, col1: tile.GetCol(), row2: gameModel.boardSize-1, col2: tile.GetCol() )
-                gameModel.SoundLaser()
-                break
-                
-            case .Four:
-                var tileFound = false
-                for tile2 in gameModel.GetTiles(){
-                    
-                    if SameColor(tile1: tile, tile2: tile2 ){
-                        if ( tile2.GetClusterType() == TileNode.ClusterType.None ){
-                            AddTempLine(row1: tile.GetRow(), col1: tile.GetCol(), row2: tile2.GetRow(), col2: tile2.GetCol() )
-                            tileFound = true
-                        }
+                if SameColor(tile1: tile, tile2: tile2 ){
+                    if ( tile2.GetClusterType() == TileNode.ClusterType.None ){
+                        AddTempLine(row1: tile.GetRow(), col1: tile.GetCol(), row2: tile2.GetRow(), col2: tile2.GetCol() )
+                        tileFound = true
                     }
                 }
-                
-                if tileFound{
-                    gameModel.SoundLaser()
-                }
-                break
-                
-            case .Five:
-                AddTempLine(row1: tile.GetRow(), col1: 0, row2: tile.GetRow(), col2: gameModel.boardSize-1 )
-                AddTempLine(row1: 0, col1: tile.GetCol(), row2: gameModel.boardSize-1, col2: tile.GetCol() )
-                gameModel.SoundLaser()
-                break
-                
-            case .Six:
-                AddTempLine(row1: tile.GetRow(), col1: 0, row2: tile.GetRow(), col2: gameModel.boardSize-1 )
-                AddTempLine(row1: 0, col1: tile.GetCol(), row2: gameModel.boardSize-1, col2: tile.GetCol() )
-                var row1: Int = 0
-                var col1: Int = 0
-                var row2: Int = 0
-                var col2: Int = 0
-                
-                if ( tile.GetCol() > tile.GetRow() ){
-                    row1 = 0
-                    col1 = tile.GetCol() - tile.GetRow()
-                    
-                    let delta = gameModel.boardSize - 1 - col1
-                    
-                    row2 = row1 + delta
-                    col2 = col1 + delta
-                }
-                else{
-                    row1 = tile.GetRow() - tile.GetCol()
-                    col1 = 0
-                    
-                    let delta = gameModel.boardSize - 1 - row1
-                    
-                    row2 = row1 + delta
-                    col2 = col1 + delta
-                }
-                AddTempLine(row1: row1, col1: col1, row2: row2, col2: col2)
-                
-                for index in 0...gameModel.boardSize{
-                    row1 = tile.GetRow() + index
-                    col1 = tile.GetCol() - index
-                    
-                    if ( row1 == gameModel.boardSize - 1 ) || ( col1 == 0 ){
-                        break
-                    }
-                }
-                
-                for index in 0...gameModel.boardSize{
-                    row2 = tile.GetRow() - index
-                    col2 = tile.GetCol() + index
-                    
-                    if ( row2 == 0 ) || ( col2 == gameModel.boardSize - 1 ){
-                        break
-                    }
-                }
-                AddTempLine(row1: row1, col1: col1, row2: row2, col2: col2)
-                
-                gameModel.SoundLaser()
-                
-                
-            default:
-                break
             }
+            
+            if tileFound{
+                gameModel.SoundLaser()
+            }
+            break
+            
+        case .Five:
+            AddTempLine(row1: tile.GetRow(), col1: 0, row2: tile.GetRow(), col2: gameModel.boardSize-1 )
+            AddTempLine(row1: 0, col1: tile.GetCol(), row2: gameModel.boardSize-1, col2: tile.GetCol() )
+            gameModel.SoundLaser()
+            break
+            
+        case .Six:
+            AddTempLine(row1: tile.GetRow(), col1: 0, row2: tile.GetRow(), col2: gameModel.boardSize-1 )
+            AddTempLine(row1: 0, col1: tile.GetCol(), row2: gameModel.boardSize-1, col2: tile.GetCol() )
+            var row1: Int = 0
+            var col1: Int = 0
+            var row2: Int = 0
+            var col2: Int = 0
+            
+            if ( tile.GetCol() > tile.GetRow() ){
+                row1 = 0
+                col1 = tile.GetCol() - tile.GetRow()
+                
+                let delta = gameModel.boardSize - 1 - col1
+                
+                row2 = row1 + delta
+                col2 = col1 + delta
+            }
+            else{
+                row1 = tile.GetRow() - tile.GetCol()
+                col1 = 0
+                
+                let delta = gameModel.boardSize - 1 - row1
+                
+                row2 = row1 + delta
+                col2 = col1 + delta
+            }
+            AddTempLine(row1: row1, col1: col1, row2: row2, col2: col2)
+            
+            for index in 0...gameModel.boardSize{
+                row1 = tile.GetRow() + index
+                col1 = tile.GetCol() - index
+                
+                if ( row1 == gameModel.boardSize - 1 ) || ( col1 == 0 ){
+                    break
+                }
+            }
+            
+            for index in 0...gameModel.boardSize{
+                row2 = tile.GetRow() - index
+                col2 = tile.GetCol() + index
+                
+                if ( row2 == 0 ) || ( col2 == gameModel.boardSize - 1 ){
+                    break
+                }
+            }
+            AddTempLine(row1: row1, col1: col1, row2: row2, col2: col2)
+            gameModel.SoundLaser()
+            
+            
+        default:
+            break
         }
     }
 
