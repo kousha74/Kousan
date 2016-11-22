@@ -116,7 +116,7 @@ class TileNode {
         if ( id >= TileNode.BUBBLE_ID ) {
             switch(id){
             case TileNode.BUBBLE_ID:
-                return "bubble"
+                return "Balloon"
             case TileNode.STAR5_ID:
                 return "Star5"
             case TileNode.STAR7_ID:
