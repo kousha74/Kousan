@@ -41,7 +41,7 @@ class GameEnagin {
     let MOVE_DIRECTION_NONE:Int = 0
     let MOVE_DIRECTION_HORIZONTAL:Int = 1
     let MOVE_DIRECTION_VERTICAL:Int = 2
-    let MOVE_DETECTION_PIXELS:Int =	3
+    let MOVE_DETECTION_PIXELS:Int =	20
     
     let DIRECTION_UP:Int = 0
     let DIRECTION_DOWN:Int = 1
@@ -54,7 +54,6 @@ class GameEnagin {
     var touchPos = CGPoint(x: 0, y: 0)
     var currentPos = CGPoint(x: 0, y: 0)
     var touchedCell = CGPoint(x: 0, y: 0)
-    var touchedTile:TileNode?
     var m_move_direction:Int
     var m_upper_bound:CGFloat = 0
     var m_lower_bound:CGFloat = 0
@@ -75,16 +74,9 @@ class GameEnagin {
         touchPos.x = pos.x
         touchPos.y = pos.y
         
-        touchedCell.x = floor(( touchPos.x - gameModel.GetViewOffset().x )/CGFloat(gameModel.GetCellSize()) )
-        touchedCell.y = floor(( touchPos.y - gameModel.GetViewOffset().y )/CGFloat(gameModel.GetCellSize()) )
-        
-        touchedTile = gameModel.GetTile(pos: touchedCell)
-        
-        if ( (touchedTile != nil) && ( (touchedTile?.GetFlag(flag: TileNode.IS_LOCKED ))! == false ) ){
+        if !isProcessing && !dragging
+        {
             dragging = true
-        }
-        else{
-            dragging = false
         }
     }
     
@@ -118,10 +110,9 @@ class GameEnagin {
                 {
                     pos.x = CGFloat(col)
                     pos.y = CGFloat(row)
-                    touchedTile = gameModel.GetTile(pos: pos)
                     
-                    if ( touchedTile != nil ){
-                        touchedTile?.Moveto(
+                    if let touchedTile = gameModel.GetTile(pos: pos) {
+                        touchedTile.Moveto(
                             delta_row: targetRow,
                             delta_col: targetCol,
                             cellSize: CGFloat(gameModel.GetCellSize()),
@@ -140,10 +131,9 @@ class GameEnagin {
                 {
                     pos.x = CGFloat(col)
                     pos.y = CGFloat(row)
-                    touchedTile = gameModel.GetTile(pos: pos)
                     
-                    if ( touchedTile != nil ){
-                        touchedTile?.Moveto(
+                    if let touchedTile = gameModel.GetTile(pos: pos){
+                        touchedTile.Moveto(
                             delta_row: targetRow,
                             delta_col: targetCol,
                             cellSize: CGFloat(gameModel.GetCellSize()),
@@ -162,10 +152,9 @@ class GameEnagin {
                 {
                     pos.x = CGFloat(col)
                     pos.y = CGFloat(row)
-                    touchedTile = gameModel.GetTile(pos: pos)
                     
-                    if ( touchedTile != nil ){
-                        touchedTile?.Moveto(
+                    if let touchedTile = gameModel.GetTile(pos: pos){
+                        touchedTile.Moveto(
                             delta_row: targetRow,
                             delta_col: targetCol,
                             cellSize: CGFloat(gameModel.GetCellSize()),
@@ -184,13 +173,12 @@ class GameEnagin {
                 {
                     pos.x = CGFloat(col)
                     pos.y = CGFloat(row)
-                    touchedTile = gameModel.GetTile(pos: pos)
                     
-                    if ( touchedTile != nil ){
+                    if let touchedTile = gameModel.GetTile(pos: pos) {
                         
                         if ( row != targetRow ) || ( col != targetCol ) {
                         
-                        touchedTile?.Moveto(
+                        touchedTile.Moveto(
                             delta_row: targetRow,
                             delta_col: targetCol,
                             cellSize: CGFloat(gameModel.GetCellSize()),
@@ -207,7 +195,8 @@ class GameEnagin {
             break
         }
         
-        Timer.scheduledTimer(timeInterval: TimeInterval( GameModel.delay ), target: self, selector:#selector(GameEnagin.FindClusters), userInfo: nil, repeats: false)
+        Timer.scheduledTimer(timeInterval: TimeInterval( ( m_direction != .None ) ? GameModel.delay : 0.0 ), target: self, selector:#selector(GameEnagin.FindClusters), userInfo: nil, repeats: false)
+        
     }
     
     func GetDirection( touchPos:CGPoint, releasePos:CGPoint)->Direction
@@ -217,24 +206,57 @@ class GameEnagin {
         
         if ( abs(deltaX) > abs(deltaY) ){
             //Horizontal Move
-            return ( (deltaX > 0) ? .Right : .Left )
+            if abs(deltaX) > CGFloat(MOVE_DETECTION_PIXELS) {
+                return ( (deltaX > 0) ? .Right : .Left )
+            }
+            else{
+                return .None
+            }
+            
         }
         else{
-            return ( (deltaY > 0) ? .Up : .Down )
+            if abs(deltaY) > CGFloat(MOVE_DETECTION_PIXELS) {
+                return ( (deltaY > 0) ? .Up : .Down )
+            }
+            else{
+                return .None
+            }
         }
     }
     
     func OnRelease(pos:CGPoint)->Bool{
         
-        if ( !isProcessing ){
-            
-            isProcessing = true
-            
-            shouldAddTile = true
+        if  !isProcessing && dragging {
             
             m_direction = GetDirection(touchPos: touchPos, releasePos: pos)
             
-            PushAgainstTheWall()
+            if ( m_direction != .None ) {
+                dragging = false
+                isProcessing = true
+                shouldAddTile = true
+                PushAgainstTheWall()
+            }
+            else{
+                //It's a tap
+                touchedCell.x = floor(( touchPos.x - gameModel.GetViewOffset().x )/CGFloat(gameModel.GetCellSize()) )
+                touchedCell.y = floor(( touchPos.y - gameModel.GetViewOffset().y )/CGFloat(gameModel.GetCellSize()) )
+                
+                if let touchedTile = gameModel.GetTile(pos: touchedCell) {
+                    switch touchedTile.GetID() {
+                    case TileNode.STAR5_ID:
+                        touchedTile.SetFlag(flag: TileNode.TBP, isSet: true)
+                        isProcessing = true
+                        shouldAddTile = true
+                        MarkSpecialNodes()
+                        ProcessSpecialNodes()
+                        break
+                        
+                    default:
+                        break
+                    }
+                }
+
+            }
         }
         
         return false
@@ -294,41 +316,76 @@ class GameEnagin {
         }
         
 
-        if ( clusterFound ){
+        if ( clusterFound ) || ( gameModel.FindFlag(flag: TileNode.TBP, isSet: true) != nil ) {
             
             if (!specialClusterFound){
                 gameModel.SoundWave()
             }
             
             if ( gameModel.FindFlag(flag: TileNode.TBP, isSet: true) != nil ){
-                Timer.scheduledTimer(timeInterval: TimeInterval( GameModel.delay + 0.1 /*TBD*/), target: self, selector:#selector(GameEnagin.ProcessSpecialNodes), userInfo: nil, repeats: false)
+                Timer.scheduledTimer(timeInterval: TimeInterval( GameModel.delay ), target: self, selector:#selector(GameEnagin.ProcessSpecialNodes), userInfo: nil, repeats: false)
                 MarkSpecialNodes()
             }
             else{
-                Timer.scheduledTimer(timeInterval: TimeInterval( GameModel.delay + 0.1 /*TBD*/), target: self, selector:#selector(GameEnagin.PushAgainstTheWall), userInfo: nil, repeats: false)
+                Timer.scheduledTimer(timeInterval: TimeInterval( GameModel.delay ), target: self, selector:#selector(GameEnagin.PushAgainstTheWall), userInfo: nil, repeats: false)
             }
         }
         else if shouldAddTile {
             shouldAddTile = false
             AddTile()
-            FindClusters()
         }
         else{
             isProcessing = false
         }
     }
     
+    func SameColor(tile1:TileNode, tile2:TileNode)->Bool{
+        return ( tile1.GetID() == tile2.GetID() ) && ( tile1.GetID() < TileNode.BUBBLE_ID )
+    }
+    
     func DeleteTile(tile:TileNode){
-        
-        if ( !tile.GetFlag(flag: TileNode.IS_DELETED )){
-            tile.SetFlag(flag: TileNode.IS_DELETED, isSet: true )
-            let fadeoutAction = SKAction.fadeOut(withDuration: GameModel.delay)
-            let actionMoveDone = SKAction.removeFromParent()
-            let actionFinalize = SKAction.run {
-                self.gameModel.RemoveTile(tile: tile)
+        gameModel.RemoveTile(tile: tile)
+        let fadeoutAction = SKAction.fadeOut(withDuration: GameModel.delay)
+        let actionMoveDone = SKAction.removeFromParent()
+        tile.sprite?.run( SKAction.sequence([fadeoutAction,actionMoveDone]))
+    }
+    
+    func DeleteRow( row:Int ){
+        for col in 0...gameModel.boardSize-1{
+            
+            if let temp = gameModel.GetTile(pos: CGPoint(x:CGFloat(col), y: CGFloat(row))) {
+                let tile2 = temp
+                tile2.SetFlag(flag: TileNode.IS_VISITED, isSet: true )
+                if ( tile2.GetClusterType() == TileNode.ClusterType.None ){
+                    //delete the tile
+                    DeleteTile(tile: tile2 )
+                }
+                else{
+                    tile2.SetFlag(flag: TileNode.TBP, isSet: true)
+                }
             }
-            tile.sprite?.run( SKAction.sequence([fadeoutAction,actionMoveDone,actionFinalize]))
         }
+    }
+    
+    func DeleteCol( col:Int ){
+        for row in 0...gameModel.boardSize-1{
+            
+            if let temp = gameModel.GetTile(pos: CGPoint(x:CGFloat(col), y: CGFloat(row))) {
+                let tile2 = temp
+                tile2.SetFlag(flag: TileNode.IS_VISITED, isSet: true )
+                if ( tile2.GetClusterType() == TileNode.ClusterType.None ){
+                    //delete the tile
+                    DeleteTile(tile: tile2 )
+                }
+                else{
+                    tile2.SetFlag(flag: TileNode.TBP, isSet: true)
+                }
+            }
+        }
+    }
+    
+    func DeleteDiagonally( tile: TileNode ){
+        
     }
     
     @objc func ProcessSpecialNodes(){
@@ -341,50 +398,17 @@ class GameEnagin {
             
             switch ( clusterType ){
             case .Row:
-                for col in 0...gameModel.boardSize-1{
-                    
-                    if let temp = gameModel.GetTile(pos: CGPoint(x:CGFloat(col), y:tile.pos.y)) {
-                        let tile2 = temp
-                        if !( tile2.GetFlag(flag: TileNode.IS_DELETED ))
-                        {
-                            tile2.SetFlag(flag: TileNode.IS_VISITED, isSet: true )
-                            if ( tile2.GetClusterType() == TileNode.ClusterType.None ){
-                                //delete the tile
-                                DeleteTile(tile: tile2 )
-                            }
-                            else{
-                                tile2.SetFlag(flag: TileNode.TBP, isSet: true)
-                            }
-                        }
-                    }
-                }
+                DeleteRow(row: tile.GetRow() )
                 break
                 
             case .Col:
-                for row in 0...gameModel.boardSize-1{
-                    
-                    if let temp = gameModel.GetTile(pos: CGPoint(x:tile.pos.x, y: CGFloat(row))) {
-                        let tile2 = temp
-                        if !( tile2.GetFlag(flag: TileNode.IS_DELETED ))
-                        {
-                            tile2.SetFlag(flag: TileNode.IS_VISITED, isSet: true )
-                            if ( tile2.GetClusterType() == TileNode.ClusterType.None ){
-                                //delete the tile
-                                DeleteTile(tile: tile2 )
-                            }
-                            else{
-                                tile2.SetFlag(flag: TileNode.TBP, isSet: true)
-                            }
-                        }
-                    }
-                }
+                DeleteCol(col: tile.GetCol())
                 break
                 
             case .Four:
                 for tile2 in gameModel.GetTiles(){
                     
-                    if !( tile2.GetFlag(flag: TileNode.IS_DELETED )) && ( tile2.GetID() == tile.GetID()) /*TBD*/
-                    {
+                    if SameColor(tile1: tile, tile2: tile2){
                         tile2.SetFlag(flag: TileNode.IS_VISITED, isSet: true )
                         if ( tile2.GetClusterType() == TileNode.ClusterType.None ){
                             //delete the tile
@@ -397,6 +421,11 @@ class GameEnagin {
                 }
                 break
                 
+            case .Five:
+                DeleteRow(row: tile.GetRow() )
+                DeleteCol(col: tile.GetCol() )
+                break;
+                
             default:
                 break
             }
@@ -407,7 +436,7 @@ class GameEnagin {
 
         }
         else{
-            Timer.scheduledTimer(timeInterval: TimeInterval( GameModel.delay + 0.1 /*TBD*/), target: self, selector:#selector(GameEnagin.PushAgainstTheWall), userInfo: nil, repeats: false)
+            Timer.scheduledTimer(timeInterval: TimeInterval( GameModel.delay ), target: self, selector:#selector(GameEnagin.PushAgainstTheWall), userInfo: nil, repeats: false)
         }
     }
 
@@ -433,8 +462,7 @@ class GameEnagin {
                 var tileFound = false
                 for tile2 in gameModel.GetTiles(){
                     
-                    if !( tile2.GetFlag(flag: TileNode.IS_DELETED )) && ( tile2.GetID() == tile.GetID()) /*TBD*/
-                    {
+                    if SameColor(tile1: tile, tile2: tile2 ){
                         if ( tile2.GetClusterType() == TileNode.ClusterType.None ){
                             AddTempLine(row1: tile.GetRow(), col1: tile.GetCol(), row2: tile2.GetRow(), col2: tile2.GetCol() )
                             tileFound = true
@@ -447,6 +475,11 @@ class GameEnagin {
                 }
                 break
                 
+            case .Five:
+                AddTempLine(row1: tile.GetRow(), col1: 0, row2: tile.GetRow(), col2: gameModel.boardSize-1 )
+                AddTempLine(row1: 0, col1: tile.GetCol(), row2: gameModel.boardSize-1, col2: tile.GetCol() )
+                gameModel.SoundLaser()
+                
             default:
                 break
             }
@@ -454,17 +487,30 @@ class GameEnagin {
     }
 
     func AddTile(){
-        let tile = gameModel.AddTile()
         
-        if tile != nil {
-            m_GameSceneProtocol?.onNewTile(tile: tile!)
+        if let tile = gameModel.AddTile() {
+            m_GameSceneProtocol?.onNewTile(tile: tile)
+            tile.sprite?.alpha = 0.0
+            
+            let fadeinAction = SKAction.fadeIn(withDuration: GameModel.delay )
+            let clusterAction = SKAction.run { self.FindClusters() }
+            tile.sprite?.run( SKAction.sequence( [ fadeinAction, clusterAction] ))
         }
     }
     
     func GetClusterType(cluster:[TileNode])->TileNode.ClusterType{
         
-        if cluster.count == 4{
+        switch (cluster.count){
+        case 0:
+            return .None
+        case 1:
+            return .None
+        case 2:
+            return .None
+        case 3:
+            return .None
             
+        case 4:
             //check if all in the same row
             let row = Int(cluster[0].pos.y)
             
@@ -480,9 +526,17 @@ class GameEnagin {
             }
             
             return .Four
-        }
         
-        return .None
+        case 5:
+            return .Five
+            
+        case 6:
+            return .Six
+            
+        default:
+            return .Six
+        
+        }
     }
     
     func FindClusterAtTile( tile:TileNode )->[TileNode]{
@@ -494,26 +548,29 @@ class GameEnagin {
         cluster.append(tile)
         queue.append(tile)
         
-        var newTilePos = CGPoint(x: 0, y: 0)
-        
-        let id = tile.GetID()
-        
-        while ( !queue.isEmpty )
-        {
-            let currentTile = queue[0]
-            queue.remove(at: 0)
+        // special tiles don't form a cluster
+        if ( tile.GetID() < TileNode.BUBBLE_ID ){
+            var newTilePos = CGPoint(x: 0, y: 0)
             
-            for pos in direction_vector {
+            let id = tile.GetID()
+            
+            while ( !queue.isEmpty )
+            {
+                let currentTile = queue[0]
+                queue.remove(at: 0)
                 
-                newTilePos.x = currentTile.pos.x + pos.x
-                newTilePos.y = currentTile.pos.y + pos.y
-            
-                if let newTile = gameModel.GetTile(pos: newTilePos){
-                    if ( !newTile.GetFlag(flag: TileNode.IS_VISITED ) ) && ( newTile.GetID() == id )
-                    {
-                        newTile.SetFlag(flag: TileNode.IS_VISITED, isSet: true )
-                        cluster.append(newTile)
-                        queue.append(newTile)
+                for pos in direction_vector {
+                    
+                    newTilePos.x = currentTile.pos.x + pos.x
+                    newTilePos.y = currentTile.pos.y + pos.y
+                
+                    if let newTile = gameModel.GetTile(pos: newTilePos){
+                        if ( !newTile.GetFlag(flag: TileNode.IS_VISITED ) ) && ( newTile.GetID() == id )
+                        {
+                            newTile.SetFlag(flag: TileNode.IS_VISITED, isSet: true )
+                            cluster.append(newTile)
+                            queue.append(newTile)
+                        }
                     }
                 }
             }
@@ -535,10 +592,10 @@ class GameEnagin {
         shape.path = path
         shape.strokeColor = UIColor.darkGray
         shape.lineWidth = 5
-        shape.zPosition = 1.0
+        shape.zPosition = 2.0
         m_GameSceneProtocol?.onAddChild(child: shape)
         
-        let fadeoutAction = SKAction.fadeOut(withDuration: 2)
+        let fadeoutAction = SKAction.fadeOut(withDuration: GameModel.delay )
         let removeAction = SKAction.removeFromParent()
         shape.run(SKAction.sequence([ fadeoutAction, removeAction]))
     }

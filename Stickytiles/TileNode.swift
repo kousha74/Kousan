@@ -12,10 +12,16 @@ import SpriteKit
 class TileNode {
     
     // MARK : constants
+    static let BUBBLE_ID = 10
+    static let STAR5_ID = 11
+    static let STAR7_ID = 12
+    static let CHOLOLATE_ID = 13
+    static let BLOCKER_ID = 14
+    
     static let IS_MOVING:Int = 0
     static let IS_VISITED:Int = 1
     static let IS_LOCKED:Int = 2
-    static let IS_DELETED:Int = 3 
+    static let DeleteMe:Int = 3 //TBD
     static let TBP:Int = 4 //to be processed
     var flags = [false,false,false,false,false]
     
@@ -59,6 +65,20 @@ class TileNode {
     
     func SetClusterType( type:ClusterType ){
         clusterType = type
+        
+        switch ( clusterType ){
+        case .Five:
+            id = TileNode.STAR5_ID
+            break
+            
+        case .Six:
+            id = TileNode.STAR7_ID
+            break
+            
+        default:
+            break
+        }
+        
         sprite?.texture = SKTexture(imageNamed:GetTileImage())
     }
     
@@ -92,148 +112,118 @@ class TileNode {
     
     func GetTileImage()->String{
         
+        //special tiles
+        if ( id >= TileNode.BUBBLE_ID ) {
+            switch(id){
+            case TileNode.BUBBLE_ID:
+                return "bubble"
+            case TileNode.STAR5_ID:
+                return "Star5"
+            case TileNode.STAR7_ID:
+                return "Star7"
+            case TileNode.CHOLOLATE_ID:
+                return "chocolate"
+            case TileNode.BLOCKER_ID:
+                return "texture1"
+            default:
+                return "gray"
+                
+            }
+        }
+        
         switch clusterType {
         case .None:
             switch(id){
             case 1:
-                return "red"
+                return "Apple"
             case 2:
-                return "green"
+                return "Apricot"
             case 3:
-                return "blue"
+                return "Cherry"
             case 4:
-                return "yellow"
+                return "Kiwi"
             case 5:
-                return "cyan"
+                return "Lemon"
             case 6:
-                return "magenta"
+                return "Orange"
             default:
                 return "gray"
                 
             }
-            break
             
         case .Row:
             switch(id){
             case 1:
-                return "redR"
+                return "AppleR"
             case 2:
-                return "greenR"
+                return "ApricotR"
             case 3:
-                return "blueR"
+                return "CherryR"
             case 4:
-                return "yellowR"
+                return "KiwiR"
             case 5:
-                return "cyan"
+                return "LemonR"
             case 6:
-                return "magenta"
+                return "OrangeR"
             default:
                 return "gray"
-                
             }
-            break
             
         case .Col:
             switch(id){
             case 1:
-                return "redC"
+                return "AppleC"
             case 2:
-                return "greenC"
+                return "ApricotC"
             case 3:
-                return "blueC"
+                return "CherryC"
             case 4:
-                return "yellowC"
+                return "KiwiC"
             case 5:
-                return "cyan"
+                return "LemonC"
             case 6:
-                return "magenta"
+                return "OrangeC"
             default:
                 return "gray"
-                
             }
-            break
             
         case .Four:
             switch(id){
             case 1:
-                return "red4"
+                return "Apple4"
             case 2:
-                return "green4"
+                return "Apricot4"
             case 3:
-                return "blue4"
+                return "Cherry4"
             case 4:
-                return "yellow4"
+                return "Kiwi4"
             case 5:
-                return "cyan"
+                return "Lemon4"
             case 6:
-                return "magenta"
+                return "Orange4"
             default:
                 return "gray"
-                
             }
-            break
             
         default:
         
             switch(id){
             case 1:
-                return "red"
+                return "Apple"
             case 2:
-                return "green"
+                return "Apricot"
             case 3:
-                return "blue"
+                return "Cherry"
             case 4:
-                return "yellow"
+                return "Kiwi"
             case 5:
-                return "cyan"
+                return "Lemon"
             case 6:
-                return "magenta"
+                return "Orange"
             default:
                 return "gray"
-                
-            }
-            break
-            
-        }
-        
-  /*      if ( clusterType != .None ) {
-            switch(id){
-            case 1:
-                return "redLock"
-            case 2:
-                return "greenLocked"
-            case 3:
-                return "blueLock"
-            case 4:
-                return "yellowLocked"
-            case 5:
-                return "cyanLocked"
-            case 6:
-                return "magentaLocked"
-            default:
-                return "grayLocked"
-                
             }
         }
-        else {
-            switch(id){
-            case 1:
-                return "red"
-            case 2:
-                return "green"
-            case 3:
-                return "blue"
-            case 4:
-                return "yellow"
-            case 5:
-                return "cyan"
-            case 6:
-                return "magenta"
-            default:
-                return "gray"
-                
-            }
-        }*/
     }
     
     func Occupies( pos: CGPoint )->Bool

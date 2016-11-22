@@ -50,7 +50,7 @@ class GameModel {
     private var audioPlayerLaser : AVAudioPlayer?
     private var audioPlayerChime : AVAudioPlayer?
     
-    private let COLOR_COUNT = 4
+    private let COLOR_COUNT = 6
     
     let boardSize : Int = 6
     
@@ -210,7 +210,20 @@ class GameModel {
         let tile = GetEmptyTile()
         
         if let emptyCell = FindEmptyCell(){
-            tile.SetID(Id: Int(arc4random_uniform(UInt32(COLOR_COUNT))) + 1)
+            
+            //TBD
+            // +2 for bubble and chocolate
+            var Id = Int(arc4random_uniform(UInt32(COLOR_COUNT+2))) + 1
+            
+            if ( Id == COLOR_COUNT + 1 ){
+                Id = 10
+            }
+            
+            if ( Id == COLOR_COUNT + 2 ){
+                Id = 13
+            }
+            
+            tile.SetID(Id: Id)
             tile.SetRowAndCol(row: Int(emptyCell.y), col: Int(emptyCell.x), cellSize: cellSize, viewOffset: viewOffset)
             gameTiles.append(tile)
             return tile
@@ -287,6 +300,7 @@ class GameModel {
         return gameTiles
     }
     
+    //TBD: get row and col
     func GetTile( pos:CGPoint)->TileNode?{
         for tile in gameTiles {
             if ( tile.Occupies(pos: pos) )

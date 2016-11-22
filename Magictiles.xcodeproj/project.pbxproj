@@ -18,6 +18,7 @@
 		846BA9E11D96DC1300F6ED87 /* background-music-aac.caf in Resources */ = {isa = PBXBuildFile; fileRef = 846BA9DE1D96DC1300F6ED87 /* background-music-aac.caf */; };
 		846BA9E21D96DC1300F6ED87 /* pew-pew-lei.caf in Resources */ = {isa = PBXBuildFile; fileRef = 846BA9DF1D96DC1300F6ED87 /* pew-pew-lei.caf */; };
 		846BA9E31D96DC1300F6ED87 /* sprites.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 846BA9E01D96DC1300F6ED87 /* sprites.atlas */; };
+		84776ADC1DE150480089BDDA /* Chartboost.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84776ADB1DE150480089BDDA /* Chartboost.framework */; };
 		847B89D91DE0DB9C0032388B /* spinsinewave.wav in Resources */ = {isa = PBXBuildFile; fileRef = 847B89D81DE0DB9C0032388B /* spinsinewave.wav */; };
 		847B89DB1DE0DE6F0032388B /* laser.wav in Resources */ = {isa = PBXBuildFile; fileRef = 847B89DA1DE0DE6F0032388B /* laser.wav */; };
 		847B89DD1DE0DE7B0032388B /* chime.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 847B89DC1DE0DE7B0032388B /* chime.mp3 */; };
@@ -34,7 +35,6 @@
 		84D086FC1DB0965C009B7EF4 /* StickyTilesProducts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D086FA1DB0965C009B7EF4 /* StickyTilesProducts.swift */; };
 		84D500321D9DE26700A701D5 /* TileNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D500311D9DE26700A701D5 /* TileNode.swift */; };
 		84D500341D9DF19600A701D5 /* GameEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D500331D9DF19600A701D5 /* GameEngine.swift */; };
-		84F18E911DB173280031DB57 /* Chartboost.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84F18E901DB173280031DB57 /* Chartboost.framework */; };
 		84F18E931DB173530031DB57 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84F18E921DB173530031DB57 /* CoreGraphics.framework */; };
 		84F18E951DB173620031DB57 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84F18E941DB173620031DB57 /* Foundation.framework */; };
 		84F18E971DB173A60031DB57 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84F18E961DB173A60031DB57 /* UIKit.framework */; };
@@ -62,6 +62,8 @@
 		846BA9DE1D96DC1300F6ED87 /* background-music-aac.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "background-music-aac.caf"; sourceTree = "<group>"; };
 		846BA9DF1D96DC1300F6ED87 /* pew-pew-lei.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "pew-pew-lei.caf"; sourceTree = "<group>"; };
 		846BA9E01D96DC1300F6ED87 /* sprites.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = sprites.atlas; sourceTree = "<group>"; };
+		84776ADA1DE14BD60089BDDA /* framework_bridging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = framework_bridging.h; sourceTree = "<group>"; };
+		84776ADB1DE150480089BDDA /* Chartboost.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Chartboost.framework; sourceTree = "<group>"; };
 		847B89D81DE0DB9C0032388B /* spinsinewave.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = spinsinewave.wav; sourceTree = "<group>"; };
 		847B89DA1DE0DE6F0032388B /* laser.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = laser.wav; sourceTree = "<group>"; };
 		847B89DC1DE0DE7B0032388B /* chime.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = chime.mp3; sourceTree = "<group>"; };
@@ -82,8 +84,6 @@
 		84D086FA1DB0965C009B7EF4 /* StickyTilesProducts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StickyTilesProducts.swift; sourceTree = "<group>"; };
 		84D500311D9DE26700A701D5 /* TileNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TileNode.swift; sourceTree = "<group>"; };
 		84D500331D9DF19600A701D5 /* GameEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameEngine.swift; sourceTree = "<group>"; };
-		84DFA7EB1DD56C9C00A94193 /* framework_bridging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = framework_bridging.h; sourceTree = "<group>"; };
-		84F18E901DB173280031DB57 /* Chartboost.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Chartboost.framework; sourceTree = "<group>"; };
 		84F18E921DB173530031DB57 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		84F18E941DB173620031DB57 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		84F18E961DB173A60031DB57 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -94,11 +94,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84776ADC1DE150480089BDDA /* Chartboost.framework in Frameworks */,
 				84F18E971DB173A60031DB57 /* UIKit.framework in Frameworks */,
 				84F18E951DB173620031DB57 /* Foundation.framework in Frameworks */,
 				84F18E931DB173530031DB57 /* CoreGraphics.framework in Frameworks */,
 				84149D901DB13377006A8100 /* StoreKit.framework in Frameworks */,
-				84F18E911DB173280031DB57 /* Chartboost.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -115,10 +115,10 @@
 		84149D8E1DB13377006A8100 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				84776ADB1DE150480089BDDA /* Chartboost.framework */,
 				84F18E961DB173A60031DB57 /* UIKit.framework */,
 				84F18E941DB173620031DB57 /* Foundation.framework */,
 				84F18E921DB173530031DB57 /* CoreGraphics.framework */,
-				84F18E901DB173280031DB57 /* Chartboost.framework */,
 				84149D8F1DB13377006A8100 /* StoreKit.framework */,
 			);
 			name = Frameworks;
@@ -171,7 +171,7 @@
 		84A88E4C1D94AB06006D1C57 /* Magictiles */ = {
 			isa = PBXGroup;
 			children = (
-				84DFA7EB1DD56C9C00A94193 /* framework_bridging.h */,
+				84776ADA1DE14BD60089BDDA /* framework_bridging.h */,
 				84D086F91DB0965C009B7EF4 /* IAPHelper.swift */,
 				84D086FA1DB0965C009B7EF4 /* StickyTilesProducts.swift */,
 				845F2D8A1D9C8AF70039C9AD /* gameModel.swift */,
@@ -485,10 +485,10 @@
 				INFOPLIST_FILE = Stickytiles/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.parspicks.stickytile;
+				PRODUCT_BUNDLE_IDENTIFIER = com.parspicks.Jumbo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_INSTALL_OBJC_HEADER = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = /Users/KoushaNejad/GitHub/stickyTiles/Stickytiles/framework_bridging.h;
+				SWIFT_OBJC_BRIDGING_HEADER = /Users/KoushaNejad/GitHub/MatchAll/Stickytiles/framework_bridging.h;
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -506,9 +506,9 @@
 				INFOPLIST_FILE = Stickytiles/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.parspicks.stickytile;
+				PRODUCT_BUNDLE_IDENTIFIER = com.parspicks.Jumbo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = /Users/KoushaNejad/GitHub/stickyTiles/Stickytiles/framework_bridging.h;
+				SWIFT_OBJC_BRIDGING_HEADER = /Users/KoushaNejad/GitHub/MatchAll/Stickytiles/framework_bridging.h;
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
