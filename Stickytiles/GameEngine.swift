@@ -281,6 +281,11 @@ class GameEnagin {
                             DeleteTile(tile: touchedTile)
                             break
                             
+                        case TileNode.BUBBLE_ID: //pop the balloon
+                            gameModel.SoundWave()
+                            DeleteTile(tile: touchedTile)
+                            break
+                            
                         default:
                             break
                         }
