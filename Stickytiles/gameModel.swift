@@ -129,6 +129,8 @@ class GameModel {
     
     func SoundLaser(){
         if ( IsAudioOn() ){
+            audioPlayerLaser?.stop()
+            audioPlayerLaser?.currentTime = 0.0
             audioPlayerLaser?.play()
         }
     }

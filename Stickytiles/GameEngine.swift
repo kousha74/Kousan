@@ -248,7 +248,7 @@ class GameEnagin {
                         isProcessing = true
                         shouldAddTile = true
                         MarkSpecialNodes(tile: touchedTile)
-                        ProcessSpecialNodes()
+                        Timer.scheduledTimer(timeInterval: TimeInterval( GameModel.delay ), target: self, selector:#selector(GameEnagin.ProcessSpecialNodes), userInfo: nil, repeats: false)
                         break
                         
                     case TileNode.STAR7_ID:
@@ -256,7 +256,7 @@ class GameEnagin {
                         isProcessing = true
                         shouldAddTile = true
                         MarkSpecialNodes(tile: touchedTile)
-                        ProcessSpecialNodes()
+                        Timer.scheduledTimer(timeInterval: TimeInterval( GameModel.delay ), target: self, selector:#selector(GameEnagin.ProcessSpecialNodes), userInfo: nil, repeats: false)
                         break
                         
                     default:
@@ -462,7 +462,7 @@ class GameEnagin {
             if let tile2 = gameModel.FindFlag(flag: TileNode.TBP, isSet: true) {
                 //We have more to process
                 MarkSpecialNodes(tile: tile2)
-                ProcessSpecialNodes()
+                Timer.scheduledTimer(timeInterval: TimeInterval( GameModel.delay ), target: self, selector:#selector(GameEnagin.ProcessSpecialNodes), userInfo: nil, repeats: false)
             }
             else{
                 Timer.scheduledTimer(timeInterval: TimeInterval( GameModel.delay ), target: self, selector:#selector(GameEnagin.PushAgainstTheWall), userInfo: nil, repeats: false)
