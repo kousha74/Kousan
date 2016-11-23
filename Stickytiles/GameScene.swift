@@ -27,6 +27,7 @@ class GameScene: SKScene,GameSceneProtocol {
     let resetButton = SKSpriteNode(imageNamed: "RewindG")
     let musicButton = SKSpriteNode(imageNamed: "MusicOn")
     let soundButton = SKSpriteNode(imageNamed: "SoundOn")
+    let helpButton = SKSpriteNode(imageNamed: "SoundOn")
     
     var gameManager:GameManager?
     var gameModel: GameModel = GameModel.sharedInstance
@@ -61,7 +62,7 @@ class GameScene: SKScene,GameSceneProtocol {
         GameEngine.sharedInstance.SetParent(parent: self)
         GameEngine.sharedInstance.LoadGame(level: gameModel.getCurrentLevel() )
         
-        titleLabel.position = CGPoint(x: size.width * 0.5, y: viewOffset.y + CGFloat(boardSize) + 1.5*CGFloat(cellSize) )
+        titleLabel.position = CGPoint(x: size.width * 0.5, y: viewOffset.y + CGFloat(boardSize) + 2.0*CGFloat(cellSize) )
         titleLabel.fontSize = 36
         titleLabel.fontColor = SKColor.blue
         titleLabel.fontName = "Papyrus"
@@ -84,6 +85,11 @@ class GameScene: SKScene,GameSceneProtocol {
         
         soundButton.position = CGPoint(x: viewOffset.x + CGFloat(boardSize)*9.0/10.0, y: y)
         addChild(soundButton)
+        
+        print("\(size.width)-----\(size.height)")
+        
+        helpButton.position = CGPoint(x: viewOffset.x + CGFloat(boardSize) - 0.5*CGFloat(cellSize), y: viewOffset.y + CGFloat(boardSize) + 2.0*CGFloat(cellSize) ) //tbd hard coded value
+        addChild(helpButton)
         
         //Move count
         let moveCountShape = SKShapeNode(rect: CGRect(x: 0, y: 0, width: 3.0*CGFloat(cellSize), height: CGFloat(cellSize)), cornerRadius: 5)
