@@ -10,15 +10,15 @@ import Foundation
 import UIKit
 import SpriteKit
 
-class GameEnagin {
+class GameEngine {
     
     enum Direction {
         case Up, Down, Right, Left, None
     }
     
-    class var sharedInstance: GameEnagin {
+    class var sharedInstance: GameEngine {
         struct Static {
-            static let instance: GameEnagin = GameEnagin()
+            static let instance: GameEngine = GameEngine()
         }
         return Static.instance
     }
@@ -60,11 +60,22 @@ class GameEnagin {
     var direction_vector = [ CGPoint(x: 0, y: 1), CGPoint(x: 0, y: -1), CGPoint(x: -1, y: 0), CGPoint(x: 1, y: 0)];
     let isStickyOn = true
     
-    func LoadGame( level:Int, gameSceneProtocol:GameSceneProtocol ){
+    
+    func SetParent( parent: GameSceneProtocol )
+    {
+        m_GameSceneProtocol = parent
+    }
+    
+    func LoadGame( level:Int ){
         m_move_direction = MOVE_DIRECTION_NONE
         dragging = false
         gameModel.loadGame(level: level)
-        m_GameSceneProtocol = gameSceneProtocol
+        
+        for tile in gameModel.GetTiles(){
+            m_GameSceneProtocol?.onAddChild(child: tile.sprite!)
+        }
+        
+        m_GameSceneProtocol?.UpdateLabels()
     }
     
     
@@ -212,7 +223,7 @@ class GameEnagin {
             break
         }
         
-        Timer.scheduledTimer(timeInterval: TimeInterval( ( m_direction != .None ) ? GameModel.delay : 0.0 ), target: self, selector:#selector(GameEnagin.FindClusters), userInfo: nil, repeats: false)
+        Timer.scheduledTimer(timeInterval: TimeInterval( ( m_direction != .None ) ? GameModel.delay : 0.0 ), target: self, selector:#selector(GameEngine.FindClusters), userInfo: nil, repeats: false)
         
     }
     
@@ -268,7 +279,7 @@ class GameEnagin {
                             isProcessing = true
                             shouldAddTile = true
                             MarkSpecialNodes(tile: touchedTile)
-                            Timer.scheduledTimer(timeInterval: TimeInterval( GameModel.delay ), target: self, selector:#selector(GameEnagin.ProcessSpecialNodes), userInfo: nil, repeats: false)
+                            Timer.scheduledTimer(timeInterval: TimeInterval( GameModel.delay ), target: self, selector:#selector(GameEngine.ProcessSpecialNodes), userInfo: nil, repeats: false)
                             gameModel.ChangeMoveCount(delta: 1)
                             break
                             
@@ -277,7 +288,7 @@ class GameEnagin {
                             isProcessing = true
                             shouldAddTile = true
                             MarkSpecialNodes(tile: touchedTile)
-                            Timer.scheduledTimer(timeInterval: TimeInterval( GameModel.delay ), target: self, selector:#selector(GameEnagin.ProcessSpecialNodes), userInfo: nil, repeats: false)
+                            Timer.scheduledTimer(timeInterval: TimeInterval( GameModel.delay ), target: self, selector:#selector(GameEngine.ProcessSpecialNodes), userInfo: nil, repeats: false)
                             gameModel.ChangeMoveCount(delta: 1)
                             break
                         
@@ -330,7 +341,7 @@ class GameEnagin {
                 {
                     let cluster = FindClusterAtTile(tile: tile)
                     
-                    if ( cluster.count >= GameEnagin.MIN_CLUSTER_SIZE )
+                    if ( cluster.count >= GameEngine.MIN_CLUSTER_SIZE )
                     {
                         var clusterType = GetClusterType(cluster: cluster)
                         
@@ -369,11 +380,11 @@ class GameEnagin {
             }
             
             if ( tile2 != nil ){
-                Timer.scheduledTimer(timeInterval: TimeInterval( GameModel.delay ), target: self, selector:#selector(GameEnagin.ProcessSpecialNodes), userInfo: nil, repeats: false)
+                Timer.scheduledTimer(timeInterval: TimeInterval( GameModel.delay ), target: self, selector:#selector(GameEngine.ProcessSpecialNodes), userInfo: nil, repeats: false)
                 MarkSpecialNodes( tile: tile2! )
             }
             else{
-                Timer.scheduledTimer(timeInterval: TimeInterval( GameModel.delay ), target: self, selector:#selector(GameEnagin.PushAgainstTheWall), userInfo: nil, repeats: false)
+                Timer.scheduledTimer(timeInterval: TimeInterval( GameModel.delay ), target: self, selector:#selector(GameEngine.PushAgainstTheWall), userInfo: nil, repeats: false)
             }
         }
         else if shouldAddTile {
@@ -516,10 +527,10 @@ class GameEnagin {
             if let tile2 = gameModel.FindFlag(flag: TileNode.TBP, isSet: true) {
                 //We have more to process
                 MarkSpecialNodes(tile: tile2)
-                Timer.scheduledTimer(timeInterval: TimeInterval( GameModel.delay ), target: self, selector:#selector(GameEnagin.ProcessSpecialNodes), userInfo: nil, repeats: false)
+                Timer.scheduledTimer(timeInterval: TimeInterval( GameModel.delay ), target: self, selector:#selector(GameEngine.ProcessSpecialNodes), userInfo: nil, repeats: false)
             }
             else{
-                Timer.scheduledTimer(timeInterval: TimeInterval( GameModel.delay ), target: self, selector:#selector(GameEnagin.PushAgainstTheWall), userInfo: nil, repeats: false)
+                Timer.scheduledTimer(timeInterval: TimeInterval( GameModel.delay ), target: self, selector:#selector(GameEngine.PushAgainstTheWall), userInfo: nil, repeats: false)
                 
             }
         }

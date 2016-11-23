@@ -213,6 +213,7 @@ class GameModel {
     func loadGame( level:Int)
     {
         for tile in gameTiles{
+            tile.sprite?.removeFromParent()
             allTiles.append(tile)
         }
         
@@ -230,6 +231,7 @@ class GameModel {
             tile.SetRowAndCol(row: gameItem[2], col: gameItem[1], cellSize: cellSize, viewOffset: viewOffset)
             
             gameTiles.append(tile)
+            
             tile.sprite?.alpha = 1.0
         }
         
@@ -305,10 +307,8 @@ class GameModel {
         
         return tile
     }
-    
-    func reloadGame(){
-    }
-    
+        
+    //tbd remove
     func GetTileCount()->Int{
         return gameTiles.count
     }
@@ -423,7 +423,7 @@ class GameModel {
         
     private init() {
         
-        maxLevelCompleted = userDefaults.integer(forKey: "maxLevelCompleted") - 1
+        maxLevelCompleted = userDefaults.integer(forKey: "maxLevelCompleted") // put - 1 back
         
         // For debugging only
         //maxLevelCompleted = 49

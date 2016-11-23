@@ -28,8 +28,6 @@ class GameScene: SKScene,GameSceneProtocol {
     let musicButton = SKSpriteNode(imageNamed: "MusicOn")
     let soundButton = SKSpriteNode(imageNamed: "SoundOn")
     
-    var touchCount:Int = 0
-    
     var gameManager:GameManager?
     var gameModel: GameModel = GameModel.sharedInstance
     
@@ -59,13 +57,10 @@ class GameScene: SKScene,GameSceneProtocol {
         shape.lineWidth = 2
         addChild(shape)
         
-        GameEnagin.sharedInstance.LoadGame(level: gameModel.getCurrentLevel(), gameSceneProtocol:self)
+        //tbd dangerous assumption
+        GameEngine.sharedInstance.SetParent(parent: self)
+        GameEngine.sharedInstance.LoadGame(level: gameModel.getCurrentLevel() )
         
-        for index in 0...gameModel.GetTileCount()-1{
-            addChild( gameModel.GetSpriteNode(index: index) )
-            
-        }
-
         titleLabel.position = CGPoint(x: size.width * 0.5, y: viewOffset.y + CGFloat(boardSize) + 1.5*CGFloat(cellSize) )
         titleLabel.fontSize = 36
         titleLabel.fontColor = SKColor.blue
@@ -222,7 +217,7 @@ class GameScene: SKScene,GameSceneProtocol {
         
         let touchedNodes = nodes(at: touch.location(in: self))
         
-        if ( GameEnagin.sharedInstance.IsSolved() ){
+        if ( GameEngine.sharedInstance.IsSolved() ){
             for i in 0 ... touchedNodes.count-1 {
                 let touchedNode = touchedNodes[i]
                 
@@ -239,22 +234,14 @@ class GameScene: SKScene,GameSceneProtocol {
                 else if ( touchedNode.isEqual(to: winResetButton )){
                     print("Reset button")
                     hideWinFrame()
-                    gameModel.reloadGame()
-                    levelLabel.text = "Level " + String(gameModel.getCurrentLevel()+1)
-                    touchCount = 0
-                    moveCountLabel.text = "Moves: \(touchCount)"
+                    GameEngine.sharedInstance.LoadGame(level: gameModel.getCurrentLevel() )
                     break
                 }
                 else if ( touchedNode.isEqual(to: winNextButton )){
                     hideWinFrame()
-                    removeTiles()
+                    removeTiles() //TBD
                     gameModel.IncreaseCurrentLevel()
-                    gameModel.loadGame(level: gameModel.getCurrentLevel())
-                    addTiles()
-                    levelLabel.text = "Level " + String(gameModel.getCurrentLevel()+1)
-                    touchCount = 0
-                    moveCountLabel.text = "Moves: \(touchCount)"
-                    
+                    GameEngine.sharedInstance.LoadGame(level: gameModel.getCurrentLevel())
                     break
                 }
             }
@@ -264,15 +251,15 @@ class GameScene: SKScene,GameSceneProtocol {
             
             if ( firstTouchedNode.isEqual(to: homeButton )){
                 print("Home button")
-                gameManager?.onHomeButtonPressed(moveCount: touchCount)
+                gameManager?.onHomeButtonPressed(moveCount: gameModel.GetMoveCount())
             }
             else if ( firstTouchedNode.isEqual(to: levelButton )){
                 print("Level button")
-                gameManager?.onLevelButtonPressed(moveCount: touchCount)
+                gameManager?.onLevelButtonPressed(moveCount: gameModel.GetMoveCount())
             }
             else if ( firstTouchedNode.isEqual(to: resetButton )){
                 print("Reset button")
-                gameManager?.onResetButtonPressed(moveCount: touchCount)
+                gameManager?.onResetButtonPressed(moveCount: gameModel.GetMoveCount())
             }
             else if ( firstTouchedNode.isEqual(to: soundButton )){
                 print("Sound button")
@@ -301,7 +288,7 @@ class GameScene: SKScene,GameSceneProtocol {
             }
             else
             {
-                GameEnagin.sharedInstance.OnTouch(pos: touch.location(in: self))
+                GameEngine.sharedInstance.OnTouch(pos: touch.location(in: self))
             }
         }
     }
@@ -311,12 +298,12 @@ class GameScene: SKScene,GameSceneProtocol {
             return
         }
         
-        GameEnagin.sharedInstance.OnDrag(pos: touch.location(in: self))
+        GameEngine.sharedInstance.OnDrag(pos: touch.location(in: self))
     }
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         
-        if ( GameEnagin.sharedInstance.IsSolved() )
+        if ( GameEngine.sharedInstance.IsSolved() )
         {
             return
         }
@@ -326,18 +313,15 @@ class GameScene: SKScene,GameSceneProtocol {
             return
         }
         
-        if ( GameEnagin.sharedInstance.OnRelease(pos: touch.location(in: self)) )
+        if ( GameEngine.sharedInstance.OnRelease(pos: touch.location(in: self)) )
         {
-                touchCount += 1
-                moveCountLabel.text = "Moves: \(touchCount)"
-                gameModel.Tick()
             
-            if ( ( gameModel.AreAdsAvailable() ) && ((touchCount%25) == 0 )){
+            if ( ( gameModel.AreAdsAvailable() ) && ((gameModel.GetMoveCount()%25) == 0 )){
                 Chartboost.showInterstitial(CBLocationHomeScreen)
             }
         }
         
-        if ( GameEnagin.sharedInstance.IsSolved() )
+        if ( GameEngine.sharedInstance.IsSolved() )
         {
             gameModel.SoundWin()
             gameManager?.onGameWon()
@@ -350,10 +334,11 @@ class GameScene: SKScene,GameSceneProtocol {
     func UpdateLabels() {
         moveCountLabel.text = "Moves: \(gameModel.GetMoveCount())"
         scoreLabel.text = "Score: \(gameModel.GetScore())"
+        levelLabel.text = "Level " + String(gameModel.getCurrentLevel()+1)
     }
     
     override func update(_ currentTime: TimeInterval) {
-        GameEnagin.sharedInstance.OnUpdate( currentTime: currentTime)
+        GameEngine.sharedInstance.OnUpdate( currentTime: currentTime)
     }
     
     func onNewTile(tile:TileNode){

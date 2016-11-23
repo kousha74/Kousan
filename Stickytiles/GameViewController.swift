@@ -47,7 +47,7 @@ class GameViewController: UIViewController,GameManager  {
     }
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return .portraitUpsideDown
+        return .portrait
 /*        if UIDevice.current.userInterfaceIdiom == .phone {
             return .allButUpsideDown
         } else {
@@ -144,13 +144,12 @@ class GameViewController: UIViewController,GameManager  {
             alertController.addAction(cancelAction)
             
             let OKAction = UIAlertAction(title: "OK", style: .default) { (action:UIAlertAction!) in
-                print("you have pressed OK button");
-                GameModel.sharedInstance.reloadGame()
+                print("you have pressed OK button")
+                GameEngine.sharedInstance.LoadGame( level: GameModel.sharedInstance.getCurrentLevel() )
             }
             alertController.addAction(OKAction)
             
             present(alertController, animated: true, completion: nil)
         }
-        
     }
 }
