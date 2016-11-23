@@ -58,16 +58,16 @@ class GameEnagin {
     var m_upper_bound:CGFloat = 0
     var m_lower_bound:CGFloat = 0
     var direction_vector = [ CGPoint(x: 0, y: 1), CGPoint(x: 0, y: -1), CGPoint(x: -1, y: 0), CGPoint(x: 1, y: 0)];
-    var moveCount:Int = 0
     let isStickyOn = true
     
     func LoadGame( level:Int, gameSceneProtocol:GameSceneProtocol ){
         m_move_direction = MOVE_DIRECTION_NONE
         dragging = false
-        moveCount = 0
         gameModel.loadGame(level: level)
         m_GameSceneProtocol = gameSceneProtocol
     }
+    
+    
     
     func OnTouch(pos:CGPoint){
         
@@ -252,6 +252,8 @@ class GameEnagin {
                 isProcessing = true
                 shouldAddTile = true
                 PushAgainstTheWall()
+                gameModel.ChangeMoveCount(delta: 1)
+                gameModel.Tick()
             }
             else{
                 //It's a tap
@@ -267,6 +269,7 @@ class GameEnagin {
                             shouldAddTile = true
                             MarkSpecialNodes(tile: touchedTile)
                             Timer.scheduledTimer(timeInterval: TimeInterval( GameModel.delay ), target: self, selector:#selector(GameEnagin.ProcessSpecialNodes), userInfo: nil, repeats: false)
+                            gameModel.ChangeMoveCount(delta: 1)
                             break
                             
                         case TileNode.STAR7_ID:
@@ -275,6 +278,7 @@ class GameEnagin {
                             shouldAddTile = true
                             MarkSpecialNodes(tile: touchedTile)
                             Timer.scheduledTimer(timeInterval: TimeInterval( GameModel.delay ), target: self, selector:#selector(GameEnagin.ProcessSpecialNodes), userInfo: nil, repeats: false)
+                            gameModel.ChangeMoveCount(delta: 1)
                             break
                         
                         case TileNode.BLOCKER_ID: //touching a blocker removes it
@@ -284,6 +288,7 @@ class GameEnagin {
                         case TileNode.BUBBLE_ID: //pop the balloon
                             gameModel.SoundWave()
                             DeleteTile(tile: touchedTile)
+                            gameModel.ChangeMoveCount(delta: 1)
                             break
                             
                         default:
@@ -293,6 +298,7 @@ class GameEnagin {
                     else{
                         RemoveBlockers() //At most one blocker is allowed
                         AddTile(id: TileNode.BLOCKER_ID, pos: touchedCell)
+                        gameModel.ChangeMoveCount(delta: 1)
                     }
                 }
             }
@@ -395,6 +401,7 @@ class GameEnagin {
     
     func DeleteTile(tile:TileNode){
         gameModel.RemoveTile(tile: tile)
+        m_GameSceneProtocol?.UpdateLabels()
         let fadeoutAction = SKAction.fadeOut(withDuration: GameModel.delay)
         let actionMoveDone = SKAction.removeFromParent()
         tile.sprite?.run( SKAction.sequence([fadeoutAction,actionMoveDone]))

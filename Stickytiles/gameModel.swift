@@ -54,6 +54,33 @@ class GameModel {
     
     let boardSize : Int = 6
     
+    var moveCount:Int = 0
+    var score:Int = 0
+    
+    func GetMoveCount()->Int{
+        return moveCount
+    }
+    
+    func ChangeMoveCount(delta:Int){
+        moveCount += delta
+    }
+    
+    func SetMoveCount( count: Int ){
+        moveCount = count
+    }
+    
+    func GetScore()->Int{
+        return score
+    }
+    
+    func ChangeScore( delta: Int ){
+        score += delta
+    }
+    
+    func SetScore( newScore: Int ){
+        score = newScore
+    }
+    
     func OnProductPurchased( productID: String ) {
         if ( productID == StickyTilesProducts.removeAds ){
             userDefaults.set( 1, forKey: "removeAds")
@@ -205,6 +232,9 @@ class GameModel {
             gameTiles.append(tile)
             tile.sprite?.alpha = 1.0
         }
+        
+        moveCount = 0
+        score = 0
     }
     
     func AddTile()->TileNode?{
@@ -385,6 +415,7 @@ class GameModel {
             if ( gameTiles[i] === tile ){
                 gameTiles.remove(at: i)
                 allTiles.append(tile)
+                ChangeScore(delta: 1)
                 break
             }
         }

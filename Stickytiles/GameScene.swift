@@ -12,12 +12,14 @@ import GameplayKit
 protocol GameSceneProtocol{
     func onNewTile(tile:TileNode)
     func onAddChild(child: SKNode)
+    func UpdateLabels()
 }
 
 
 class GameScene: SKScene,GameSceneProtocol {
     
-    let levelLabel = SKLabelNode(text: "Level")
+    let levelLabel = SKLabelNode(text: "Level: 0")
+    let scoreLabel = SKLabelNode(text: "Score")
     let titleLabel = SKLabelNode(text: "Sticky Tiles")
     let moveCountLabel = SKLabelNode(text: "Moves: 0")
     let homeButton = SKSpriteNode(imageNamed: "HomeG")
@@ -104,7 +106,16 @@ class GameScene: SKScene,GameSceneProtocol {
         moveCountLabel.fontName = "Papyrus"
         addChild(moveCountLabel)
         
-        levelLabel.position = CGPoint(x: viewOffset.x + 2.0*CGFloat(boardPadding), y: viewOffset.y + CGFloat(boardSize) + 2.0*CGFloat(boardPadding) + 0.5*CGFloat(cellSize) )
+        scoreLabel.position = CGPoint(x: viewOffset.x + 2.0*CGFloat(boardPadding), y: viewOffset.y + CGFloat(boardSize) + 2.0*CGFloat(boardPadding) + 0.5*CGFloat(cellSize) )
+        scoreLabel.verticalAlignmentMode = SKLabelVerticalAlignmentMode.center
+        scoreLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
+        scoreLabel.fontSize = 24
+        scoreLabel.fontColor = SKColor.blue
+        scoreLabel.fontName = "Papyrus"
+        addChild(scoreLabel)
+        
+        
+        levelLabel.position = CGPoint(x: scoreLabel.frame.minX, y: scoreLabel.frame.maxY + 0.5*CGFloat(cellSize) )
         levelLabel.verticalAlignmentMode = SKLabelVerticalAlignmentMode.center
         levelLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
         levelLabel.fontSize = 24
@@ -162,9 +173,6 @@ class GameScene: SKScene,GameSceneProtocol {
         winTitleLabel.fontColor = SKColor.blue
         winTitleLabel.fontName = "Papyrus"
         winTitleLabel.zPosition = 1
-        
-
-        
     }
     
     func showWinFrame(){
@@ -335,6 +343,13 @@ class GameScene: SKScene,GameSceneProtocol {
             gameManager?.onGameWon()
             showWinFrame()
         }
+        
+        UpdateLabels()
+    }
+    
+    func UpdateLabels() {
+        moveCountLabel.text = "Moves: \(gameModel.GetMoveCount())"
+        scoreLabel.text = "Score: \(gameModel.GetScore())"
     }
     
     override func update(_ currentTime: TimeInterval) {
