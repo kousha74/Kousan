@@ -10,4 +10,5 @@ import Foundation
 
 class Constants{
     static let popupZIndex = CGFloat(3.0)
+    static let cellSize = CGFloat(50)
 }

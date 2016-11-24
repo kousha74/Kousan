@@ -33,7 +33,7 @@ class GameModel {
     
     private var gameSamples : [GameSample]
     
-    private var cellSize : Int = 50
+    private var cellSize : Int = 50 // move to constants
     
     private var viewOffset = CGPoint(x:0, y:0)
     

@@ -30,11 +30,14 @@ class Popups{
     private var isOpen = false
     private var sknodes = [SKNode]()
     
-
+    private let popupSize = CGSize(width: 300, height: 300)
+    
     required init( bounds: CGRect, gameSceneProtocol: GameSceneProtocol ) {
         
         gameModel = GameModel.sharedInstance
         self.gameSceneProtocol = gameSceneProtocol
+        
+        
         
         //For Win Dialog
         let winSize = bounds.size
@@ -47,7 +50,7 @@ class Popups{
         sknodes.append(winCoverFrame)
         
         
-        winFrame = SKShapeNode(rect: CGRect(x: Int(-winSize.width*0.4), y: Int(-winSize.height*0.2), width: Int(winSize.width*0.8), height: Int(winSize.height*0.4)), cornerRadius: 10)
+        winFrame = SKShapeNode(rect: CGRect(x: Int(-popupSize.width*0.5), y: Int(-popupSize.height*0.5), width: Int(popupSize.width), height: Int(popupSize.height)), cornerRadius: 10)
         winFrame.position = CGPoint(x: winSize.width/2.0, y: winSize.height/2.0)
         winFrame.fillColor = UIColor(red: 0.0, green: 1.0, blue: 0.0, alpha: 0.75)
         winFrame.strokeColor = UIColor.darkGray
@@ -55,33 +58,32 @@ class Popups{
         winFrame.zPosition = Constants.popupZIndex
         sknodes.append(winFrame)
         
-        let cellSize = gameModel.GetCellSize()
-        let boardSize : Int = gameModel.GetCellSize()*gameModel.boardSize
-        let viewOffset = gameModel.GetViewOffset()
         
-        let y = winSize.height/2.0 - 1.0*CGFloat(cellSize)
+        let minY = ( bounds.height - popupSize.height )/2.0
+        let minX = ( bounds.width - popupSize.width )/2.0
+        let buttonY = minY + Constants.cellSize
         
-        winHomeButton.position = CGPoint(x: viewOffset.x + CGFloat(boardSize)*2.0/10.0 , y: y)
+        winHomeButton.position = CGPoint(x: minX + popupSize.width*2.0/10.0 , y: buttonY)
         winHomeButton.zPosition = Constants.popupZIndex
         sknodes.append(winHomeButton)
         
         
-        winLevelButton.position = CGPoint(x: viewOffset.x + CGFloat(boardSize)*4.0/10.0, y: y)
+        winLevelButton.position = CGPoint(x: minX + popupSize.width*4.0/10.0 , y: buttonY)
         winLevelButton.zPosition = Constants.popupZIndex
         sknodes.append(winLevelButton)
         
         
-        winResetButton.position = CGPoint(x: viewOffset.x + CGFloat(boardSize)*6.0/10.0, y: y)
+        winResetButton.position = CGPoint(x: minX + popupSize.width*6.0/10.0 , y: buttonY)
         winResetButton.zPosition = Constants.popupZIndex
         sknodes.append(winResetButton)
         
         
-        winNextButton.position = CGPoint(x: viewOffset.x + CGFloat(boardSize)*8.0/10.0, y: y)
+        winNextButton.position = CGPoint(x: minX + popupSize.width*8.0/10.0 , y: buttonY)
         winNextButton.zPosition = Constants.popupZIndex
         sknodes.append(winNextButton)
         
         
-        winTitleLabel.position = CGPoint(x: bounds.size.width * 0.5, y: winSize.height/2.0 + 1.0*CGFloat(cellSize) )
+        winTitleLabel.position = CGPoint(x: bounds.size.width * 0.5, y: minY + popupSize.height - 2.0*Constants.cellSize )
         winTitleLabel.fontSize = 36
         winTitleLabel.fontColor = SKColor.blue
         winTitleLabel.fontName = "Papyrus"
