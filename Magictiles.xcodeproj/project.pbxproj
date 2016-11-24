@@ -36,6 +36,7 @@
 		84D086FC1DB0965C009B7EF4 /* StickyTilesProducts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D086FA1DB0965C009B7EF4 /* StickyTilesProducts.swift */; };
 		84D500321D9DE26700A701D5 /* TileNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D500311D9DE26700A701D5 /* TileNode.swift */; };
 		84D500341D9DF19600A701D5 /* GameEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D500331D9DF19600A701D5 /* GameEngine.swift */; };
+		84F08E501DE756E900244E0C /* PopUps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F08E4F1DE756E900244E0C /* PopUps.swift */; };
 		84F18E931DB173530031DB57 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84F18E921DB173530031DB57 /* CoreGraphics.framework */; };
 		84F18E951DB173620031DB57 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84F18E941DB173620031DB57 /* Foundation.framework */; };
 		84F18E971DB173A60031DB57 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84F18E961DB173A60031DB57 /* UIKit.framework */; };
@@ -86,6 +87,7 @@
 		84D086FA1DB0965C009B7EF4 /* StickyTilesProducts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StickyTilesProducts.swift; sourceTree = "<group>"; };
 		84D500311D9DE26700A701D5 /* TileNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TileNode.swift; sourceTree = "<group>"; };
 		84D500331D9DF19600A701D5 /* GameEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameEngine.swift; sourceTree = "<group>"; };
+		84F08E4F1DE756E900244E0C /* PopUps.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopUps.swift; sourceTree = "<group>"; };
 		84F18E921DB173530031DB57 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		84F18E941DB173620031DB57 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		84F18E961DB173A60031DB57 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -192,6 +194,7 @@
 				84D500331D9DF19600A701D5 /* GameEngine.swift */,
 				842273941DA476320084C3F9 /* HelpViewController.swift */,
 				841DCC8A1DE52784008B7995 /* Constants.swift */,
+				84F08E4F1DE756E900244E0C /* PopUps.swift */,
 			);
 			name = Magictiles;
 			path = Stickytiles;
@@ -335,6 +338,7 @@
 				84A88E4E1D94AB06006D1C57 /* AppDelegate.swift in Sources */,
 				845F2D8B1D9C8AF70039C9AD /* gameModel.swift in Sources */,
 				841DCC8B1DE52784008B7995 /* Constants.swift in Sources */,
+				84F08E501DE756E900244E0C /* PopUps.swift in Sources */,
 				84D500321D9DE26700A701D5 /* TileNode.swift in Sources */,
 				841D49FA1D9B79E700BBD3B2 /* GameOverViewController.swift in Sources */,
 				84D500341D9DF19600A701D5 /* GameEngine.swift in Sources */,

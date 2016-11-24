@@ -32,16 +32,11 @@ class GameScene: SKScene,GameSceneProtocol {
     var gameManager:GameManager?
     var gameModel: GameModel = GameModel.sharedInstance
     
-    //For Win Dialog
-    var winCoverFrame:SKShapeNode!
-    var winFrame:SKShapeNode!
-    let winHomeButton = SKSpriteNode(imageNamed: "HomeG")
-    let winLevelButton = SKSpriteNode(imageNamed: "GridG")
-    let winResetButton = SKSpriteNode(imageNamed: "RewindG")
-    let winNextButton = SKSpriteNode(imageNamed: "FastForwardG")
-    let winTitleLabel = SKLabelNode(text: "You Won!")
-    
+    private var popups: Popups?
+        
     override func didMove(to view: SKView) {
+        
+        popups = Popups(bounds: view.bounds, gameSceneProtocol: self )
         
         backgroundColor = SKColor.white
         
@@ -69,7 +64,7 @@ class GameScene: SKScene,GameSceneProtocol {
         addChild(titleLabel)
         
         
-        var y = viewOffset.y - 1.5*CGFloat(cellSize)
+        let y = viewOffset.y - 1.5*CGFloat(cellSize)
         
         homeButton.position = CGPoint(x: viewOffset.x + CGFloat(boardSize)/10.0 , y: y)
         addChild(homeButton)
@@ -131,71 +126,9 @@ class GameScene: SKScene,GameSceneProtocol {
         
         if ( !gameModel.IsAudioOn() ){
             soundButton.texture = SKTexture(imageNamed: "SoundOff")
-        }
-        
-        //For Win Dialog
-        let winSize = view.bounds.size
-        winCoverFrame = SKShapeNode(rect: CGRect(x: Int(-winSize.width*0.5), y: Int(-winSize.height*0.5), width: Int(winSize.width), height: Int(winSize.height)), cornerRadius: 0)
-        winCoverFrame.position = CGPoint(x: winSize.width/2.0, y: winSize.height/2.0)
-        winCoverFrame.fillColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.5)
-        //winCoverFrame.strokeColor = UIColor.darkGray
-        //winCoverFrame.lineWidth = 5
-        winCoverFrame.zPosition = 1
-        
-        
-        winFrame = SKShapeNode(rect: CGRect(x: Int(-winSize.width*0.4), y: Int(-winSize.height*0.2), width: Int(winSize.width*0.8), height: Int(winSize.height*0.4)), cornerRadius: 10)
-        winFrame.position = CGPoint(x: winSize.width/2.0, y: winSize.height/2.0)
-        winFrame.fillColor = UIColor(red: 0.0, green: 1.0, blue: 0.0, alpha: 0.75)
-        winFrame.strokeColor = UIColor.darkGray
-        winFrame.lineWidth = 5
-        winFrame.zPosition = 1
-        
-        
-        y = winSize.height/2.0 - 1.0*CGFloat(cellSize)
-        
-        winHomeButton.position = CGPoint(x: viewOffset.x + CGFloat(boardSize)*2.0/10.0 , y: y)
-        winHomeButton.zPosition = 1
-        
-        
-        winLevelButton.position = CGPoint(x: viewOffset.x + CGFloat(boardSize)*4.0/10.0, y: y)
-        winLevelButton.zPosition = 1
-        
-        
-        winResetButton.position = CGPoint(x: viewOffset.x + CGFloat(boardSize)*6.0/10.0, y: y)
-        winResetButton.zPosition = 1
-        
-        
-        winNextButton.position = CGPoint(x: viewOffset.x + CGFloat(boardSize)*8.0/10.0, y: y)
-        winNextButton.zPosition = 1
-        
-        
-        winTitleLabel.position = CGPoint(x: size.width * 0.5, y: winSize.height/2.0 + 1.0*CGFloat(cellSize) )
-        winTitleLabel.fontSize = 36
-        winTitleLabel.fontColor = SKColor.blue
-        winTitleLabel.fontName = "Papyrus"
-        winTitleLabel.zPosition = 1
+        }        
     }
     
-    func showWinFrame(){
-        addChild(winCoverFrame)
-        addChild(winFrame)
-        addChild(winHomeButton)
-        addChild(winLevelButton)
-        addChild(winResetButton)
-        addChild(winNextButton)
-        addChild(winTitleLabel)
-    }
-    
-    func hideWinFrame(){
-        winCoverFrame.removeFromParent()
-        winFrame.removeFromParent()
-        winHomeButton.removeFromParent()
-        winLevelButton.removeFromParent()
-        winResetButton.removeFromParent()
-        winNextButton.removeFromParent()
-        winTitleLabel.removeFromParent()
-    }
-
     func removeTiles()
     {
         if ( gameModel.GetTileCount() > 0 ) {
@@ -223,31 +156,32 @@ class GameScene: SKScene,GameSceneProtocol {
         
         let touchedNodes = nodes(at: touch.location(in: self))
         
-        if ( GameEngine.sharedInstance.IsSolved() ){
-            for i in 0 ... touchedNodes.count-1 {
-                let touchedNode = touchedNodes[i]
-                
-                if ( touchedNode.isEqual(to: winHomeButton )){
-                    print("Home button")
+        if ( popups?.IsOpen() )!{
+            
+            if let touchedButton = popups?.GetTouchedButton(nodes: touchedNodes) {
+                switch ( touchedButton ){
+                    
+                case .Home:
                     gameManager?.onHomeButtonPressed(moveCount: 0)
                     break
-                }
-                else if ( touchedNode.isEqual(to: winLevelButton )){
-                    print("Level button")
+                    
+                case .Level:
                     gameManager?.onLevelButtonPressed(moveCount: 0)
                     break
-                }
-                else if ( touchedNode.isEqual(to: winResetButton )){
-                    print("Reset button")
-                    hideWinFrame()
+                    
+                case .Reset:
+                    popups?.ClosePopup()
                     GameEngine.sharedInstance.LoadGame(level: gameModel.getCurrentLevel() )
                     break
-                }
-                else if ( touchedNode.isEqual(to: winNextButton )){
-                    hideWinFrame()
+                    
+                case .Next:
+                    popups?.ClosePopup()
                     removeTiles() //TBD
                     gameModel.IncreaseCurrentLevel()
                     GameEngine.sharedInstance.LoadGame(level: gameModel.getCurrentLevel())
+                    break
+                    
+                case .None:
                     break
                 }
             }
@@ -331,7 +265,7 @@ class GameScene: SKScene,GameSceneProtocol {
         {
             gameModel.SoundWin()
             gameManager?.onGameWon()
-            showWinFrame()
+            popups?.OpenPopup()
         }
         
         UpdateLabels()

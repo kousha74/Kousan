@@ -93,7 +93,7 @@ class GameEngine {
     
     func IsSolved()->Bool{
         
-        return false
+        return (gameModel.GetMoveCount() > 3)
         
     }
     
