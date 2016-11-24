@@ -16,7 +16,7 @@ class Popups{
     }
     
     enum PopupType{
-        case Win, Lose, Match3, Match4, Match5, Match6, None
+        case Win, Lose, Match3, Match4, Match5, Match6, Next, Prev, Close, None
     }
     
     //For Win Dialog
@@ -28,11 +28,14 @@ class Popups{
     private let winNextButton = SKSpriteNode(imageNamed: "FastForwardG")
     private let winTitleLabel = SKLabelNode(text: "You Won!")
     private let closeButton = SKSpriteNode(imageNamed: "HomeG")
+    private let nextButton = SKSpriteNode(imageNamed: "NextPage")
+    private let prevButton = SKSpriteNode(imageNamed: "PrevPage")
     
     private let gameModel:GameModel
     private let gameSceneProtocol:GameSceneProtocol
     
     private var isOpen = false
+    private var currentHelpPage = PopupType.Match3
     private var sknodes = [SKNode]()
     
     private let popupSize = CGSize(width: 300 - Constants.cellSize, height: 300)
@@ -72,6 +75,10 @@ class Popups{
         winHomeButton.zPosition = Constants.popupZIndex
         sknodes.append(winHomeButton)
         
+        prevButton.position = CGPoint(x: minX + popupSize.width*1.4/10.0 , y: buttonY)
+        prevButton.zPosition = Constants.popupZIndex
+        sknodes.append(prevButton)
+        
         
         winLevelButton.position = CGPoint(x: minX + popupSize.width*3.8/10.0 , y: buttonY)
         winLevelButton.zPosition = Constants.popupZIndex
@@ -86,6 +93,10 @@ class Popups{
         winNextButton.position = CGPoint(x: minX + popupSize.width*8.6/10.0 , y: buttonY)
         winNextButton.zPosition = Constants.popupZIndex
         sknodes.append(winNextButton)
+        
+        nextButton.position = CGPoint(x: minX + popupSize.width*8.6/10.0 , y: buttonY)
+        nextButton.zPosition = Constants.popupZIndex
+        sknodes.append(nextButton)
         
         closeButton.position = CGPoint(x: minX + popupSize.width , y: minY + popupSize.height)
         closeButton.zPosition = Constants.popupZIndex
@@ -120,6 +131,15 @@ class Popups{
             
         case .Lose:
             return "You Lost!, Try again"
+        
+        case .Match3:
+            return "Match 3 fruits"
+            
+        case .Match4:
+            return "Match 4 fruits"
+            
+        case .Match5:
+            return "Match 5 fruits"
             
         default:
             return "Text missing!!!"
@@ -133,26 +153,36 @@ class Popups{
             isOpen = true
             
             winTitleLabel.text = GetTileString(type: type)
+            winCoverFrame.isHidden = false
+            winFrame.isHidden = false
+            winTitleLabel.isHidden = false
             
             switch ( type ){
             case .Win:
-                winCoverFrame.isHidden = false
-                winFrame.isHidden = false
                 winHomeButton.isHidden = false
                 winLevelButton.isHidden = false
                 winResetButton.isHidden = false
                 winNextButton.isHidden = false
-                winTitleLabel.isHidden = false
                 break
                 
             case .Lose:
-                winCoverFrame.isHidden = false
-                winFrame.isHidden = false
                 winHomeButton.isHidden = false
                 winLevelButton.isHidden = false
                 winResetButton.isHidden = false
-                winTitleLabel.isHidden = false
+                break
+                
+            case .Match3:
                 closeButton.isHidden = false
+                nextButton.isHidden = false
+                prevButton.isHidden = false
+                currentHelpPage = type
+                break
+                
+            case .Match4:
+                closeButton.isHidden = false
+                nextButton.isHidden = false
+                prevButton.isHidden = false
+                currentHelpPage = type
                 break
                 
             default:
@@ -177,18 +207,80 @@ class Popups{
         for touchedNode in nodes {
             if ( touchedNode.isEqual(to: winHomeButton )){
                 touchedButton = .Home
+                break
             }
             else if ( touchedNode.isEqual(to: winLevelButton )){
                 touchedButton = .Level
+                break
             }
             else if ( touchedNode.isEqual(to: winResetButton )){
                 touchedButton = .Reset
+                break
             }
             else if ( touchedNode.isEqual(to: winNextButton )){
                 touchedButton = .Next
+                break
+            }
+            else if ( touchedNode.isEqual(to: nextButton )){
+                onNextButton()
+                break
+            }
+            else if ( touchedNode.isEqual(to: prevButton )){
+                onPrevButton()
+                break
+            }
+            else if ( touchedNode.isEqual(to: closeButton )){
+                onCloseButton()
+                break
             }
         }
         
         return touchedButton
+    }
+    
+    func onNextButton(){
+        switch ( currentHelpPage ){
+        case .Match3:
+            currentHelpPage = .Match4
+            break
+            
+        case .Match4:
+            currentHelpPage = .Match5
+            break
+            
+        case .Match5:
+            currentHelpPage = .Match3
+            break
+            
+        default:
+            break
+        }
+
+        winTitleLabel.text = GetTileString(type: currentHelpPage)
+    }
+    
+    func onPrevButton(){
+        switch ( currentHelpPage ){
+        case .Match3:
+            currentHelpPage = .Match5
+            break
+            
+        case .Match4:
+            currentHelpPage = .Match3
+            break
+            
+        case .Match5:
+            currentHelpPage = .Match4
+            break
+            
+        default:
+            break
+        }
+        
+        winTitleLabel.text = GetTileString(type: currentHelpPage)
+    }
+    
+    func onCloseButton(){
+        ClosePopup()
     }
 }

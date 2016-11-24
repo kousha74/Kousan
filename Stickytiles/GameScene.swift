@@ -226,6 +226,9 @@ class GameScene: SKScene,GameSceneProtocol {
                 print("Music button")
                 
             }
+            else if ( firstTouchedNode.isEqual(to: helpButton )){
+                popups?.OpenPopup(type: Popups.PopupType.Match3)
+            }
             else
             {
                 GameEngine.sharedInstance.OnTouch(pos: touch.location(in: self))
