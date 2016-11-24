@@ -92,14 +92,14 @@ class GameEngine {
     }
     
     func IsSolved()->Bool{
-        
-        return (gameModel.GetMoveCount() > 3)
+        return false
+        //return (gameModel.GetMoveCount() > 3)
         
     }
     
     func IsLost()->Bool{
-        
-        return (gameModel.GetMoveCount() > 2)
+        return false
+        //return (gameModel.GetMoveCount() > 2)
         
     }
     
@@ -334,7 +334,7 @@ class GameEngine {
             
             // reset the visited flag
             gameModel.SetFlag(flag: TileNode.IS_VISITED, isSet: false)
-            gameModel.SetFlag(flag: TileNode.TBP, isSet: false)
+            //gameModel.SetFlag(flag: TileNode.TBP, isSet: false) Tbd remove
             
             var gameTiles = [TileNode]()
             
@@ -438,6 +438,8 @@ class GameEngine {
                 }
                 else{
                     tile2.SetFlag(flag: TileNode.TBP, isSet: true)
+                    // Tbd remove
+                    print("tile \(tile2.GetRow()) -- \(tile2.GetCol()) is special")
                 }
             }
         }
@@ -530,15 +532,12 @@ class GameEngine {
             tile.SetFlag(flag: TileNode.TBP, isSet: false)
             DeleteTile(tile: tile )
             
-            if let tile2 = gameModel.FindFlag(flag: TileNode.TBP, isSet: true) {
-                //We have more to process
-                MarkSpecialNodes(tile: tile2)
-                Timer.scheduledTimer(timeInterval: TimeInterval( GameModel.delay ), target: self, selector:#selector(GameEngine.ProcessSpecialNodes), userInfo: nil, repeats: false)
+            if m_direction == .None {
+                m_direction = .Down
             }
-            else{
-                Timer.scheduledTimer(timeInterval: TimeInterval( GameModel.delay ), target: self, selector:#selector(GameEngine.PushAgainstTheWall), userInfo: nil, repeats: false)
+            
+            Timer.scheduledTimer(timeInterval: TimeInterval( GameModel.delay ), target: self, selector:#selector(GameEngine.PushAgainstTheWall), userInfo: nil, repeats: false)
                 
-            }
         }
     }
 
@@ -641,7 +640,7 @@ class GameEngine {
             m_GameSceneProtocol?.onNewTile(tile: tile)
             tile.sprite?.alpha = 0.0
             
-            let fadeinAction = SKAction.fadeIn(withDuration: GameModel.delay )
+            let fadeinAction = SKAction.fadeIn(withDuration: GameModel.delay/2.0 )
             let clusterAction = SKAction.run { self.FindClusters() } //TBD have the caller call this action
             tile.sprite?.run( SKAction.sequence( [ fadeinAction, clusterAction] ))
         }

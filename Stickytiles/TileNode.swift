@@ -257,6 +257,12 @@ class TileNode {
     
     func SetFlag( flag: Int, isSet:Bool){
         flags[ flag ] = isSet
+        
+        if isSet && flag == TileNode.TBP {
+            let scaleUp = SKAction.scale(to: 1.25, duration: GameModel.delay/2.0)
+            let scaleDown = SKAction.scale(to: 1.0, duration: GameModel.delay/2.0)
+            self.sprite?.run(SKAction.repeatForever(SKAction.sequence([scaleUp,scaleDown])))
+        }
     }
     
     func GetFlag( flag: Int )->Bool{

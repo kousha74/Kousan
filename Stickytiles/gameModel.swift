@@ -50,7 +50,7 @@ class GameModel {
     private var audioPlayerLaser : AVAudioPlayer?
     private var audioPlayerChime : AVAudioPlayer?
     
-    private let COLOR_COUNT = 6
+    private let COLOR_COUNT = 4 //tbd
     
     let boardSize : Int = 6
     
@@ -247,7 +247,7 @@ class GameModel {
             
             //TBD
             // +2 for bubble and chocolate
-            var Id = Int(arc4random_uniform(UInt32(COLOR_COUNT+2))) + 1
+            var Id = Int(arc4random_uniform(UInt32(COLOR_COUNT))) + 1
             
             if ( Id == COLOR_COUNT + 1 ){
                 Id = 10
