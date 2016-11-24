@@ -265,7 +265,11 @@ class GameScene: SKScene,GameSceneProtocol {
         {
             gameModel.SoundWin()
             gameManager?.onGameWon()
-            popups?.OpenPopup()
+            popups?.OpenPopup( type: Popups.PopupType.Win)
+        }
+        else if ( GameEngine.sharedInstance.IsLost() ){
+            gameModel.SoundWin() //TBD
+            popups?.OpenPopup( type: Popups.PopupType.Lose)
         }
         
         UpdateLabels()

@@ -15,6 +15,10 @@ class Popups{
         case Home, Level, Reset, Next, None
     }
     
+    enum PopupType{
+        case Win, Lose, Match3, Match4, Match5, Match6, None
+    }
+    
     //For Win Dialog
     private var winCoverFrame:SKShapeNode!
     private var winFrame:SKShapeNode!
@@ -23,6 +27,7 @@ class Popups{
     private let winResetButton = SKSpriteNode(imageNamed: "RewindG")
     private let winNextButton = SKSpriteNode(imageNamed: "FastForwardG")
     private let winTitleLabel = SKLabelNode(text: "You Won!")
+    private let closeButton = SKSpriteNode(imageNamed: "HomeG")
     
     private let gameModel:GameModel
     private let gameSceneProtocol:GameSceneProtocol
@@ -30,7 +35,7 @@ class Popups{
     private var isOpen = false
     private var sknodes = [SKNode]()
     
-    private let popupSize = CGSize(width: 300, height: 300)
+    private let popupSize = CGSize(width: 300 - Constants.cellSize, height: 300)
     
     required init( bounds: CGRect, gameSceneProtocol: GameSceneProtocol ) {
         
@@ -63,32 +68,43 @@ class Popups{
         let minX = ( bounds.width - popupSize.width )/2.0
         let buttonY = minY + Constants.cellSize
         
-        winHomeButton.position = CGPoint(x: minX + popupSize.width*2.0/10.0 , y: buttonY)
+        winHomeButton.position = CGPoint(x: minX + popupSize.width*1.4/10.0 , y: buttonY)
         winHomeButton.zPosition = Constants.popupZIndex
         sknodes.append(winHomeButton)
         
         
-        winLevelButton.position = CGPoint(x: minX + popupSize.width*4.0/10.0 , y: buttonY)
+        winLevelButton.position = CGPoint(x: minX + popupSize.width*3.8/10.0 , y: buttonY)
         winLevelButton.zPosition = Constants.popupZIndex
         sknodes.append(winLevelButton)
         
         
-        winResetButton.position = CGPoint(x: minX + popupSize.width*6.0/10.0 , y: buttonY)
+        winResetButton.position = CGPoint(x: minX + popupSize.width*6.2/10.0 , y: buttonY)
         winResetButton.zPosition = Constants.popupZIndex
         sknodes.append(winResetButton)
         
         
-        winNextButton.position = CGPoint(x: minX + popupSize.width*8.0/10.0 , y: buttonY)
+        winNextButton.position = CGPoint(x: minX + popupSize.width*8.6/10.0 , y: buttonY)
         winNextButton.zPosition = Constants.popupZIndex
         sknodes.append(winNextButton)
         
+        closeButton.position = CGPoint(x: minX + popupSize.width , y: minY + popupSize.height)
+        closeButton.zPosition = Constants.popupZIndex
+        sknodes.append(closeButton)
         
-        winTitleLabel.position = CGPoint(x: bounds.size.width * 0.5, y: minY + popupSize.height - 2.0*Constants.cellSize )
-        winTitleLabel.fontSize = 36
+        
+        winTitleLabel.position = CGPoint(x: bounds.size.width * 0.5, y: minY + popupSize.height - Constants.cellSize )
+        winTitleLabel.fontSize = 24
         winTitleLabel.fontColor = SKColor.blue
         winTitleLabel.fontName = "Papyrus"
         winTitleLabel.zPosition = Constants.popupZIndex
         sknodes.append(winTitleLabel)
+        
+        //adding items and hide them
+        for node in sknodes{
+            node.isHidden = true
+            gameSceneProtocol.onAddChild(child: node)
+        }
+        
         
         
     }
@@ -97,11 +113,50 @@ class Popups{
         return isOpen
     }
     
-    func OpenPopup(){
+    func GetTileString( type: PopupType )->String{
+        switch ( type ){
+        case .Win:
+            return "Nice job, You Won!"
+            
+        case .Lose:
+            return "You Lost!, Try again"
+            
+        default:
+            return "Text missing!!!"
+        }
+        
+    }
+    
+    func OpenPopup( type: PopupType ){
         if !isOpen {
+            
             isOpen = true
-            for node in sknodes{
-                gameSceneProtocol.onAddChild(child: node)
+            
+            winTitleLabel.text = GetTileString(type: type)
+            
+            switch ( type ){
+            case .Win:
+                winCoverFrame.isHidden = false
+                winFrame.isHidden = false
+                winHomeButton.isHidden = false
+                winLevelButton.isHidden = false
+                winResetButton.isHidden = false
+                winNextButton.isHidden = false
+                winTitleLabel.isHidden = false
+                break
+                
+            case .Lose:
+                winCoverFrame.isHidden = false
+                winFrame.isHidden = false
+                winHomeButton.isHidden = false
+                winLevelButton.isHidden = false
+                winResetButton.isHidden = false
+                winTitleLabel.isHidden = false
+                closeButton.isHidden = false
+                break
+                
+            default:
+                break
             }
         }
     }
@@ -110,7 +165,7 @@ class Popups{
         if isOpen {
             isOpen = false
             for node in sknodes{
-                node.removeFromParent()
+                node.isHidden = true
             }
         }
     }

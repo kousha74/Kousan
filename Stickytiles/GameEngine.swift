@@ -97,6 +97,12 @@ class GameEngine {
         
     }
     
+    func IsLost()->Bool{
+        
+        return (gameModel.GetMoveCount() > 2)
+        
+    }
+    
     func OnUpdate( currentTime: TimeInterval ){
     }
     
