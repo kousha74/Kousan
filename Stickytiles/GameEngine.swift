@@ -435,16 +435,18 @@ class GameEngine {
             if let temp = gameModel.GetTile(pos: CGPoint(x:CGFloat(col), y: CGFloat(row))) {
                 let tile2 = temp
                 tile2.SetFlag(flag: TileNode.IS_VISITED, isSet: true )
-                if ( tile2.GetClusterType() == TileNode.ClusterType.None ){
-                    //delete the tile
-                    if tile2.CanBeRemoved(){
+                
+                if tile2.CanBeRemoved(){
+                    if ( tile2.GetClusterType() == TileNode.ClusterType.None ){
+                        //delete the tile
                         DeleteTile(tile: tile2 )
+                        
                     }
-                }
-                else{
-                    tile2.SetFlag(flag: TileNode.TBP, isSet: true)
-                    // Tbd remove
-                    print("tile \(tile2.GetRow()) -- \(tile2.GetCol()) is special")
+                    else{
+                        tile2.SetFlag(flag: TileNode.TBP, isSet: true)
+                        // Tbd remove
+                        print("tile \(tile2.GetRow()) -- \(tile2.GetCol()) is special")
+                    }
                 }
             }
         }
@@ -456,14 +458,16 @@ class GameEngine {
             if let temp = gameModel.GetTile(pos: CGPoint(x:CGFloat(col), y: CGFloat(row))) {
                 let tile2 = temp
                 tile2.SetFlag(flag: TileNode.IS_VISITED, isSet: true )
-                if ( tile2.GetClusterType() == TileNode.ClusterType.None ){
-                    //delete the tile
-                    if tile2.CanBeRemoved(){
-                        DeleteTile(tile: tile2 )
+                if tile2.CanBeRemoved(){
+                    if ( tile2.GetClusterType() == TileNode.ClusterType.None ){
+                        //delete the tile
+                        
+                            DeleteTile(tile: tile2 )
+                        
                     }
-                }
-                else{
-                    tile2.SetFlag(flag: TileNode.TBP, isSet: true)
+                    else{
+                        tile2.SetFlag(flag: TileNode.TBP, isSet: true)
+                    }
                 }
             }
         }
@@ -475,14 +479,15 @@ class GameEngine {
             let deltaCol = abs( tile.GetCol() - tile2.GetCol() )
             if deltaRow == deltaCol{
                 tile2.SetFlag(flag: TileNode.IS_VISITED, isSet: true )
-                if ( tile2.GetClusterType() == TileNode.ClusterType.None ){
-                    //delete the tile
-                    if tile2.CanBeRemoved(){
+                if tile2.CanBeRemoved(){
+                    if ( tile2.GetClusterType() == TileNode.ClusterType.None ){
+                        //delete the tile
                         DeleteTile(tile: tile2 )
+                        
                     }
-                }
-                else{
-                    tile2.SetFlag(flag: TileNode.TBP, isSet: true)
+                    else{
+                        tile2.SetFlag(flag: TileNode.TBP, isSet: true)
+                    }
                 }
             }
         }
