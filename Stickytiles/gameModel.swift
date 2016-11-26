@@ -268,7 +268,7 @@ class GameModel {
                 //First find an empty tile
                 let tile = GetEmptyTile()
                 
-                if let emptyCell = FindEmptyCell(){
+                if let emptyCell = FindEmptyCellForChocolate(){
                     
                     tile.SetID(Id: TileNode.CHOLOLATE_ID)
                     tile.SetRowAndCol(row: Int(emptyCell.y), col: Int(emptyCell.x), cellSize: cellSize, viewOffset: viewOffset)
@@ -340,6 +340,36 @@ class GameModel {
                         selectedEmptyCell = emptyCell
                     }
                     
+                }
+            }
+        }
+        
+        return ( candidates>0 ) ? selectedEmptyCell :  nil
+    }
+    
+    func FindEmptyCellForChocolate()->CGPoint?{
+        var selectedEmptyCell = CGPoint(x: -1, y: -1)
+        var emptyCell = CGPoint(x: -1, y: -1)
+        var candidates : UInt32 = 0
+        var tileFound = false
+        
+        for col in 0...boardSize-1{
+            tileFound = false
+            for row in 0...boardSize-1{
+                emptyCell.x = CGFloat(col)
+                emptyCell.y = CGFloat(row)
+                
+                if GetTile(pos: emptyCell) == nil {
+                    if tileFound {
+                        candidates += 1
+                        if ( arc4random_uniform(candidates) == 0 ){
+                            selectedEmptyCell = emptyCell
+                        }
+                    }
+                    
+                }
+                else{
+                    tileFound = true
                 }
             }
         }
