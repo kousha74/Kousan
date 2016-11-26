@@ -118,6 +118,9 @@ class GameEngine {
         var targetCol:Int = 0
         var pos:CGPoint = CGPoint(x:0,y:0)
         
+        //Remove locks
+        gameModel.SetFlag(flag: TileNode.IS_LOCKED, isSet: false)
+        
         switch ( m_direction ) {
         case .Right:
             for row in 0...boardSize-1{
@@ -129,7 +132,7 @@ class GameEngine {
                     pos.y = CGFloat(row)
                     
                     if let touchedTile = gameModel.GetTile(pos: pos) {
-                        if touchedTile.IsBlock(){
+                        if !touchedTile.CanMove(){
                             targetCol = touchedTile.GetCol() - 1
                         }
                         else{
@@ -155,7 +158,7 @@ class GameEngine {
                     pos.y = CGFloat(row)
                     
                     if let touchedTile = gameModel.GetTile(pos: pos){
-                        if touchedTile.IsBlock(){
+                        if !touchedTile.CanMove(){
                             targetCol = touchedTile.GetCol() + 1
                         }
                         else{
@@ -181,7 +184,7 @@ class GameEngine {
                     pos.y = CGFloat(row)
                     
                     if let touchedTile = gameModel.GetTile(pos: pos){
-                        if touchedTile.IsBlock(){
+                        if !touchedTile.CanMove(){
                             targetRow = touchedTile.GetRow() - 1
                         }
                         else{
@@ -208,7 +211,7 @@ class GameEngine {
                     
                     if let touchedTile = gameModel.GetTile(pos: pos) {
                         
-                        if touchedTile.IsBlock(){
+                        if !touchedTile.CanMove(){
                             targetRow = touchedTile.GetRow() + 1
                         }
                         else{
@@ -360,6 +363,8 @@ class GameEngine {
                                     gameModel.SoundChime()
                                     specialClusterFound = true
                                     tile2.SetClusterType(type: clusterType)
+                                    //this tile must be locked, so it won't be removed immediately
+                                    tile2.SetFlag(flag: TileNode.IS_LOCKED, isSet: true)
                                     clusterType = TileNode.ClusterType.None
                                 }
                                 else {
@@ -432,7 +437,7 @@ class GameEngine {
                 tile2.SetFlag(flag: TileNode.IS_VISITED, isSet: true )
                 if ( tile2.GetClusterType() == TileNode.ClusterType.None ){
                     //delete the tile
-                    if !tile2.IsBlock(){
+                    if tile2.CanBeRemoved(){
                         DeleteTile(tile: tile2 )
                     }
                 }
@@ -453,7 +458,7 @@ class GameEngine {
                 tile2.SetFlag(flag: TileNode.IS_VISITED, isSet: true )
                 if ( tile2.GetClusterType() == TileNode.ClusterType.None ){
                     //delete the tile
-                    if !tile2.IsBlock(){
+                    if tile2.CanBeRemoved(){
                         DeleteTile(tile: tile2 )
                     }
                 }
@@ -472,7 +477,7 @@ class GameEngine {
                 tile2.SetFlag(flag: TileNode.IS_VISITED, isSet: true )
                 if ( tile2.GetClusterType() == TileNode.ClusterType.None ){
                     //delete the tile
-                    if !tile2.IsBlock(){
+                    if tile2.CanBeRemoved(){
                         DeleteTile(tile: tile2 )
                     }
                 }
@@ -500,15 +505,19 @@ class GameEngine {
                 
             case .Four:
                 for tile2 in gameModel.GetTiles(){
-                    
+                    // Deleting all the tiles with the same color
+                    // If the tile is LOCKED, do not remove it
                     if SameColor(tile1: tile, tile2: tile2){
                         tile2.SetFlag(flag: TileNode.IS_VISITED, isSet: true )
-                        if ( tile2.GetClusterType() == TileNode.ClusterType.None ){
-                            //delete the tile
-                            DeleteTile(tile: tile2 )
-                        }
-                        else{
-                            tile2.SetFlag(flag: TileNode.TBP, isSet: true)
+                        
+                        if !tile2.GetFlag(flag: TileNode.IS_LOCKED) {
+                            if ( tile2.GetClusterType() == TileNode.ClusterType.None ){
+                                //delete the tile
+                                DeleteTile(tile: tile2 )
+                            }
+                            else{
+                                tile2.SetFlag(flag: TileNode.TBP, isSet: true)
+                            }
                         }
                     }
                 }

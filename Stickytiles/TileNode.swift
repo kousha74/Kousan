@@ -50,9 +50,14 @@ class TileNode {
         sprite?.position.y = viewOffset.y + (CGFloat(y)+CGFloat(0.5))*CGFloat(cellSize)
     }
     
-    func IsBlock()->Bool{
-        return id == TileNode.BLOCKED_ID || id == TileNode.BLOCKER_ID
+    func CanBeRemoved()->Bool{
+        return id != TileNode.BLOCKED_ID && id != TileNode.BLOCKER_ID && id != TileNode.CHOLOLATE_ID && !GetFlag(flag: TileNode.IS_LOCKED)
     }
+    
+    func CanMove()->Bool{
+        return id != TileNode.BLOCKED_ID && id != TileNode.BLOCKER_ID
+    }
+    
     //Resets the tile to be reused
     func Reset(){
         id = 0
