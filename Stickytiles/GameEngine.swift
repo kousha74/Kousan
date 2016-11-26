@@ -378,6 +378,13 @@ class GameEngine {
                         
                         clusterFound = true
                     }
+                    else{
+                        //Checking for cholocates
+                        if tile.GetID() == TileNode.CHOLOLATE_ID && tile.GetRow() == 0 {
+                            DeleteTile(tile: tile)
+                            clusterFound = true
+                        }
+                    }
                 }
             }
         }

@@ -13,9 +13,11 @@ import StoreKit
 
 class GameSample{
     var gameItems = [[Int]]()
+    var chGoal = 0
     
-    init( localArr: [[Int]]) {
+    init( localArr: [[Int]], chGoal: Int) {
         gameItems = localArr
+        self.chGoal = chGoal
     }
 }
 
@@ -56,6 +58,11 @@ class GameModel {
     
     var moveCount:Int = 0
     var score:Int = 0
+    
+    //To support chololates
+    var chGoal = 0
+    var chAdded = 0
+    var chRemoved = 0
     
     func GetMoveCount()->Int{
         return moveCount
@@ -237,9 +244,51 @@ class GameModel {
         
         moveCount = 0
         score = 0
+        chGoal = getSample.chGoal
+        chAdded = 0
+        chRemoved = 0
+    }
+    
+    //find the first tile with the given ID
+    func GetID( id: Int )->TileNode?{
+        for tile in gameTiles{
+            if tile.GetID() == id{
+                return tile
+            }
+        }
+        
+        return nil
+    }
+    
+    func AddChocolate()->TileNode?{
+        
+        if chAdded < chGoal {
+            if GetID(id: TileNode.CHOLOLATE_ID) == nil {
+                chAdded += 1
+                //First find an empty tile
+                let tile = GetEmptyTile()
+                
+                if let emptyCell = FindEmptyCell(){
+                    
+                    tile.SetID(Id: TileNode.CHOLOLATE_ID)
+                    tile.SetRowAndCol(row: Int(emptyCell.y), col: Int(emptyCell.x), cellSize: cellSize, viewOffset: viewOffset)
+                    gameTiles.append(tile)
+                    return tile
+                }
+            }
+        }
+        
+        return nil
     }
     
     func AddTile()->TileNode?{
+        
+        //Check if chocolate should be added
+        
+        if let chTile = AddChocolate() {
+            return chTile
+        }
+        
         //First find an empty tile
         let tile = GetEmptyTile()
         
@@ -505,7 +554,9 @@ class GameModel {
                 [1,0,2],
                 [1,0,3],
                 [1,0,4]
-                ]) )
+                ],
+                chGoal: 4
+                ) )
         
             gameSamples.append( GameSample( localArr:[
                 [2,0,0],
@@ -526,7 +577,9 @@ class GameModel {
                 [3,5,3],
                 [3,5,4],
                 [3,5,5]
-                ]) )
+                ],
+                chGoal : 0
+                ) )
         
             gameSamples.append( GameSample( localArr:[
                 [1,0,0],
@@ -548,7 +601,10 @@ class GameModel {
                 [3,2,1],
                 [3,2,2],
                 [3,2,3]
-                ]) )
+                ],
+                chGoal: 4
+                
+                                            ) )
         
         
             print ("There are \(gameSamples.count) samples")
