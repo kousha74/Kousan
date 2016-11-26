@@ -318,7 +318,7 @@ class GameEngine {
                     else{
                         RemoveBlockers() //At most one blocker is allowed
                         AddTile(id: TileNode.BLOCKER_ID, pos: touchedCell)
-                        gameModel.ChangeMoveCount(delta: 1)
+                        //gameModel.ChangeMoveCount(delta: 1)
                     }
                 }
             }

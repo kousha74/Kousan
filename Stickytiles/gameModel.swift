@@ -410,12 +410,15 @@ class GameModel {
     }
     
     func RemoveTile(tile:TileNode){
-        
+        //tbd bad loop
         for i in 0...gameTiles.count-1{
             if ( gameTiles[i] === tile ){
+                if gameTiles[i].GetID() != TileNode.BLOCKER_ID{
+                    ChangeScore(delta: 1)
+                }
+                
                 gameTiles.remove(at: i)
                 allTiles.append(tile)
-                ChangeScore(delta: 1)
                 break
             }
         }
