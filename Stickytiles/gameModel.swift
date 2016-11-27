@@ -54,6 +54,9 @@ class GameModel {
     
     private let COLOR_COUNT = 4 //tbd
     
+    // the minimum number of tiles on the board
+    private let MIN_TILES = 12
+    
     let boardSize : Int = 6
     
     var moveCount:Int = 0
@@ -281,38 +284,39 @@ class GameModel {
         return nil
     }
     
-    func AddTile()->TileNode?{
+    func AddTiles()->[TileNode]{
         
+        var newTiles = [TileNode]()
+        
+        var tilesToBeAdded = max( 1, MIN_TILES - gameTiles.count )
+            
         //Check if chocolate should be added
-        
         if let chTile = AddChocolate() {
-            return chTile
+            newTiles.append(chTile)
+            tilesToBeAdded -= 1
         }
         
-        //First find an empty tile
-        let tile = GetEmptyTile()
         
-        if let emptyCell = FindEmptyCell(){
-            
-            //TBD
-            // +2 for bubble and chocolate
-            var Id = Int(arc4random_uniform(UInt32(COLOR_COUNT))) + 1
-            
-            if ( Id == COLOR_COUNT + 1 ){
-                Id = 10
+        if tilesToBeAdded > 0 {
+            for _ in 1...tilesToBeAdded{
+                //First find an empty tile
+                let tile = GetEmptyTile()
+                
+                if let emptyCell = FindEmptyCell(){
+                    
+                    //TBD : consider bubbles
+                    
+                    let Id = Int(arc4random_uniform(UInt32(COLOR_COUNT))) + 1
+                    
+                    tile.SetID(Id: Id)
+                    tile.SetRowAndCol(row: Int(emptyCell.y), col: Int(emptyCell.x), cellSize: cellSize, viewOffset: viewOffset)
+                    gameTiles.append(tile)
+                    newTiles.append(tile)
+                }
             }
-            
-            if ( Id == COLOR_COUNT + 2 ){
-                Id = 13
-            }
-            
-            tile.SetID(Id: Id)
-            tile.SetRowAndCol(row: Int(emptyCell.y), col: Int(emptyCell.x), cellSize: cellSize, viewOffset: viewOffset)
-            gameTiles.append(tile)
-            return tile
         }
         
-        return nil
+        return newTiles
     }
     
     func AddTile(id: Int, pos:CGPoint)->TileNode?{

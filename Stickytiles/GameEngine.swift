@@ -407,7 +407,7 @@ class GameEngine {
         }
         else if shouldAddTile {
             shouldAddTile = false
-            AddTile()
+            AddTiles()
         }
         else{
             isProcessing = false
@@ -655,16 +655,17 @@ class GameEngine {
         }
     }
 
-    func AddTile(){
+    func AddTiles(){
         
-        if let tile = gameModel.AddTile() {
+        let fadeinAction = SKAction.fadeIn(withDuration: GameModel.delay/2.0 )
+
+        for tile in gameModel.AddTiles() {
             m_GameSceneProtocol?.onNewTile(tile: tile)
             tile.sprite?.alpha = 0.0
-            
-            let fadeinAction = SKAction.fadeIn(withDuration: GameModel.delay/2.0 )
-            let clusterAction = SKAction.run { self.FindClusters() } //TBD have the caller call this action
-            tile.sprite?.run( SKAction.sequence( [ fadeinAction, clusterAction] ))
+            tile.sprite?.run( fadeinAction )
         }
+
+        Timer.scheduledTimer(timeInterval: TimeInterval( GameModel.delay ), target: self, selector:#selector(GameEngine.FindClusters), userInfo: nil, repeats: false)
     }
     
     func AddTile(id: Int, pos:CGPoint){
