@@ -80,6 +80,8 @@ class GameModel {
     
     var colorCount = 0
     
+    var baloonFrequency = 0
+    
     func GetMoveCount()->Int{
         return moveCount
     }
@@ -287,6 +289,7 @@ class GameModel {
         targetSpecials = gameSample.goals[4] //tbd hard coded
         targetStars = gameSample.goals[5] //tbd hard coded
         colorCount = gameSample.goals[6]
+        baloonFrequency = gameSample.goals[7]
     }
     
     //find the first tile with the given ID
@@ -342,11 +345,13 @@ class GameModel {
                 
                 if let emptyCell = FindEmptyCell(){
                     
-                    //TBD : consider bubbles
+                    if baloonFrequency != 0 && arc4random_uniform(UInt32(baloonFrequency)) == 0 {
+                        tile.SetID(Id: TileNode.BUBBLE_ID)
+                    }
+                    else{
+                        tile.SetID(Id: Int(arc4random_uniform(UInt32(colorCount))) + 1)
+                    }
                     
-                    let Id = Int(arc4random_uniform(UInt32(colorCount))) + 1
-                    
-                    tile.SetID(Id: Id)
                     tile.SetRowAndCol(row: Int(emptyCell.y), col: Int(emptyCell.x), cellSize: cellSize, viewOffset: viewOffset)
                     gameTiles.append(tile)
                     newTiles.append(tile)
@@ -656,7 +661,7 @@ class GameModel {
                 [1,0,4],
                 [1,1,0]
                 ],
-                goals: [2,0,40,0,0,1,4]
+                goals: [2,0,40,0,0,1,4,6]
                 ) )
         
         gameSamples.append( GameSample( fruits:[
@@ -665,7 +670,7 @@ class GameModel {
             [1,0,3],
             [1,0,4]
             ],
-                                        goals: [0,125,10,0,0,0,4]
+                                        goals: [0,125,10,0,0,0,4,6]
         ) )
         
             print ("There are \(gameSamples.count) samples")
