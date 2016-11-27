@@ -304,24 +304,12 @@ class GameScene: SKScene,GameSceneProtocol {
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         
-        //TBD
-        //if ( GameEngine.sharedInstance.IsSolved() )
-        //{
-        //   return
-        //}
-        
         // 1 - Choose one of the touches to work with
         guard let touch = touches.first else {
             return
         }
         
-        if ( GameEngine.sharedInstance.OnRelease(pos: touch.location(in: self)) )
-        {
-            
-            if ( ( gameModel.AreAdsAvailable() ) && ((gameModel.GetMoveCount()%25) == 0 )){
-                Chartboost.showInterstitial(CBLocationHomeScreen)
-            }
-        }
+        GameEngine.sharedInstance.OnRelease(pos: touch.location(in: self)) 
         
         UpdateLabels()
     }

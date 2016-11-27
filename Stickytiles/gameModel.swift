@@ -122,7 +122,7 @@ class GameModel {
     }
     
     func AreAdsAvailable()->Bool{
-        return ( userDefaults.integer(forKey: "removeAds") == 0 ) && ( currentLevel > 10 )
+        return ( userDefaults.integer(forKey: "removeAds") == 0 ) && ( currentLevel > 2 )
     }
     
     class var sharedInstance: GameModel {

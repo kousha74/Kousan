@@ -295,7 +295,7 @@ class GameEngine {
         }
     }
     
-    func OnRelease(pos:CGPoint)->Bool{
+    func OnRelease(pos:CGPoint){
         
         if  !isProcessing && dragging {
             
@@ -357,8 +357,6 @@ class GameEngine {
                 }
             }
         }
-        
-        return false
     }
     
     @objc func FindClusters(){
@@ -459,6 +457,11 @@ class GameEngine {
         }
         else if ( IsLost() ){
             m_GameSceneProtocol?.OnGameLost()
+        }
+        else{
+            if ( ( gameModel.AreAdsAvailable() ) && ((gameModel.GetMoveCount()%25) == 0 )){
+                Chartboost.showInterstitial(CBLocationHomeScreen)
+            }
         }
     }
     
