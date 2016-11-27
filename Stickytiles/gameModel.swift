@@ -656,7 +656,7 @@ class GameModel {
                 [1,0,4],
                 [1,1,0]
                 ],
-                goals: [0,0,40,0,0,1,4]
+                goals: [2,0,40,0,0,1,4]
                 ) )
         
         gameSamples.append( GameSample( fruits:[

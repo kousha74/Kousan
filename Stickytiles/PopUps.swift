@@ -63,7 +63,7 @@ class Popups{
         
         winFrame = SKShapeNode(rect: CGRect(x: Int(-popupSize.width*0.5), y: Int(-popupSize.height*0.5), width: Int(popupSize.width), height: Int(popupSize.height)), cornerRadius: 10)
         winFrame.position = CGPoint(x: winSize.width/2.0, y: winSize.height/2.0)
-        winFrame.fillColor = UIColor(red: 0.0, green: 1.0, blue: 0.0, alpha: 0.75)
+        winFrame.fillColor = UIColor(red: 1.0, green: 1.0, blue: 0.8 , alpha: 0.75)
         winFrame.strokeColor = UIColor.darkGray
         winFrame.lineWidth = 5
         winFrame.zPosition = Constants.popupZIndex
