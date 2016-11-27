@@ -46,7 +46,7 @@ class Popups{
     private var popupType : PopupType = .Match3
     private var sknodes = [SKNode]()
     
-    private let popupSize = CGSize(width: 300 - Constants.cellSize, height: 300)
+    private let popupSize = CGSize(width: 300 - Constants.cellSize, height: 400)
     
     required init( bounds: CGRect, gameSceneProtocol: GameSceneProtocol ) {
         
@@ -75,19 +75,19 @@ class Popups{
         sknodes.append(winFrame)
         
         
-        match3Image.position = CGPoint(x: winSize.width/2.0, y: winSize.height/2.0)
+        match3Image.position = CGPoint(x: winSize.width/2.0, y: winSize.height/2.25)
         match3Image.zPosition = Constants.popupZIndex
         sknodes.append(match3Image)
         
-        match4Image.position = CGPoint(x: winSize.width/2.0, y: winSize.height/2.0)
+        match4Image.position = CGPoint(x: winSize.width/2.0, y: winSize.height/2.25)
         match4Image.zPosition = Constants.popupZIndex
         sknodes.append(match4Image)
         
-        match5Image.position = CGPoint(x: winSize.width/2.0, y: winSize.height/2.0)
+        match5Image.position = CGPoint(x: winSize.width/2.0, y: winSize.height/2.25)
         match5Image.zPosition = Constants.popupZIndex
         sknodes.append(match5Image)
         
-        match6Image.position = CGPoint(x: winSize.width/2.0, y: winSize.height/2.0)
+        match6Image.position = CGPoint(x: winSize.width/2.0, y: winSize.height/2.25)
         match6Image.zPosition = Constants.popupZIndex
         sknodes.append(match6Image)
         
@@ -135,14 +135,14 @@ class Popups{
         title1Label.zPosition = Constants.popupZIndex
         sknodes.append(title1Label)
         
-        title2Label.position = CGPoint(x: bounds.size.width * 0.5, y: minY + popupSize.height - 2.0*Constants.cellSize )
+        title2Label.position = CGPoint(x: bounds.size.width * 0.5, y: minY + popupSize.height - 1.75*Constants.cellSize )
         title2Label.fontSize = 24
         title2Label.fontColor = Constants.fontColor
         title2Label.fontName = Constants.fontName
         title2Label.zPosition = Constants.popupZIndex
         sknodes.append(title2Label)
         
-        title3Label.position = CGPoint(x: bounds.size.width * 0.5, y: minY + popupSize.height - 3.0*Constants.cellSize )
+        title3Label.position = CGPoint(x: bounds.size.width * 0.5, y: minY + popupSize.height - 2.5*Constants.cellSize )
         title3Label.fontSize = 24
         title3Label.fontColor = Constants.fontColor
         title3Label.fontName = Constants.fontName
@@ -204,6 +204,8 @@ class Popups{
             
         case .Match4:
             title1Label.text = "Match 4 fruits"
+            title2Label.text = "create a special fruit"
+            title2Label.isHidden = false
             closeButton.isHidden = false
             nextButton.isHidden = false
             prevButton.isHidden = false
@@ -212,6 +214,8 @@ class Popups{
             
         case .Match5:
             title1Label.text = "Match 5 fruits"
+            title2Label.text = "create a yellow star"
+            title2Label.isHidden = false
             closeButton.isHidden = false
             nextButton.isHidden = false
             prevButton.isHidden = false
@@ -220,7 +224,7 @@ class Popups{
             
         case .Match6:
             title1Label.text = "Match 6 fruits"
-            title2Label.text = "to remove them"
+            title2Label.text = "create a green star"
             title2Label.isHidden = false
             closeButton.isHidden = false
             nextButton.isHidden = false
