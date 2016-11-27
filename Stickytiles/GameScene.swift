@@ -15,6 +15,7 @@ protocol GameSceneProtocol{
     func UpdateLabels()
     func OnGameWon()
     func OnGameLost()
+    func OnGameLoaded()
 }
 
 
@@ -38,6 +39,8 @@ class GameScene: SKScene,GameSceneProtocol {
         
     override func didMove(to view: SKView) {
         
+        GameEngine.sharedInstance.SetParent(parent: self)
+
         popups = Popups(bounds: view.bounds, gameSceneProtocol: self )
         
         backgroundColor = SKColor.white
@@ -54,10 +57,6 @@ class GameScene: SKScene,GameSceneProtocol {
         shape.strokeColor = UIColor.black
         shape.lineWidth = 2
         addChild(shape)
-        
-        //tbd dangerous assumption
-        GameEngine.sharedInstance.SetParent(parent: self)
-        GameEngine.sharedInstance.LoadGame(level: gameModel.getCurrentLevel() )
         
         titleLabel.position = CGPoint(x: size.width * 0.5, y: viewOffset.y + CGFloat(boardSize) + 2.0*CGFloat(cellSize) )
         titleLabel.fontSize = 36
@@ -97,8 +96,9 @@ class GameScene: SKScene,GameSceneProtocol {
         //addChild(moveCountShape)
         
         
-        moveCountLabel.position = CGPoint(x: viewOffset.x + 4.5*CGFloat(cellSize), y: viewOffset.y + CGFloat(boardSize) + 2.0*CGFloat(boardPadding) + 0.5*CGFloat(cellSize) )
+        moveCountLabel.position = CGPoint(x: viewOffset.x + CGFloat(boardSize), y: viewOffset.y + CGFloat(boardSize) + 2.0*CGFloat(boardPadding) + 0.5*CGFloat(cellSize) )
         moveCountLabel.verticalAlignmentMode = SKLabelVerticalAlignmentMode.center
+        moveCountLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.right
         moveCountLabel.fontSize = 24
         moveCountLabel.fontColor = SKColor.blue
         moveCountLabel.fontName = "Papyrus"
@@ -128,7 +128,38 @@ class GameScene: SKScene,GameSceneProtocol {
         
         if ( !gameModel.IsAudioOn() ){
             soundButton.texture = SKTexture(imageNamed: "SoundOff")
-        }        
+        }
+        
+        GameEngine.sharedInstance.LoadGame(level: gameModel.getCurrentLevel() )
+    }
+    
+    func OnGameLoaded(){
+        
+        var title1 = ""
+        var title2 = ""
+        
+        //check chocolates
+        if gameModel.chGoal != 0 {
+            title1 = "Bring \(gameModel.chGoal) chocolates down"
+        }
+        else if gameModel.targetScore != 0 {
+            title1 = "Remove \(gameModel.targetScore) fruits"
+        }
+        else if gameModel.targetApples != 0 {
+            title1 = "Remove \(gameModel.targetApples) apples"
+        }
+        else if gameModel.targetSpecials != 0 {
+            title1 = "Remove \(gameModel.targetSpecials) special fruits"
+        }
+        else if gameModel.targetStars != 0 {
+            title1 = "Remove \(gameModel.targetStars) starts"
+        }
+        
+        if gameModel.maxMoves != 0 {
+            title2 = "In \(gameModel.maxMoves) moves"
+        }
+        
+        popups?.OpenInfoPopup(title1: title1, title2: title2)
     }
     
     func OnGameWon(){
@@ -170,7 +201,10 @@ class GameScene: SKScene,GameSceneProtocol {
         
         if ( popups?.IsOpen() )!{
             
-            if let touchedButton = popups?.GetTouchedButton(nodes: touchedNodes) {
+            if popups?.GetPopupType() == Popups.PopupType.Info {
+                popups?.ClosePopup()
+            }
+            else if let touchedButton = popups?.GetTouchedButton(nodes: touchedNodes) {
                 switch ( touchedButton ){
                     
                 case .Home:
@@ -281,7 +315,13 @@ class GameScene: SKScene,GameSceneProtocol {
     }
     
     func UpdateLabels() {
-        moveCountLabel.text = "Moves: \(gameModel.GetMoveCount())"
+        if gameModel.maxMoves != 0{
+            moveCountLabel.text = "Moves Left: \(gameModel.maxMoves - gameModel.GetMoveCount())"
+        }
+        else{
+            moveCountLabel.text = "Moves: \(gameModel.GetMoveCount())"
+        }
+        
         scoreLabel.text = "Score: \(gameModel.GetScore())"
         levelLabel.text = "Level " + String(gameModel.getCurrentLevel()+1)
     }

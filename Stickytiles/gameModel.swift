@@ -593,16 +593,26 @@ class GameModel {
         
         gameSamples = [GameSample]()
         
-            //[id,x,y]
-        
+            //fruits [id,x,y]
+            //goals [Chcolate, targetScore, maxMoves, targetApples, targetSpecial, targetStars, colorCount]
+
             gameSamples.append( GameSample( fruits:[
                 [1,0,0],
                 [1,0,2],
                 [1,0,3],
                 [1,0,4]
                 ],
-                goals: [0,25,0,0,0,0,4]
+                goals: [0,5,0,0,0,0,4]
                 ) )
+        
+        gameSamples.append( GameSample( fruits:[
+            [1,0,0],
+            [1,0,2],
+            [1,0,3],
+            [1,0,4]
+            ],
+                                        goals: [0,125,10,0,0,0,4]
+        ) )
         
             print ("There are \(gameSamples.count) samples")
         

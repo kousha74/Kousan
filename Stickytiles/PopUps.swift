@@ -16,7 +16,7 @@ class Popups{
     }
     
     enum PopupType{
-        case Win, Lose, Match3, Match4, Match5, Match6, Next, Prev, Close, None
+        case Win, Lose, Match3, Match4, Match5, Match6, Next, Prev, Close, Info, None
     }
     
     //For Win Dialog
@@ -26,16 +26,19 @@ class Popups{
     private let winLevelButton = SKSpriteNode(imageNamed: "GridG")
     private let winResetButton = SKSpriteNode(imageNamed: "RewindG")
     private let winNextButton = SKSpriteNode(imageNamed: "FastForwardG")
-    private let winTitleLabel = SKLabelNode(text: "You Won!")
     private let closeButton = SKSpriteNode(imageNamed: "HomeG")
     private let nextButton = SKSpriteNode(imageNamed: "NextPage")
     private let prevButton = SKSpriteNode(imageNamed: "PrevPage")
+
+    private let title1Label = SKLabelNode(text: "title1")
+    private let title2Label = SKLabelNode(text: "title2")
+    private let title3Label = SKLabelNode(text: "Tap to continue")
     
     private let gameModel:GameModel
     private let gameSceneProtocol:GameSceneProtocol
     
     private var isOpen = false
-    private var currentHelpPage = PopupType.Match3
+    private var popupType : PopupType = .Match3
     private var sknodes = [SKNode]()
     
     private let popupSize = CGSize(width: 300 - Constants.cellSize, height: 300)
@@ -103,12 +106,26 @@ class Popups{
         sknodes.append(closeButton)
         
         
-        winTitleLabel.position = CGPoint(x: bounds.size.width * 0.5, y: minY + popupSize.height - Constants.cellSize )
-        winTitleLabel.fontSize = 24
-        winTitleLabel.fontColor = SKColor.blue
-        winTitleLabel.fontName = "Papyrus"
-        winTitleLabel.zPosition = Constants.popupZIndex
-        sknodes.append(winTitleLabel)
+        title1Label.position = CGPoint(x: bounds.size.width * 0.5, y: minY + popupSize.height - Constants.cellSize )
+        title1Label.fontSize = 24
+        title1Label.fontColor = SKColor.blue
+        title1Label.fontName = "Papyrus"
+        title1Label.zPosition = Constants.popupZIndex
+        sknodes.append(title1Label)
+        
+        title2Label.position = CGPoint(x: bounds.size.width * 0.5, y: minY + popupSize.height - 2.0*Constants.cellSize )
+        title2Label.fontSize = 24
+        title2Label.fontColor = SKColor.blue
+        title2Label.fontName = "Papyrus"
+        title2Label.zPosition = Constants.popupZIndex
+        sknodes.append(title2Label)
+        
+        title3Label.position = CGPoint(x: bounds.size.width * 0.5, y: minY + popupSize.height - 3.0*Constants.cellSize )
+        title3Label.fontSize = 24
+        title3Label.fontColor = SKColor.blue
+        title3Label.fontName = "Papyrus"
+        title3Label.zPosition = Constants.popupZIndex
+        sknodes.append(title3Label)
         
         //adding items and hide them
         for node in sknodes{
@@ -118,6 +135,10 @@ class Popups{
         
         
         
+    }
+    
+    func GetPopupType()->PopupType{
+        return popupType
     }
     
     func IsOpen()->Bool{
@@ -147,15 +168,50 @@ class Popups{
         
     }
     
+    private func HideAll(){
+        for node in sknodes{
+            node.isHidden = true
+        }
+    }
+    
+    func OpenInfoPopup( title1: String, title2: String ){
+        
+        if !isOpen {
+            
+            isOpen = true
+            
+            popupType = .Info
+            
+            HideAll()
+            
+            title1Label.text = title1
+            title1Label.isHidden = false
+            
+            title2Label.text = title2
+            title2Label.isHidden = false
+            
+            title3Label.isHidden = false
+            
+            winCoverFrame.isHidden = false
+            winFrame.isHidden = false
+            title1Label.isHidden = false
+        }
+    }
+    
     func OpenPopup( type: PopupType ){
         if !isOpen {
             
             isOpen = true
             
-            winTitleLabel.text = GetTileString(type: type)
+            popupType = type
+            
+            HideAll()
+            title1Label.isHidden = false
+            
+            title1Label.text = GetTileString(type: type)
             winCoverFrame.isHidden = false
             winFrame.isHidden = false
-            winTitleLabel.isHidden = false
+            title1Label.isHidden = false
             
             switch ( type ){
             case .Win:
@@ -175,14 +231,12 @@ class Popups{
                 closeButton.isHidden = false
                 nextButton.isHidden = false
                 prevButton.isHidden = false
-                currentHelpPage = type
                 break
                 
             case .Match4:
                 closeButton.isHidden = false
                 nextButton.isHidden = false
                 prevButton.isHidden = false
-                currentHelpPage = type
                 break
                 
             default:
@@ -194,9 +248,7 @@ class Popups{
     func ClosePopup(){
         if isOpen {
             isOpen = false
-            for node in sknodes{
-                node.isHidden = true
-            }
+            HideAll()
         }
     }
     
@@ -239,45 +291,45 @@ class Popups{
     }
     
     func onNextButton(){
-        switch ( currentHelpPage ){
+        switch ( popupType ){
         case .Match3:
-            currentHelpPage = .Match4
+            popupType = .Match4
             break
             
         case .Match4:
-            currentHelpPage = .Match5
+            popupType = .Match5
             break
             
         case .Match5:
-            currentHelpPage = .Match3
+            popupType = .Match3
             break
             
         default:
             break
         }
 
-        winTitleLabel.text = GetTileString(type: currentHelpPage)
+        title1Label.text = GetTileString(type: popupType)
     }
     
     func onPrevButton(){
-        switch ( currentHelpPage ){
+        switch ( popupType ){
         case .Match3:
-            currentHelpPage = .Match5
+            popupType = .Match5
             break
             
         case .Match4:
-            currentHelpPage = .Match3
+            popupType = .Match3
             break
             
         case .Match5:
-            currentHelpPage = .Match4
+            popupType = .Match4
             break
             
         default:
             break
         }
         
-        winTitleLabel.text = GetTileString(type: currentHelpPage)
+        title1Label.text = GetTileString(type: popupType)
     }
     
     func onCloseButton(){

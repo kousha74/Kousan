@@ -76,6 +76,7 @@ class GameEngine {
         }
         
         m_GameSceneProtocol?.UpdateLabels()
+        m_GameSceneProtocol?.OnGameLoaded()
     }
     
     
@@ -109,7 +110,7 @@ class GameEngine {
     
     func IsLost()->Bool{
         //TBD Check if the board is full and there's nothing to do
-        if gameModel.maxMoves >= gameModel.moveCount && gameModel.maxMoves != 0 {
+        if gameModel.maxMoves <= gameModel.moveCount && gameModel.maxMoves != 0 {
             return true
         }
         
