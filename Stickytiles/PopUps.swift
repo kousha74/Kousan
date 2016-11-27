@@ -35,6 +35,8 @@ class Popups{
     private let match5Image = SKSpriteNode(imageNamed: "Match5")
     private let match6Image = SKSpriteNode(imageNamed: "Match6")
 
+    private let iconButton = SKSpriteNode(imageNamed: "PrevPage")
+
     private let title1Label = SKLabelNode(text: "title1")
     private let title2Label = SKLabelNode(text: "title2")
     private let title3Label = SKLabelNode(text: "Tap to continue")
@@ -90,6 +92,10 @@ class Popups{
         match6Image.position = CGPoint(x: winSize.width/2.0, y: winSize.height/2.25)
         match6Image.zPosition = Constants.popupZIndex
         sknodes.append(match6Image)
+        
+        iconButton.position = CGPoint(x: winSize.width/2.0, y: winSize.height/2.25)
+        iconButton.zPosition = Constants.popupZIndex
+        sknodes.append(iconButton)
         
 
         let minY = ( bounds.height - popupSize.height )/2.0
@@ -181,7 +187,11 @@ class Popups{
             nextButton.isHidden = false
             prevButton.isHidden = false
         }
-
+        
+        if popupType.rawValue >= PopupType.Row.rawValue && popupType.rawValue <= PopupType.Chocolate.rawValue {
+            iconButton.isHidden = false
+        }
+        
         switch ( popupType ){
         case .Win:
             title1Label.text = "Nice job, You Won!"
@@ -230,20 +240,23 @@ class Popups{
             title1Label.text = "Remove row fruit"
             title2Label.text = "to remove a row"
             title2Label.isHidden = false
+            iconButton.texture = SKTexture(image: #imageLiteral(resourceName: "AppleR"))
             break
             
         case .Col:
             title1Label.text = "Remove column fruit"
             title2Label.text = "to remove a column"
             title2Label.isHidden = false
+            iconButton.texture = SKTexture(image: #imageLiteral(resourceName: "AppleC"))
             break
             
         case .Four:
             title1Label.text = "Remove power fruit"
-            title2Label.text = "To remove all fruits"
+            title2Label.text = "to remove all fruits"
             title2Label.isHidden = false
             title3Label.text = "of the same type"
             title3Label.isHidden = false
+            iconButton.texture = SKTexture(image: #imageLiteral(resourceName: "Apple4"))
             break
             
         case .Yellow:
@@ -252,7 +265,7 @@ class Popups{
             title2Label.isHidden = false
             title3Label.text = "and column"
             title3Label.isHidden = false
-            break
+            iconButton.texture = SKTexture(image: #imageLiteral(resourceName: "Star5"))
             
         case .Green:
             title1Label.text = "Tap green star"
@@ -260,6 +273,7 @@ class Popups{
             title2Label.isHidden = false
             title3Label.text = "column, and diagonally"
             title3Label.isHidden = false
+            iconButton.texture = SKTexture(image: #imageLiteral(resourceName: "Star7"))
             break
             
         case .Blocker:
@@ -268,16 +282,21 @@ class Popups{
             title2Label.isHidden = false
             title3Label.text = "temporary blocker"
             title3Label.isHidden = false
+            iconButton.texture = SKTexture(image: #imageLiteral(resourceName: "blocker"))
             break
             
         case .Blocked:
-            title1Label.text = "Blockers don't move"
+            title1Label.text = "Permanent Blockers"
+            title2Label.text = "Don't move"
+            title2Label.isHidden = false
+            iconButton.texture = SKTexture(image: #imageLiteral(resourceName: "Blocked"))
             break
             
         case .Baloon:
             title1Label.text = "Tap a ballon"
             title2Label.text = "to remove it"
             title2Label.isHidden = false
+            iconButton.texture = SKTexture(image: #imageLiteral(resourceName: "Balloon"))
             break
             
         case .Question:
@@ -286,12 +305,14 @@ class Popups{
             title2Label.isHidden = false
             title3Label.text = "the fruit"
             title3Label.isHidden = false
+            iconButton.texture = SKTexture(image: #imageLiteral(resourceName: "QuestionMark"))
             break
             
         case .Chocolate:
             title1Label.text = "Bring chocolate down"
             title2Label.text = "to remove it"
             title2Label.isHidden = false
+            iconButton.texture = SKTexture(image: #imageLiteral(resourceName: "chocolate"))
             break
             
             
@@ -322,7 +343,9 @@ class Popups{
             title2Label.text = title2
             title2Label.isHidden = false
             
+            title3Label.text = "Tap to continue"
             title3Label.isHidden = false
+            
             
             winCoverFrame.isHidden = false
             winFrame.isHidden = false
