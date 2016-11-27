@@ -108,22 +108,22 @@ class Popups{
         
         title1Label.position = CGPoint(x: bounds.size.width * 0.5, y: minY + popupSize.height - Constants.cellSize )
         title1Label.fontSize = 24
-        title1Label.fontColor = SKColor.blue
-        title1Label.fontName = "Papyrus"
+        title1Label.fontColor = Constants.fontColor
+        title1Label.fontName = Constants.fontName
         title1Label.zPosition = Constants.popupZIndex
         sknodes.append(title1Label)
         
         title2Label.position = CGPoint(x: bounds.size.width * 0.5, y: minY + popupSize.height - 2.0*Constants.cellSize )
         title2Label.fontSize = 24
-        title2Label.fontColor = SKColor.blue
-        title2Label.fontName = "Papyrus"
+        title2Label.fontColor = Constants.fontColor
+        title2Label.fontName = Constants.fontName
         title2Label.zPosition = Constants.popupZIndex
         sknodes.append(title2Label)
         
         title3Label.position = CGPoint(x: bounds.size.width * 0.5, y: minY + popupSize.height - 3.0*Constants.cellSize )
         title3Label.fontSize = 24
-        title3Label.fontColor = SKColor.blue
-        title3Label.fontName = "Papyrus"
+        title3Label.fontColor = Constants.fontColor
+        title3Label.fontName = Constants.fontName
         title3Label.zPosition = Constants.popupZIndex
         sknodes.append(title3Label)
         

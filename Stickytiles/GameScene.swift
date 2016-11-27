@@ -61,8 +61,8 @@ class GameScene: SKScene,GameSceneProtocol {
         
         titleLabel.position = CGPoint(x: size.width * 0.5, y: viewOffset.y + CGFloat(boardSize) + 2.0*CGFloat(cellSize) )
         titleLabel.fontSize = 36
-        titleLabel.fontColor = SKColor.blue
-        titleLabel.fontName = "Papyrus"
+        titleLabel.fontColor = Constants.fontColor
+        titleLabel.fontName = Constants.fontName
         //addChild(titleLabel)
         
         
@@ -100,9 +100,9 @@ class GameScene: SKScene,GameSceneProtocol {
         moveCountLabel.position = CGPoint(x: viewOffset.x + CGFloat(boardSize), y: viewOffset.y + CGFloat(boardSize) + 2.0*CGFloat(boardPadding) + 0.5*CGFloat(cellSize) )
         moveCountLabel.verticalAlignmentMode = SKLabelVerticalAlignmentMode.center
         moveCountLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.right
-        moveCountLabel.fontSize = 24
-        moveCountLabel.fontColor = SKColor.blue
-        moveCountLabel.fontName = "Papyrus"
+        moveCountLabel.fontSize = Constants.fontSize
+        moveCountLabel.fontColor = Constants.fontColor
+        moveCountLabel.fontName = Constants.fontName
         addChild(moveCountLabel)
         
         let boardMaxY = viewOffset.y + CGFloat(boardSize) + 2.0*CGFloat(boardPadding)
@@ -111,27 +111,27 @@ class GameScene: SKScene,GameSceneProtocol {
         scoreLabel.position = CGPoint(x: viewOffset.x, y:  boardMaxY + 0.5*labelHeight )
         scoreLabel.verticalAlignmentMode = SKLabelVerticalAlignmentMode.center
         scoreLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
-        scoreLabel.fontSize = 18
-        scoreLabel.fontColor = SKColor.blue
-        scoreLabel.fontName = "Papyrus"
+        scoreLabel.fontSize = Constants.fontSize
+        scoreLabel.fontColor = Constants.fontColor
+        scoreLabel.fontName = Constants.fontName
         addChild(scoreLabel)
         
         
         goalLabel.position = CGPoint(x: viewOffset.x, y: boardMaxY + 1.5*labelHeight )
         goalLabel.verticalAlignmentMode = SKLabelVerticalAlignmentMode.center
         goalLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
-        goalLabel.fontSize = 18
-        goalLabel.fontColor = SKColor.blue
-        goalLabel.fontName = "Papyrus"
+        goalLabel.fontSize = Constants.fontSize
+        goalLabel.fontColor = Constants.fontColor
+        goalLabel.fontName = Constants.fontName
         goalLabel.text = ""
         addChild(goalLabel)
         
         levelLabel.position = CGPoint(x: viewOffset.x, y: boardMaxY + 2.5*labelHeight )
         levelLabel.verticalAlignmentMode = SKLabelVerticalAlignmentMode.center
         levelLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
-        levelLabel.fontSize = 18
-        levelLabel.fontColor = SKColor.blue
-        levelLabel.fontName = "Papyrus"
+        levelLabel.fontSize = Constants.fontSize
+        levelLabel.fontColor = Constants.fontColor
+        levelLabel.fontName = Constants.fontName
         levelLabel.text = "Level " + String(gameModel.getCurrentLevel()+1)
         addChild(levelLabel)
         
