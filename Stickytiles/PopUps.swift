@@ -29,6 +29,11 @@ class Popups{
     private let closeButton = SKSpriteNode(imageNamed: "CancelIcon")
     private let nextButton = SKSpriteNode(imageNamed: "NextPage")
     private let prevButton = SKSpriteNode(imageNamed: "PrevPage")
+    
+    private let match3Image = SKSpriteNode(imageNamed: "Match3")
+    private let match4Image = SKSpriteNode(imageNamed: "Match4")
+    private let match5Image = SKSpriteNode(imageNamed: "Match5")
+    private let match6Image = SKSpriteNode(imageNamed: "Match6")
 
     private let title1Label = SKLabelNode(text: "title1")
     private let title2Label = SKLabelNode(text: "title2")
@@ -70,6 +75,23 @@ class Popups{
         sknodes.append(winFrame)
         
         
+        match3Image.position = CGPoint(x: winSize.width/2.0, y: winSize.height/2.0)
+        match3Image.zPosition = Constants.popupZIndex
+        sknodes.append(match3Image)
+        
+        match4Image.position = CGPoint(x: winSize.width/2.0, y: winSize.height/2.0)
+        match4Image.zPosition = Constants.popupZIndex
+        sknodes.append(match4Image)
+        
+        match5Image.position = CGPoint(x: winSize.width/2.0, y: winSize.height/2.0)
+        match5Image.zPosition = Constants.popupZIndex
+        sknodes.append(match5Image)
+        
+        match6Image.position = CGPoint(x: winSize.width/2.0, y: winSize.height/2.0)
+        match6Image.zPosition = Constants.popupZIndex
+        sknodes.append(match6Image)
+        
+
         let minY = ( bounds.height - popupSize.height )/2.0
         let minX = ( bounds.width - popupSize.width )/2.0
         let buttonY = minY + Constants.cellSize
@@ -145,29 +167,72 @@ class Popups{
         return isOpen
     }
     
-    func GetTileString( type: PopupType )->String{
-        switch ( type ){
+    func UpdateWidgets(){
+        
+        HideAll()
+        title1Label.isHidden = false
+        
+        winCoverFrame.isHidden = false
+        winFrame.isHidden = false
+        title1Label.isHidden = false
+
+        switch ( popupType ){
         case .Win:
-            return "Nice job, You Won!"
+            title1Label.text = "Nice job, You Won!"
+            winHomeButton.isHidden = false
+            winLevelButton.isHidden = false
+            winResetButton.isHidden = false
+            winNextButton.isHidden = false
+            break
             
         case .Lose:
-            return "You Lost!, Try again"
+            title1Label.text = "You Lost!, Try again"
+            winHomeButton.isHidden = false
+            winLevelButton.isHidden = false
+            winResetButton.isHidden = false
+            break
         
         case .Match3:
-            return "Match 3 fruits"
+            title1Label.text = "Match 3 fruits"
+            title2Label.text = "to remove them"
+            title2Label.isHidden = false
+            closeButton.isHidden = false
+            nextButton.isHidden = false
+            prevButton.isHidden = false
+            match3Image.isHidden = false
+            break
             
         case .Match4:
-            return "Match 4 fruits"
+            title1Label.text = "Match 4 fruits"
+            closeButton.isHidden = false
+            nextButton.isHidden = false
+            prevButton.isHidden = false
+            match4Image.isHidden = false
+            break
             
         case .Match5:
-            return "Match 5 fruits"
+            title1Label.text = "Match 5 fruits"
+            closeButton.isHidden = false
+            nextButton.isHidden = false
+            prevButton.isHidden = false
+            match5Image.isHidden = false
+            break
+            
+        case .Match6:
+            title1Label.text = "Match 6 fruits"
+            title2Label.text = "to remove them"
+            title2Label.isHidden = false
+            closeButton.isHidden = false
+            nextButton.isHidden = false
+            prevButton.isHidden = false
+            match6Image.isHidden = false
+            break
             
         default:
-            return "Text missing!!!"
+            title1Label.text = "Text missing!!!"
         }
-        
     }
-    
+
     private func HideAll(){
         for node in sknodes{
             node.isHidden = true
@@ -205,43 +270,7 @@ class Popups{
             
             popupType = type
             
-            HideAll()
-            title1Label.isHidden = false
-            
-            title1Label.text = GetTileString(type: type)
-            winCoverFrame.isHidden = false
-            winFrame.isHidden = false
-            title1Label.isHidden = false
-            
-            switch ( type ){
-            case .Win:
-                winHomeButton.isHidden = false
-                winLevelButton.isHidden = false
-                winResetButton.isHidden = false
-                winNextButton.isHidden = false
-                break
-                
-            case .Lose:
-                winHomeButton.isHidden = false
-                winLevelButton.isHidden = false
-                winResetButton.isHidden = false
-                break
-                
-            case .Match3:
-                closeButton.isHidden = false
-                nextButton.isHidden = false
-                prevButton.isHidden = false
-                break
-                
-            case .Match4:
-                closeButton.isHidden = false
-                nextButton.isHidden = false
-                prevButton.isHidden = false
-                break
-                
-            default:
-                break
-            }
+            UpdateWidgets()
         }
     }
     
@@ -301,6 +330,10 @@ class Popups{
             break
             
         case .Match5:
+            popupType = .Match6
+            break
+            
+        case .Match6:
             popupType = .Match3
             break
             
@@ -308,13 +341,13 @@ class Popups{
             break
         }
 
-        title1Label.text = GetTileString(type: popupType)
+        UpdateWidgets()
     }
     
     func onPrevButton(){
         switch ( popupType ){
         case .Match3:
-            popupType = .Match5
+            popupType = .Match6
             break
             
         case .Match4:
@@ -325,11 +358,15 @@ class Popups{
             popupType = .Match4
             break
             
+        case .Match6:
+            popupType = .Match5
+            break
+            
         default:
             break
         }
         
-        title1Label.text = GetTileString(type: popupType)
+        UpdateWidgets()
     }
     
     func onCloseButton(){
