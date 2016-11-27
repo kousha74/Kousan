@@ -12,12 +12,12 @@ import AVFoundation
 import StoreKit
 
 class GameSample{
-    var gameItems = [[Int]]()
-    var chGoal = 0
+    var fruits = [[Int]]()
+    var goals = [Int]()
     
-    init( localArr: [[Int]], chGoal: Int) {
-        gameItems = localArr
-        self.chGoal = chGoal
+    init( fruits: [[Int]], goals: [Int]) {
+        self.fruits = fruits
+        self.goals = goals
     }
 }
 
@@ -52,8 +52,6 @@ class GameModel {
     private var audioPlayerLaser : AVAudioPlayer?
     private var audioPlayerChime : AVAudioPlayer?
     
-    private let COLOR_COUNT = 4 //tbd
-    
     // the minimum number of tiles on the board
     private let MIN_TILES = 12
     
@@ -62,10 +60,16 @@ class GameModel {
     var moveCount:Int = 0
     var score:Int = 0
     
-    //To support chololates
+    //To support goals
     var chGoal = 0
     var chAdded = 0
     var chRemoved = 0
+    var targetScore = 0
+    var maxMoves = 0
+    var targetApples = 0
+    var targetSpecials = 0
+    var targetStars = 0
+    var colorCount = 0
     
     func GetMoveCount()->Int{
         return moveCount
@@ -229,12 +233,12 @@ class GameModel {
         
         gameTiles.removeAll()
         
-        let getSample = gameSamples[level]
+        let gameSample = gameSamples[level]
         
-        for index in 0...(getSample.gameItems.count-1){
+        for index in 0...(gameSample.fruits.count-1){
             let tile = GetEmptyTile()
             
-            let gameItem = getSample.gameItems[ index ]
+            let gameItem = gameSample.fruits[ index ]
             
             tile.SetID(Id:gameItem[0])
             
@@ -245,9 +249,17 @@ class GameModel {
             tile.sprite?.alpha = 1.0
         }
         
+        chGoal = gameSample.goals[0] //tbd hard coded
+        targetScore = gameSample.goals[1] //tbd hard coded
+        maxMoves = gameSample.goals[2] //tbd hard coded
+        targetApples = gameSample.goals[3] //tbd hard coded
+        targetSpecials = gameSample.goals[4] //tbd hard coded
+        targetStars = gameSample.goals[5] //tbd hard coded
+        colorCount = gameSample.goals[6]
+       
+
         moveCount = 0
         score = 0
-        chGoal = getSample.chGoal
         chAdded = 0
         chRemoved = 0
     }
@@ -306,7 +318,7 @@ class GameModel {
                     
                     //TBD : consider bubbles
                     
-                    let Id = Int(arc4random_uniform(UInt32(COLOR_COUNT))) + 1
+                    let Id = Int(arc4random_uniform(UInt32(colorCount))) + 1
                     
                     tile.SetID(Id: Id)
                     tile.SetRowAndCol(row: Int(emptyCell.y), col: Int(emptyCell.x), cellSize: cellSize, viewOffset: viewOffset)
@@ -583,63 +595,14 @@ class GameModel {
         
             //[id,x,y]
         
-            gameSamples.append( GameSample( localArr:[
+            gameSamples.append( GameSample( fruits:[
                 [1,0,0],
                 [1,0,2],
                 [1,0,3],
                 [1,0,4]
                 ],
-                chGoal: 4
+                goals: [0,25,0,0,0,0,4]
                 ) )
-        
-            gameSamples.append( GameSample( localArr:[
-                [2,0,0],
-                [1,0,1],
-                [1,0,2],
-                [1,0,3],
-                [1,0,4],
-                [1,0,5],
-                [1,2,0],
-                [2,2,1],
-                [2,2,2],
-                [2,2,3],
-                [2,2,4],
-                [2,2,5],
-                [3,5,0],
-                [3,5,1],
-                [3,5,2],
-                [3,5,3],
-                [3,5,4],
-                [3,5,5]
-                ],
-                chGoal : 0
-                ) )
-        
-            gameSamples.append( GameSample( localArr:[
-                [1,0,0],
-                [1,0,1],
-                [1,0,2],
-                [1,0,3],
-                
-                [2,1,0],
-                [2,1,1],
-                [2,1,2],
-                [2,1,3],
-                
-                [4,3,0],
-                [4,3,1],
-                [4,3,2],
-                [4,3,3],
-                
-                [3,2,0],
-                [3,2,1],
-                [3,2,2],
-                [3,2,3]
-                ],
-                chGoal: 4
-                
-                                            ) )
-        
         
             print ("There are \(gameSamples.count) samples")
         

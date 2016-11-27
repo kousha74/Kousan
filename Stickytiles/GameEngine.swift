@@ -91,16 +91,29 @@ class GameEngine {
         }
     }
     
-    func IsSolved()->Bool{
-        return false
-        //return (gameModel.GetMoveCount() > 3)
+    func IsWon()->Bool{
         
+        //check chocolates
+        if gameModel.chGoal == gameModel.chRemoved && gameModel.chGoal != 0 {
+            return true
+        }
+        
+        //check target score
+        if gameModel.targetScore <= gameModel.score && gameModel.targetScore != 0 {
+            return true
+        }
+        
+        
+        return false
     }
     
     func IsLost()->Bool{
-        return false
-        //return (gameModel.GetMoveCount() > 2)
+        //TBD Check if the board is full and there's nothing to do
+        if gameModel.maxMoves >= gameModel.moveCount && gameModel.maxMoves != 0 {
+            return true
+        }
         
+        return false
     }
     
     func OnUpdate( currentTime: TimeInterval ){
@@ -410,8 +423,21 @@ class GameEngine {
             AddTiles()
         }
         else{
-            isProcessing = false
-            RemoveBlockers()
+            FinalizeProcessing()
+        }
+    }
+    
+    func FinalizeProcessing(){
+        isProcessing = false
+        RemoveBlockers()
+        
+        if ( IsWon() )
+        {
+            gameModel.OnGameWon()
+            m_GameSceneProtocol?.OnGameWon()
+        }
+        else if ( IsLost() ){
+            m_GameSceneProtocol?.OnGameLost()
         }
     }
     

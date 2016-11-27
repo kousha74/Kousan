@@ -13,6 +13,8 @@ protocol GameSceneProtocol{
     func onNewTile(tile:TileNode)
     func onAddChild(child: SKNode)
     func UpdateLabels()
+    func OnGameWon()
+    func OnGameLost()
 }
 
 
@@ -127,6 +129,16 @@ class GameScene: SKScene,GameSceneProtocol {
         if ( !gameModel.IsAudioOn() ){
             soundButton.texture = SKTexture(imageNamed: "SoundOff")
         }        
+    }
+    
+    func OnGameWon(){
+        gameModel.SoundWin()
+        popups?.OpenPopup( type: Popups.PopupType.Win)
+    }
+    
+    func OnGameLost(){
+        gameModel.SoundWin() //TBD
+        popups?.OpenPopup( type: Popups.PopupType.Lose)
     }
     
     func removeTiles()
@@ -246,10 +258,11 @@ class GameScene: SKScene,GameSceneProtocol {
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         
-        if ( GameEngine.sharedInstance.IsSolved() )
-        {
-            return
-        }
+        //TBD
+        //if ( GameEngine.sharedInstance.IsSolved() )
+        //{
+        //   return
+        //}
         
         // 1 - Choose one of the touches to work with
         guard let touch = touches.first else {
@@ -262,17 +275,6 @@ class GameScene: SKScene,GameSceneProtocol {
             if ( ( gameModel.AreAdsAvailable() ) && ((gameModel.GetMoveCount()%25) == 0 )){
                 Chartboost.showInterstitial(CBLocationHomeScreen)
             }
-        }
-        
-        if ( GameEngine.sharedInstance.IsSolved() )
-        {
-            gameModel.SoundWin()
-            gameManager?.onGameWon()
-            popups?.OpenPopup( type: Popups.PopupType.Win)
-        }
-        else if ( GameEngine.sharedInstance.IsLost() ){
-            gameModel.SoundWin() //TBD
-            popups?.OpenPopup( type: Popups.PopupType.Lose)
         }
         
         UpdateLabels()

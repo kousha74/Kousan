@@ -11,7 +11,6 @@ import SpriteKit
 import GameplayKit
 
 protocol GameManager{
-    func onGameWon()
     func onHomeButtonPressed( moveCount: Int )
     func onLevelButtonPressed( moveCount: Int )
     func onResetButtonPressed( moveCount: Int )
@@ -63,13 +62,7 @@ class GameViewController: UIViewController,GameManager  {
     override var prefersStatusBarHidden: Bool {
         return true
     }
-    
-    func onGameWon()
-    {
-        GameModel.sharedInstance.OnGameWon()
-        //performSegue(withIdentifier: "gameOverSegue", sender: self)
-    }
-    
+        
     func onHomeButtonPressed( moveCount: Int ){
         
         if ( moveCount == 0 ){
