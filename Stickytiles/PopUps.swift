@@ -15,8 +15,8 @@ class Popups{
         case Home, Level, Reset, Next, None
     }
     
-    enum PopupType{
-        case Win, Lose, Match3, Match4, Match5, Match6, Next, Prev, Close, Info, None
+    enum PopupType:Int{
+        case Win, Lose, Match3, Match4, Match5, Match6, Row, Col, Four, Yellow, Green, Blocker, Blocked, Baloon, Question, Chocolate, Next, Prev, Close, Info, None
     }
     
     //For Win Dialog
@@ -175,6 +175,12 @@ class Popups{
         winCoverFrame.isHidden = false
         winFrame.isHidden = false
         title1Label.isHidden = false
+        
+        if popupType.rawValue >= PopupType.Match3.rawValue && popupType.rawValue <= PopupType.Chocolate.rawValue {
+            closeButton.isHidden = false
+            nextButton.isHidden = false
+            prevButton.isHidden = false
+        }
 
         switch ( popupType ){
         case .Win:
@@ -196,9 +202,6 @@ class Popups{
             title1Label.text = "Match 3 fruits"
             title2Label.text = "to remove them"
             title2Label.isHidden = false
-            closeButton.isHidden = false
-            nextButton.isHidden = false
-            prevButton.isHidden = false
             match3Image.isHidden = false
             break
             
@@ -206,9 +209,6 @@ class Popups{
             title1Label.text = "Match 4 fruits"
             title2Label.text = "create a special fruit"
             title2Label.isHidden = false
-            closeButton.isHidden = false
-            nextButton.isHidden = false
-            prevButton.isHidden = false
             match4Image.isHidden = false
             break
             
@@ -216,9 +216,6 @@ class Popups{
             title1Label.text = "Match 5 fruits"
             title2Label.text = "create a yellow star"
             title2Label.isHidden = false
-            closeButton.isHidden = false
-            nextButton.isHidden = false
-            prevButton.isHidden = false
             match5Image.isHidden = false
             break
             
@@ -226,11 +223,77 @@ class Popups{
             title1Label.text = "Match 6 fruits"
             title2Label.text = "create a green star"
             title2Label.isHidden = false
-            closeButton.isHidden = false
-            nextButton.isHidden = false
-            prevButton.isHidden = false
             match6Image.isHidden = false
             break
+
+        case .Row:
+            title1Label.text = "Remove row fruit"
+            title2Label.text = "to remove a row"
+            title2Label.isHidden = false
+            break
+            
+        case .Col:
+            title1Label.text = "Remove column fruit"
+            title2Label.text = "to remove a column"
+            title2Label.isHidden = false
+            break
+            
+        case .Four:
+            title1Label.text = "Remove power fruit"
+            title2Label.text = "To remove all fruits"
+            title2Label.isHidden = false
+            title3Label.text = "of the same type"
+            title3Label.isHidden = false
+            break
+            
+        case .Yellow:
+            title1Label.text = "Tap yellow star"
+            title2Label.text = "to remove row,"
+            title2Label.isHidden = false
+            title3Label.text = "and column"
+            title3Label.isHidden = false
+            break
+            
+        case .Green:
+            title1Label.text = "Tap green star"
+            title2Label.text = "to remove row,"
+            title2Label.isHidden = false
+            title3Label.text = "column, and diagonally"
+            title3Label.isHidden = false
+            break
+            
+        case .Blocker:
+            title1Label.text = "Tap empty space"
+            title2Label.text = "to create a"
+            title2Label.isHidden = false
+            title3Label.text = "temporary blocker"
+            title3Label.isHidden = false
+            break
+            
+        case .Blocked:
+            title1Label.text = "Blockers don't move"
+            break
+            
+        case .Baloon:
+            title1Label.text = "Tap a ballon"
+            title2Label.text = "to remove it"
+            title2Label.isHidden = false
+            break
+            
+        case .Question:
+            title1Label.text = "Remove a neighboring"
+            title2Label.text = "fruit to reveal"
+            title2Label.isHidden = false
+            title3Label.text = "the fruit"
+            title3Label.isHidden = false
+            break
+            
+        case .Chocolate:
+            title1Label.text = "Bring chocolate down"
+            title2Label.text = "to remove it"
+            title2Label.isHidden = false
+            break
+            
             
         default:
             title1Label.text = "Text missing!!!"
@@ -324,50 +387,23 @@ class Popups{
     }
     
     func onNextButton(){
-        switch ( popupType ){
-        case .Match3:
-            popupType = .Match4
-            break
-            
-        case .Match4:
-            popupType = .Match5
-            break
-            
-        case .Match5:
-            popupType = .Match6
-            break
-            
-        case .Match6:
+        
+        if popupType == .Chocolate{
             popupType = .Match3
-            break
-            
-        default:
-            break
+        }
+        else{
+            popupType = PopupType( rawValue: popupType.rawValue + 1)!
         }
 
         UpdateWidgets()
     }
     
     func onPrevButton(){
-        switch ( popupType ){
-        case .Match3:
-            popupType = .Match6
-            break
-            
-        case .Match4:
-            popupType = .Match3
-            break
-            
-        case .Match5:
-            popupType = .Match4
-            break
-            
-        case .Match6:
-            popupType = .Match5
-            break
-            
-        default:
-            break
+        if popupType == .Match3{
+            popupType = .Chocolate
+        }
+        else{
+            popupType = PopupType( rawValue: popupType.rawValue - 1)!
         }
         
         UpdateWidgets()
