@@ -31,7 +31,7 @@ class GameScene: SKScene,GameSceneProtocol {
     let resetButton = SKSpriteNode(imageNamed: "RewindG")
     let musicButton = SKSpriteNode(imageNamed: "MusicOn")
     let soundButton = SKSpriteNode(imageNamed: "SoundOn")
-    let helpButton = SKSpriteNode(imageNamed: "SoundOn")
+    let helpButton = SKSpriteNode(imageNamed: "HelpIcon")
     
     var gameManager:GameManager?
     var gameModel: GameModel = GameModel.sharedInstance

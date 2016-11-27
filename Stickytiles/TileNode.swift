@@ -134,7 +134,7 @@ class TileNode {
             case TileNode.CHOLOLATE_ID:
                 return "chocolate"
             case TileNode.BLOCKER_ID:
-                return "texture1"
+                return "blocker"
             case TileNode.BLOCKED_ID:
                 return "Blocked"
             default:

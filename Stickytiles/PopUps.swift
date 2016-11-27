@@ -26,7 +26,7 @@ class Popups{
     private let winLevelButton = SKSpriteNode(imageNamed: "GridG")
     private let winResetButton = SKSpriteNode(imageNamed: "RewindG")
     private let winNextButton = SKSpriteNode(imageNamed: "FastForwardG")
-    private let closeButton = SKSpriteNode(imageNamed: "HomeG")
+    private let closeButton = SKSpriteNode(imageNamed: "CancelIcon")
     private let nextButton = SKSpriteNode(imageNamed: "NextPage")
     private let prevButton = SKSpriteNode(imageNamed: "PrevPage")
 
