@@ -95,15 +95,35 @@ class GameEngine {
     func IsWon()->Bool{
         
         //check chocolates
-        if gameModel.chGoal == gameModel.chRemoved && gameModel.chGoal != 0 {
-            return true
+        if gameModel.chGoal != 0 {
+            if gameModel.chGoal == gameModel.chRemoved {
+                return true
+            }
         }
-        
         //check target score
-        if gameModel.targetScore <= gameModel.score && gameModel.targetScore != 0 {
-            return true
+        else if gameModel.targetScore != 0 {
+            if gameModel.targetScore <= gameModel.score {
+                return true
+            }
         }
-        
+        //check target apples
+        else if gameModel.targetApples != 0 {
+            if gameModel.targetApples <= gameModel.applesRemoved {
+                return true
+            }
+        }
+        //check target Special
+        else if gameModel.targetSpecials != 0 {
+            if gameModel.targetSpecials <= gameModel.specialsRemoved {
+                return true
+            }
+        }
+        //check target stars
+        else if gameModel.targetStars != 0 {
+            if gameModel.targetStars <= gameModel.starsRemoved {
+                return true
+            }
+        }
         
         return false
     }

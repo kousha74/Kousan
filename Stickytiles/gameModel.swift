@@ -64,11 +64,20 @@ class GameModel {
     var chGoal = 0
     var chAdded = 0
     var chRemoved = 0
+    
     var targetScore = 0
+    
     var maxMoves = 0
+    
     var targetApples = 0
+    var applesRemoved = 0
+    
     var targetSpecials = 0
+    var specialsRemoved = 0
+    
     var targetStars = 0
+    var starsRemoved = 0
+    
     var colorCount = 0
     
     func GetMoveCount()->Int{
@@ -233,6 +242,24 @@ class GameModel {
         
         gameTiles.removeAll()
         
+        moveCount = 0
+        score = 0
+        
+        //Resetting goals
+        chGoal = 0
+        chAdded = 0
+        chRemoved = 0
+        targetScore = 0
+        maxMoves = 0
+        targetApples = 0
+        applesRemoved = 0
+        targetSpecials = 0
+        specialsRemoved = 0
+        targetStars = 0
+        starsRemoved = 0
+        
+        colorCount = 0
+
         let gameSample = gameSamples[level]
         
         for index in 0...(gameSample.fruits.count-1){
@@ -241,6 +268,10 @@ class GameModel {
             let gameItem = gameSample.fruits[ index ]
             
             tile.SetID(Id:gameItem[0])
+            
+            if gameItem[0] == TileNode.CHOLOLATE_ID {
+                chAdded += 1
+            }
             
             tile.SetRowAndCol(row: gameItem[2], col: gameItem[1], cellSize: cellSize, viewOffset: viewOffset)
             
@@ -256,12 +287,6 @@ class GameModel {
         targetSpecials = gameSample.goals[4] //tbd hard coded
         targetStars = gameSample.goals[5] //tbd hard coded
         colorCount = gameSample.goals[6]
-       
-
-        moveCount = 0
-        score = 0
-        chAdded = 0
-        chRemoved = 0
     }
     
     //find the first tile with the given ID
@@ -279,7 +304,7 @@ class GameModel {
         
         if chAdded < chGoal {
             if GetID(id: TileNode.CHOLOLATE_ID) == nil {
-                chAdded += 1
+                
                 //First find an empty tile
                 let tile = GetEmptyTile()
                 
@@ -288,6 +313,7 @@ class GameModel {
                     tile.SetID(Id: TileNode.CHOLOLATE_ID)
                     tile.SetRowAndCol(row: Int(emptyCell.y), col: Int(emptyCell.x), cellSize: cellSize, viewOffset: viewOffset)
                     gameTiles.append(tile)
+                    chAdded += 1
                     return tile
                 }
             }
@@ -508,8 +534,35 @@ class GameModel {
         //tbd bad loop
         for i in 0...gameTiles.count-1{
             if ( gameTiles[i] === tile ){
+                
                 if gameTiles[i].GetID() != TileNode.BLOCKER_ID{
                     ChangeScore(delta: 1)
+                }
+                
+                switch gameTiles[i].GetID() {
+                case TileNode.CHOLOLATE_ID:
+                    chRemoved += 1
+                    break
+                    
+                case TileNode.APPLE_ID:
+                    applesRemoved += 1
+                    break
+                    
+                case TileNode.STAR5_ID, TileNode.STAR7_ID:
+                    starsRemoved += 1
+                    break
+                    
+                default:
+                    break;
+                }
+                
+                switch gameTiles[i].GetClusterType(){
+                case .Four, .Row, .Col:
+                    specialsRemoved += 1
+                    break
+                    
+                default:
+                    break
                 }
                 
                 gameTiles.remove(at: i)
@@ -600,9 +653,10 @@ class GameModel {
                 [1,0,0],
                 [1,0,2],
                 [1,0,3],
-                [1,0,4]
+                [1,0,4],
+                [1,1,0]
                 ],
-                goals: [0,5,0,0,0,0,4]
+                goals: [0,0,40,0,0,1,4]
                 ) )
         
         gameSamples.append( GameSample( fruits:[

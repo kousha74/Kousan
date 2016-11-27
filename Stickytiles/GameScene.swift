@@ -21,6 +21,7 @@ protocol GameSceneProtocol{
 
 class GameScene: SKScene,GameSceneProtocol {
     
+    let goalLabel = SKLabelNode(text: "Level: 0")
     let levelLabel = SKLabelNode(text: "Level: 0")
     let scoreLabel = SKLabelNode(text: "Score")
     let titleLabel = SKLabelNode(text: "Sticky Tiles")
@@ -62,7 +63,7 @@ class GameScene: SKScene,GameSceneProtocol {
         titleLabel.fontSize = 36
         titleLabel.fontColor = SKColor.blue
         titleLabel.fontName = "Papyrus"
-        addChild(titleLabel)
+        //addChild(titleLabel)
         
         
         let y = viewOffset.y - 1.5*CGFloat(cellSize)
@@ -104,19 +105,31 @@ class GameScene: SKScene,GameSceneProtocol {
         moveCountLabel.fontName = "Papyrus"
         addChild(moveCountLabel)
         
-        scoreLabel.position = CGPoint(x: viewOffset.x + 2.0*CGFloat(boardPadding), y: viewOffset.y + CGFloat(boardSize) + 2.0*CGFloat(boardPadding) + 0.5*CGFloat(cellSize) )
+        let boardMaxY = viewOffset.y + CGFloat(boardSize) + 2.0*CGFloat(boardPadding)
+        let labelHeight = 0.75*CGFloat(cellSize)
+        
+        scoreLabel.position = CGPoint(x: viewOffset.x, y:  boardMaxY + 0.5*labelHeight )
         scoreLabel.verticalAlignmentMode = SKLabelVerticalAlignmentMode.center
         scoreLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
-        scoreLabel.fontSize = 24
+        scoreLabel.fontSize = 18
         scoreLabel.fontColor = SKColor.blue
         scoreLabel.fontName = "Papyrus"
         addChild(scoreLabel)
         
         
-        levelLabel.position = CGPoint(x: scoreLabel.frame.minX, y: scoreLabel.frame.maxY + 0.5*CGFloat(cellSize) )
+        goalLabel.position = CGPoint(x: viewOffset.x, y: boardMaxY + 1.5*labelHeight )
+        goalLabel.verticalAlignmentMode = SKLabelVerticalAlignmentMode.center
+        goalLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
+        goalLabel.fontSize = 18
+        goalLabel.fontColor = SKColor.blue
+        goalLabel.fontName = "Papyrus"
+        goalLabel.text = ""
+        addChild(goalLabel)
+        
+        levelLabel.position = CGPoint(x: viewOffset.x, y: boardMaxY + 2.5*labelHeight )
         levelLabel.verticalAlignmentMode = SKLabelVerticalAlignmentMode.center
         levelLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
-        levelLabel.fontSize = 24
+        levelLabel.fontSize = 18
         levelLabel.fontColor = SKColor.blue
         levelLabel.fontName = "Papyrus"
         levelLabel.text = "Level " + String(gameModel.getCurrentLevel()+1)
@@ -152,7 +165,7 @@ class GameScene: SKScene,GameSceneProtocol {
             title1 = "Remove \(gameModel.targetSpecials) special fruits"
         }
         else if gameModel.targetStars != 0 {
-            title1 = "Remove \(gameModel.targetStars) starts"
+            title1 = "Remove \(gameModel.targetStars) stars"
         }
         
         if gameModel.maxMoves != 0 {
@@ -189,7 +202,6 @@ class GameScene: SKScene,GameSceneProtocol {
             }
         }
     }
-    
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         // 1 - Choose one of the touches to work with
@@ -324,6 +336,27 @@ class GameScene: SKScene,GameSceneProtocol {
         
         scoreLabel.text = "Score: \(gameModel.GetScore())"
         levelLabel.text = "Level " + String(gameModel.getCurrentLevel()+1)
+        
+        //goal label
+        //check chocolates
+        if gameModel.chGoal != 0 {
+            goalLabel.text = "Chololates: \(gameModel.chRemoved) / \(gameModel.chGoal)"
+        }
+        //check target apples
+        else if gameModel.targetApples != 0 {
+            goalLabel.text = "Apples: \(gameModel.applesRemoved) / \(gameModel.targetApples)"
+        }
+        //check target Special
+        else if gameModel.targetSpecials != 0 {
+            goalLabel.text = "Special Fruits: \(gameModel.specialsRemoved) / \(gameModel.targetSpecials)"
+        }
+        //check target stars
+        else if gameModel.targetStars != 0 {
+            goalLabel.text = "Stars: \(gameModel.starsRemoved) / \(gameModel.targetStars)"
+        }
+        else{
+            goalLabel.text = ""
+        }
     }
     
     override func update(_ currentTime: TimeInterval) {

@@ -12,6 +12,7 @@ import SpriteKit
 class TileNode {
     
     // MARK : constants
+    static let APPLE_ID = 1
     static let BUBBLE_ID = 10
     static let STAR5_ID = 11
     static let STAR7_ID = 12
