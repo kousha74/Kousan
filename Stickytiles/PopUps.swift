@@ -158,13 +158,10 @@ class Popups{
             node.isHidden = true
             gameSceneProtocol.onAddChild(child: node)
         }
-        
-        
-        
     }
     
     func OpenRandomHelpPopup(){
-        OpenPopup(type: .Match3)
+        OpenPopup(type: .Blocker)
     }
     
     func GetPopupType()->PopupType{

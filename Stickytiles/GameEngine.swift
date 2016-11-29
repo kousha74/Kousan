@@ -75,6 +75,9 @@ class GameEngine {
             m_GameSceneProtocol?.onAddChild(child: tile.sprite!)
         }
         
+        //tbd remove
+        AddTiles()
+        
         m_GameSceneProtocol?.UpdateLabels()
         m_GameSceneProtocol?.OnGameLoaded()
     }

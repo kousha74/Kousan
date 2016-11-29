@@ -27,7 +27,7 @@ class GameModel {
     
     private var maxLevelCompleted:Int = -1
     
-    static let maxLevel:Int = 49
+    static let maxLevel:Int = 7 //tbd
     
     static let delay = 0.35
     
@@ -122,7 +122,7 @@ class GameModel {
     }
     
     func AreAdsAvailable()->Bool{
-        return ( userDefaults.integer(forKey: "removeAds") == 0 ) && ( currentLevel > 2 )
+        return ( userDefaults.integer(forKey: "removeAds") == 0 ) && ( currentLevel > 20 ) //tbd change
     }
     
     class var sharedInstance: GameModel {
@@ -262,7 +262,7 @@ class GameModel {
         
         colorCount = 0
 
-        let gameSample = gameSamples[level]
+        let gameSample = gameSamples[min(level, GameModel.maxLevel - 1)]
         
         for index in 0...(gameSample.fruits.count-1){
             let tile = GetEmptyTile()
@@ -579,7 +579,7 @@ class GameModel {
         
     private init() {
         
-        maxLevelCompleted = userDefaults.integer(forKey: "maxLevelCompleted") // put - 1 back
+        maxLevelCompleted = userDefaults.integer(forKey: "maxLevelCompleted") - 1
         
         // For debugging only
         //maxLevelCompleted = 49
@@ -672,13 +672,62 @@ class GameModel {
                 ) )
         
         gameSamples.append( GameSample( fruits:[
-            [1,0,0],
-            [1,0,2],
-            [1,0,3],
-            [1,0,4]
+            [TileNode.CHOLOLATE_ID,0,5]
             ],
-                                        goals: [0,125,10,0,0,0,4,6]
+                                        goals: [3,0,50,0,0,0,4,0]
         ) )
+        
+        gameSamples.append( GameSample( fruits:[
+            [1,0,5]
+            ],
+                                        goals: [0,0,50,10,0,0,4,0]
+        ) )
+        
+        gameSamples.append( GameSample( fruits:[
+            [1,0,5]
+            ],
+                                        goals: [0,0,50,0,3,0,4,0]
+        ) )
+        
+        gameSamples.append( GameSample( fruits:[
+            [1,0,0],
+            [1,1,1],
+            [1,2,0],
+            [1,3,2],
+            [1,4,0],
+            [1,5,2],
+            [2,0,1],
+            [2,1,0],
+            [2,2,1],
+            [2,3,0],
+            [2,4,1],
+            [2,5,0],
+            [TileNode.BLOCKED_ID,3,3]
+            ],
+                                        goals: [0,40,40,0,0,0,4,10]
+        ) )
+        
+        gameSamples.append( GameSample( fruits:[
+            [TileNode.CHOLOLATE_ID,0,5]
+            ,[TileNode.BLOCKED_ID,3,3]
+            ],
+                                        goals: [3,0,50,0,0,0,4,10]
+        ) )
+        
+        gameSamples.append( GameSample( fruits:[
+            [1,0,5]
+            ,[TileNode.BLOCKED_ID,3,3]
+            ],
+                                        goals: [0,0,50,10,0,0,4,10]
+        ) )
+        
+        gameSamples.append( GameSample( fruits:[
+            [1,0,5]
+            ,[TileNode.BLOCKED_ID,3,3]
+            ],
+                                        goals: [0,0,50,0,3,0,4,10]
+        ) )
+        
         
             print ("There are \(gameSamples.count) samples")
         
