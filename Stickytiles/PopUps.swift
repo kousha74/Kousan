@@ -55,8 +55,6 @@ class Popups{
         gameModel = GameModel.sharedInstance
         self.gameSceneProtocol = gameSceneProtocol
         
-        
-        
         //For Win Dialog
         let winSize = bounds.size
         winCoverFrame = SKShapeNode(rect: CGRect(x: Int(-winSize.width*0.5), y: Int(-winSize.height*0.5), width: Int(winSize.width), height: Int(winSize.height)), cornerRadius: 0)
@@ -163,6 +161,10 @@ class Popups{
         
         
         
+    }
+    
+    func OpenRandomHelpPopup(){
+        OpenPopup(type: .Match3)
     }
     
     func GetPopupType()->PopupType{

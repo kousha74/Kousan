@@ -215,6 +215,7 @@ class GameScene: SKScene,GameSceneProtocol {
             
             if popups?.GetPopupType() == Popups.PopupType.Info {
                 popups?.ClosePopup()
+                popups?.OpenRandomHelpPopup()
             }
             else if let touchedButton = popups?.GetTouchedButton(nodes: touchedNodes) {
                 switch ( touchedButton ){
