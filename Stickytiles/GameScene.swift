@@ -44,7 +44,7 @@ class GameScene: SKScene,GameSceneProtocol {
 
         popups = Popups(bounds: view.bounds, gameSceneProtocol: self )
         
-        backgroundColor = SKColor.white
+        backgroundColor = UIColor(red: 1.0, green: 1.0, blue: 0.95, alpha: 1.0)
         
         ///The game board
         let boardSize : Int = gameModel.GetCellSize()*gameModel.boardSize
@@ -54,7 +54,7 @@ class GameScene: SKScene,GameSceneProtocol {
         let shape = SKShapeNode(rect: CGRect(x: -boardPadding, y: -boardPadding, width: boardSize+2*boardPadding, height: boardSize+2*boardPadding), cornerRadius: 10)
         
         shape.position = CGPoint(x: viewOffset.x, y: viewOffset.y)
-        shape.fillColor = UIColor.lightGray
+        shape.fillColor = UIColor(red: 1.0, green: 1.0, blue: 0.8, alpha: 1.0)
         shape.strokeColor = UIColor.black
         shape.lineWidth = 2
         addChild(shape)
