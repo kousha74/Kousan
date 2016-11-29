@@ -342,7 +342,8 @@ class GameEngine {
                         case TileNode.BUBBLE_ID: //pop the balloon
                             gameModel.SoundWave()
                             DeleteTile(tile: touchedTile)
-                            gameModel.ChangeMoveCount(delta: 1)
+                            //balloon is not a move
+                            //gameModel.ChangeMoveCount(delta: 1)
                             break
                             
                         default:

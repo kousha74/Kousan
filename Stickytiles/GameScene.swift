@@ -338,9 +338,13 @@ class GameScene: SKScene,GameSceneProtocol {
         else if gameModel.targetSpecials != 0 {
             goalLabel.text = "Special Fruits: \(gameModel.specialsRemoved) / \(gameModel.targetSpecials)"
         }
-        //check target stars
+            //check target stars
         else if gameModel.targetStars != 0 {
             goalLabel.text = "Stars: \(gameModel.starsRemoved) / \(gameModel.targetStars)"
+        }
+        //check target score
+        else if gameModel.targetScore != 0 {
+            goalLabel.text = "Target Score: \(gameModel.targetScore)"
         }
         else{
             goalLabel.text = ""

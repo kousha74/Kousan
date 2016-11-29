@@ -540,7 +540,7 @@ class GameModel {
         for i in 0...gameTiles.count-1{
             if ( gameTiles[i] === tile ){
                 
-                if gameTiles[i].GetID() != TileNode.BLOCKER_ID{
+                if gameTiles[i].GetID() != TileNode.BLOCKER_ID && gameTiles[i].GetID() != TileNode.BUBBLE_ID{
                     ChangeScore(delta: 1)
                 }
                 
@@ -652,16 +652,23 @@ class GameModel {
         gameSamples = [GameSample]()
         
             //fruits [id,x,y]
-            //goals [Chcolate, targetScore, maxMoves, targetApples, targetSpecial, targetStars, colorCount]
+            //goals [Chcolate, targetScore, maxMoves, targetApples, targetSpecial, targetStars, colorCount, baloon frequency]
 
             gameSamples.append( GameSample( fruits:[
                 [1,0,0],
-                [1,0,2],
-                [1,0,3],
-                [1,0,4],
-                [1,1,0]
+                [1,1,1],
+                [1,2,0],
+                [1,3,2],
+                [1,4,0],
+                [1,5,2],
+                [2,0,1],
+                [2,1,0],
+                [2,2,1],
+                [2,3,0],
+                [2,4,1],
+                [2,5,0]
                 ],
-                goals: [2,0,40,0,0,1,4,6]
+                goals: [0,40,40,0,0,0,4,0]
                 ) )
         
         gameSamples.append( GameSample( fruits:[
