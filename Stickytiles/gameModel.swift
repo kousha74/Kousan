@@ -107,14 +107,14 @@ class GameModel {
     }
     
     func OnProductPurchased( productID: String ) {
-        if ( productID == StickyTilesProducts.removeAds ){
+        if ( productID == GameProducts.removeAds ){
             userDefaults.set( 1, forKey: "removeAds")
         }
     }
     
     func IsProductPurchased( productID: String )->Bool{
         
-        if ( productID == StickyTilesProducts.removeAds ){
+        if ( productID == GameProducts.removeAds ){
             return ( userDefaults.integer(forKey: "removeAds") != 0 )
         }
 

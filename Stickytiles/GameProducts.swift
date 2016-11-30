@@ -22,13 +22,13 @@
 
 import Foundation
 
-public struct StickyTilesProducts {
+public struct GameProducts {
   
-  public static let removeAds = "com.parspicks.stickytiles.removeAds"
+  public static let removeAds = "com.parspicks.magictiles.removeads"
   
-  fileprivate static let productIdentifiers: Set<ProductIdentifier> = [StickyTilesProducts.removeAds]
+  fileprivate static let productIdentifiers: Set<ProductIdentifier> = [GameProducts.removeAds]
 
-  public static let store = IAPHelper(productIds: StickyTilesProducts.productIdentifiers)
+  public static let store = IAPHelper(productIds: GameProducts.productIdentifiers)
 }
 
 func resourceNameForProductIdentifier(_ productIdentifier: String) -> String? {

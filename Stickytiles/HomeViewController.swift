@@ -26,7 +26,7 @@ class HomeViewController: UIViewController {
                                                object: nil)
         reload()
         
-        if ( GameModel.sharedInstance.IsProductPurchased(productID: StickyTilesProducts.removeAds))
+        if ( GameModel.sharedInstance.IsProductPurchased(productID: GameProducts.removeAds))
         {
             removeAdsButton.isHidden = true
             restorePurchaseButton.isHidden = true
@@ -58,7 +58,7 @@ class HomeViewController: UIViewController {
         
         if ( products.count > 0 ) {
             
-            StickyTilesProducts.store.buyProduct(products[0])
+            GameProducts.store.buyProduct(products[0])
         }
         else {
             reload()
@@ -76,7 +76,7 @@ class HomeViewController: UIViewController {
     }
     
     @IBAction func OnRestorePurchasePressed(_ sender: AnyObject) {
-        StickyTilesProducts.store.restorePurchases()
+        GameProducts.store.restorePurchases()
     }
     
     func handlePurchaseNotification(_ notification: Notification) {
@@ -84,7 +84,7 @@ class HomeViewController: UIViewController {
         
         GameModel.sharedInstance.OnProductPurchased(productID: productID)
         
-        if ( GameModel.sharedInstance.IsProductPurchased(productID: StickyTilesProducts.removeAds))
+        if ( GameModel.sharedInstance.IsProductPurchased(productID: GameProducts.removeAds))
         {
             removeAdsButton.isHidden = true
             restorePurchaseButton.isHidden = true
@@ -121,7 +121,7 @@ class HomeViewController: UIViewController {
     func reload() {
         products = []
         
-        StickyTilesProducts.store.requestProducts{success, products in
+        GameProducts.store.requestProducts{success, products in
             if success {
                 self.products = products!
             }
