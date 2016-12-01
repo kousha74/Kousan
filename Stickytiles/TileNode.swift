@@ -19,6 +19,7 @@ class TileNode {
     static let CHOLOLATE_ID = 13
     static let BLOCKER_ID = 14
     static let BLOCKED_ID = 15
+    static let QUESTION_ID = 16
     
     static let IS_MOVING:Int = 0
     static let IS_VISITED:Int = 1
@@ -120,10 +121,14 @@ class TileNode {
         sprite?.position.y = viewOffset.y + (CGFloat(row)+CGFloat(0.5))*CGFloat(cellSize)
     }
     
+    func IsFruit()->Bool{
+        return id < TileNode.BUBBLE_ID
+    }
+    
     func GetTileImage()->String{
         
         //special tiles
-        if ( id >= TileNode.BUBBLE_ID ) {
+        if !IsFruit() {
             switch(id){
             case TileNode.BUBBLE_ID:
                 return "Balloon"
@@ -137,6 +142,8 @@ class TileNode {
                 return "blocker"
             case TileNode.BLOCKED_ID:
                 return "Blocked"
+            case TileNode.QUESTION_ID:
+                return "QuestionMark"
             default:
                 return "gray"
                 

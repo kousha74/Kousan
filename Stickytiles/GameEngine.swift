@@ -483,6 +483,7 @@ class GameEngine {
     }
     
     func DeleteTile(tile:TileNode){
+        TileWillBeDeleted(tile: tile)
         gameModel.RemoveTile(tile: tile)
         m_GameSceneProtocol?.UpdateLabels()
         let fadeoutAction = SKAction.fadeOut(withDuration: GameModel.delay)
@@ -490,6 +491,47 @@ class GameEngine {
         tile.sprite?.run( SKAction.sequence([fadeoutAction,actionMoveDone]))
     }
     
+    func TileWillBeDeleted(tile:TileNode)
+    {
+        if tile.IsFruit(){
+            
+            var pos = CGPoint(x: tile.GetCol(), y: tile.GetRow() )
+            
+            
+            pos.x = CGFloat( tile.GetCol() )
+            pos.y = CGFloat( tile.GetRow() + 1 )
+            if let neighborTile = gameModel.GetTile(pos: pos){
+                if neighborTile.GetID() == TileNode.QUESTION_ID{
+                    neighborTile.SetID(Id: gameModel.GetRandomTileID())
+                }
+            }
+            
+            pos.x = CGFloat( tile.GetCol() )
+            pos.y = CGFloat( tile.GetRow() - 1 )
+            if let neighborTile = gameModel.GetTile(pos: pos){
+                if neighborTile.GetID() == TileNode.QUESTION_ID{
+                    neighborTile.SetID(Id: gameModel.GetRandomTileID())
+                }
+            }
+            
+            pos.x = CGFloat( tile.GetCol() + 1 )
+            pos.y = CGFloat( tile.GetRow() )
+            if let neighborTile = gameModel.GetTile(pos: pos){
+                if neighborTile.GetID() == TileNode.QUESTION_ID{
+                    neighborTile.SetID(Id: gameModel.GetRandomTileID())
+                }
+            }
+            
+            pos.x = CGFloat( tile.GetCol() - 1 )
+            pos.y = CGFloat( tile.GetRow() )
+            if let neighborTile = gameModel.GetTile(pos: pos){
+                if neighborTile.GetID() == TileNode.QUESTION_ID{
+                    neighborTile.SetID(Id: gameModel.GetRandomTileID())
+                }
+            }
+        }
+    }
+        
     func DeleteRow( row:Int ){
         for col in 0...gameModel.boardSize-1{
             
@@ -579,7 +621,7 @@ class GameEngine {
                         if !tile2.GetFlag(flag: TileNode.IS_LOCKED) {
                             if ( tile2.GetClusterType() == TileNode.ClusterType.None ){
                                 //delete the tile
-                                DeleteTile(tile: tile2 )
+                                DeleteTile(tile: tile2 )///
                             }
                             else{
                                 tile2.SetFlag(flag: TileNode.TBP, isSet: true)

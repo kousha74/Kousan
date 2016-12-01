@@ -345,12 +345,7 @@ class GameModel {
                 
                 if let emptyCell = FindEmptyCell(){
                     
-                    if baloonFrequency != 0 && arc4random_uniform(UInt32(baloonFrequency)) == 0 {
-                        tile.SetID(Id: TileNode.BUBBLE_ID)
-                    }
-                    else{
-                        tile.SetID(Id: Int(arc4random_uniform(UInt32(colorCount))) + 1)
-                    }
+                    tile.SetID(Id: GetRandomTileID() )
                     
                     tile.SetRowAndCol(row: Int(emptyCell.y), col: Int(emptyCell.x), cellSize: cellSize, viewOffset: viewOffset)
                     gameTiles.append(tile)
@@ -360,6 +355,16 @@ class GameModel {
         }
         
         return newTiles
+    }
+    
+    func GetRandomTileID()->Int{
+        
+        if baloonFrequency != 0 && arc4random_uniform(UInt32(baloonFrequency)) == 0 {
+            return TileNode.BUBBLE_ID
+        }
+        else{
+            return Int(arc4random_uniform(UInt32(colorCount))) + 1
+        }
     }
     
     func AddTile(id: Int, pos:CGPoint)->TileNode?{
@@ -536,6 +541,7 @@ class GameModel {
     }
     
     func RemoveTile(tile:TileNode){
+        
         //tbd bad loop
         for i in 0...gameTiles.count-1{
             if ( gameTiles[i] === tile ){
@@ -655,16 +661,16 @@ class GameModel {
             //goals [Chcolate, targetScore, maxMoves, targetApples, targetSpecial, targetStars, colorCount, baloon frequency]
 
             gameSamples.append( GameSample( fruits:[
-                [1,0,0],
-                [1,1,1],
+                [16,0,0],
+                [16,1,1],
                 [1,2,0],
                 [1,3,2],
                 [1,4,0],
                 [1,5,2],
                 [2,0,1],
                 [2,1,0],
-                [2,2,1],
-                [2,3,0],
+                [16,2,1],
+                [16,3,0],
                 [2,4,1],
                 [2,5,0]
                 ],
@@ -690,14 +696,14 @@ class GameModel {
         ) )
         
         gameSamples.append( GameSample( fruits:[
-            [1,0,0],
-            [1,1,1],
+            [16,0,0],
+            [16,1,1],
             [1,2,0],
             [1,3,2],
             [1,4,0],
             [1,5,2],
-            [2,0,1],
-            [2,1,0],
+            [16,0,1],
+            [16,1,0],
             [2,2,1],
             [2,3,0],
             [2,4,1],
