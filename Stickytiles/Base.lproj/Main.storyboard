@@ -12,7 +12,7 @@
         <!--Home View Controller-->
         <scene sceneID="WrZ-3Q-QFc">
             <objects>
-                <viewController storyboardIdentifier="homevc" id="5Ie-E2-vTb" customClass="HomeViewController" customModule="Stickytiles" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="homevc" id="5Ie-E2-vTb" customClass="HomeViewController" customModule="Magictiles" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="w4m-8E-fGg"/>
                         <viewControllerLayoutGuide type="bottom" id="zCt-7s-REC"/>
@@ -24,7 +24,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="gd1-52-5Cv">
                                 <rect key="frame" x="80" y="128.5" width="215" height="410"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sticky Tiles" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XBV-Cp-i0w">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kousan" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XBV-Cp-i0w">
                                         <rect key="frame" x="0.0" y="0.0" width="215" height="56"/>
                                         <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="36"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -112,7 +112,7 @@
         <!--Level Selector View Controller-->
         <scene sceneID="wtl-3H-GSQ">
             <objects>
-                <viewController storyboardIdentifier="levelvc" id="1cM-Vp-O44" customClass="LevelSelectorViewController" customModule="Stickytiles" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="levelvc" id="1cM-Vp-O44" customClass="LevelSelectorViewController" customModule="Magictiles" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="H8x-av-CQo"/>
                         <viewControllerLayoutGuide type="bottom" id="Sa6-Mo-fcQ"/>
@@ -641,7 +641,7 @@
         <!--Help View Controller-->
         <scene sceneID="SNV-ti-dkl">
             <objects>
-                <pageViewController storyboardIdentifier="helpVC" autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="1hi-G4-Tdr" customClass="HelpViewController" customModule="Stickytiles" customModuleProvider="target" sceneMemberID="viewController"/>
+                <pageViewController storyboardIdentifier="helpVC" autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="1hi-G4-Tdr" customClass="HelpViewController" customModule="Magictiles" customModuleProvider="target" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5YN-6J-9hq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1625" y="591"/>
@@ -958,7 +958,7 @@
         <!--Game View Controller-->
         <scene sceneID="tXr-a1-R10">
             <objects>
-                <viewController id="BV1-FR-VrT" customClass="GameViewController" customModule="Stickytiles" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BV1-FR-VrT" customClass="GameViewController" customModule="Magictiles" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="8aa-yV-Osq"/>
                         <viewControllerLayoutGuide type="bottom" id="qHh-Mt-9TT"/>
@@ -981,7 +981,7 @@
         <!--Game Over View Controller-->
         <scene sceneID="0aP-G9-hpi">
             <objects>
-                <viewController id="GOx-oM-wlG" customClass="GameOverViewController" customModule="Stickytiles" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="GOx-oM-wlG" customClass="GameOverViewController" customModule="Magictiles" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="nve-yN-LAM"/>
                         <viewControllerLayoutGuide type="bottom" id="MCD-dS-fD9"/>
@@ -1096,8 +1096,8 @@
         <image name="tweeter" width="50" height="50"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Oyk-XL-ERO"/>
-        <segue reference="pB8-kn-G9r"/>
         <segue reference="LWH-FU-trT"/>
+        <segue reference="w15-ui-JHT"/>
+        <segue reference="Oyk-XL-ERO"/>
     </inferredMetricsTieBreakers>
 </document>

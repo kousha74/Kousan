@@ -373,7 +373,6 @@ class GameEngine {
             
             // reset the visited flag
             gameModel.SetFlag(flag: TileNode.IS_VISITED, isSet: false)
-            //gameModel.SetFlag(flag: TileNode.TBP, isSet: false) Tbd remove
             
             var gameTiles = [TileNode]()
             
@@ -470,7 +469,7 @@ class GameEngine {
     }
     
     func RemoveBlockers(){
-        //TBD removes one blocker
+        //TBD only removes one blocker
         for tile in gameModel.GetTiles(){
             if tile.GetID() == TileNode.BLOCKER_ID {
                 DeleteTile(tile: tile)
@@ -547,8 +546,6 @@ class GameEngine {
                     }
                     else{
                         tile2.SetFlag(flag: TileNode.TBP, isSet: true)
-                        // Tbd remove
-                        print("tile \(tile2.GetRow()) -- \(tile2.GetCol()) is special")
                     }
                 }
             }
@@ -658,7 +655,6 @@ class GameEngine {
         }
     }
 
-    /* TBD special case: cascading delete*/
     func MarkSpecialNodes(tile:TileNode){
         
         let clusterType = tile.GetClusterType()
