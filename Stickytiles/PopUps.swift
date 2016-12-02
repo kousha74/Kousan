@@ -21,7 +21,8 @@ class Popups{
     
     //For Win Dialog
     private var winCoverFrame:SKShapeNode!
-    private var winFrame:SKShapeNode!
+    private var smallFrame:SKShapeNode!
+    private var bigFrame:SKShapeNode!
     private let winHomeButton = SKSpriteNode(imageNamed: "HomeG")
     private let winLevelButton = SKSpriteNode(imageNamed: "GridG")
     private let winResetButton = SKSpriteNode(imageNamed: "RewindG")
@@ -48,15 +49,18 @@ class Popups{
     private var popupType : PopupType = .Match3
     private var sknodes = [SKNode]()
     
-    private let popupSize = CGSize(width: 300 - Constants.cellSize, height: 400)
+    private let bigPopupSize = CGSize(width: 300 - Constants.cellSize, height: 400)
+    private let smallPopupSize = CGSize(width: 300 - Constants.cellSize, height: 200)
+    private let winSize: CGSize
     
     required init( bounds: CGRect, gameSceneProtocol: GameSceneProtocol ) {
+        
+        winSize = CGSize(width: bounds.size.width, height: bounds.size.height)
         
         gameModel = GameModel.sharedInstance
         self.gameSceneProtocol = gameSceneProtocol
         
         //For Win Dialog
-        let winSize = bounds.size
         winCoverFrame = SKShapeNode(rect: CGRect(x: Int(-winSize.width*0.5), y: Int(-winSize.height*0.5), width: Int(winSize.width), height: Int(winSize.height)), cornerRadius: 0)
         winCoverFrame.position = CGPoint(x: winSize.width/2.0, y: winSize.height/2.0)
         winCoverFrame.fillColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.5)
@@ -66,13 +70,21 @@ class Popups{
         sknodes.append(winCoverFrame)
         
         
-        winFrame = SKShapeNode(rect: CGRect(x: Int(-popupSize.width*0.5), y: Int(-popupSize.height*0.5), width: Int(popupSize.width), height: Int(popupSize.height)), cornerRadius: 10)
-        winFrame.position = CGPoint(x: winSize.width/2.0, y: winSize.height/2.0)
-        winFrame.fillColor = UIColor(red: 1.0, green: 1.0, blue: 0.8 , alpha: 0.75)
-        winFrame.strokeColor = UIColor.darkGray
-        winFrame.lineWidth = 5
-        winFrame.zPosition = Constants.popupZIndex
-        sknodes.append(winFrame)
+        bigFrame = SKShapeNode(rect: CGRect(x: Int(-bigPopupSize.width*0.5), y: Int(-bigPopupSize.height*0.5), width: Int(bigPopupSize.width), height: Int(bigPopupSize.height)), cornerRadius: 10)
+        bigFrame.position = CGPoint(x: winSize.width/2.0, y: winSize.height/2.0)
+        bigFrame.fillColor = UIColor(red: 0.8, green: 0.8, blue: 0.0 , alpha: 0.85)
+        bigFrame.strokeColor = UIColor.darkGray
+        bigFrame.lineWidth = 5
+        bigFrame.zPosition = Constants.popupZIndex
+        sknodes.append(bigFrame)
+        
+        smallFrame = SKShapeNode(rect: CGRect(x: Int(-smallPopupSize.width*0.5), y: Int(-smallPopupSize.height*0.5), width: Int(smallPopupSize.width), height: Int(smallPopupSize.height)), cornerRadius: 10)
+        smallFrame.position = CGPoint(x: winSize.width/2.0, y: winSize.height/2.0)
+        smallFrame.fillColor = UIColor(red: 1.0, green: 0.6, blue: 0.2 , alpha: 0.85)
+        smallFrame.strokeColor = UIColor.darkGray
+        smallFrame.lineWidth = 5
+        smallFrame.zPosition = Constants.popupZIndex
+        sknodes.append(smallFrame)
         
         
         match3Image.position = CGPoint(x: winSize.width/2.0, y: winSize.height/2.25)
@@ -96,57 +108,57 @@ class Popups{
         sknodes.append(iconButton)
         
 
-        let minY = ( bounds.height - popupSize.height )/2.0
-        let minX = ( bounds.width - popupSize.width )/2.0
+        let minY = ( bounds.height - smallPopupSize.height )/2.0
+        let minX = ( bounds.width - smallPopupSize.width )/2.0
         let buttonY = minY + Constants.cellSize
         
-        winHomeButton.position = CGPoint(x: minX + popupSize.width*1.4/10.0 , y: buttonY)
+        winHomeButton.position = CGPoint(x: minX + smallPopupSize.width*1.4/10.0 , y: buttonY)
         winHomeButton.zPosition = Constants.popupZIndex
         sknodes.append(winHomeButton)
         
-        prevButton.position = CGPoint(x: minX + popupSize.width*1.4/10.0 , y: buttonY)
+        prevButton.position = CGPoint(x: minX + smallPopupSize.width*1.4/10.0 , y: ( bounds.height - bigPopupSize.height )/2.0 + Constants.cellSize )
         prevButton.zPosition = Constants.popupZIndex
         sknodes.append(prevButton)
         
         
-        winLevelButton.position = CGPoint(x: minX + popupSize.width*3.8/10.0 , y: buttonY)
+        winLevelButton.position = CGPoint(x: minX + smallPopupSize.width*3.8/10.0 , y: buttonY)
         winLevelButton.zPosition = Constants.popupZIndex
         sknodes.append(winLevelButton)
         
         
-        winResetButton.position = CGPoint(x: minX + popupSize.width*6.2/10.0 , y: buttonY)
+        winResetButton.position = CGPoint(x: minX + smallPopupSize.width*6.2/10.0 , y: buttonY)
         winResetButton.zPosition = Constants.popupZIndex
         sknodes.append(winResetButton)
         
         
-        winNextButton.position = CGPoint(x: minX + popupSize.width*8.6/10.0 , y: buttonY)
+        winNextButton.position = CGPoint(x: minX + smallPopupSize.width*8.6/10.0 , y: buttonY)
         winNextButton.zPosition = Constants.popupZIndex
         sknodes.append(winNextButton)
         
-        nextButton.position = CGPoint(x: minX + popupSize.width*8.6/10.0 , y: buttonY)
+        nextButton.position = CGPoint(x: minX + smallPopupSize.width*8.6/10.0 , y: ( bounds.height - bigPopupSize.height )/2.0 + Constants.cellSize )
         nextButton.zPosition = Constants.popupZIndex
         sknodes.append(nextButton)
         
-        closeButton.position = CGPoint(x: minX + popupSize.width , y: minY + popupSize.height)
+        closeButton.position = CGPoint(x: ( bounds.width + bigPopupSize.width )/2.0 , y: ( bounds.height + bigPopupSize.height )/2.0 )
         closeButton.zPosition = Constants.popupZIndex
         sknodes.append(closeButton)
         
         
-        title1Label.position = CGPoint(x: bounds.size.width * 0.5, y: minY + popupSize.height - Constants.cellSize )
+        title1Label.position = CGPoint(x: bounds.size.width * 0.5, y: minY + bigPopupSize.height - Constants.cellSize )
         title1Label.fontSize = 24
         title1Label.fontColor = Constants.fontColor
         title1Label.fontName = Constants.fontName
         title1Label.zPosition = Constants.popupZIndex
         sknodes.append(title1Label)
         
-        title2Label.position = CGPoint(x: bounds.size.width * 0.5, y: minY + popupSize.height - 1.75*Constants.cellSize )
+        title2Label.position = CGPoint(x: bounds.size.width * 0.5, y: minY + bigPopupSize.height - 1.75*Constants.cellSize )
         title2Label.fontSize = 24
         title2Label.fontColor = Constants.fontColor
         title2Label.fontName = Constants.fontName
         title2Label.zPosition = Constants.popupZIndex
         sknodes.append(title2Label)
         
-        title3Label.position = CGPoint(x: bounds.size.width * 0.5, y: minY + popupSize.height - 2.5*Constants.cellSize )
+        title3Label.position = CGPoint(x: bounds.size.width * 0.5, y: minY + bigPopupSize.height - 2.5*Constants.cellSize )
         title3Label.fontSize = 24
         title3Label.fontColor = Constants.fontColor
         title3Label.fontName = Constants.fontName
@@ -172,13 +184,38 @@ class Popups{
         return isOpen
     }
     
+    func IsSmall()->Bool{
+        switch popupType {
+        case .Win, .Lose, .Close, .Info:
+            return true
+            
+        default:
+            return false
+        }
+    }
+    
     func UpdateWidgets(){
         
         HideAll()
+        
         title1Label.isHidden = false
         
         winCoverFrame.isHidden = false
-        winFrame.isHidden = false
+        
+        if IsSmall() {
+            smallFrame.isHidden = false
+            title1Label.position.y = (winSize.height + smallPopupSize.height)/2.0 - Constants.cellSize
+            title2Label.position.y = (winSize.height + smallPopupSize.height)/2.0 - 1.75*Constants.cellSize
+            title3Label.position.y = (winSize.height + smallPopupSize.height)/2.0 - 2.5*Constants.cellSize
+        }
+        else{
+            bigFrame.isHidden = false
+            title1Label.position.y = (winSize.height + bigPopupSize.height)/2.0 - Constants.cellSize
+            title2Label.position.y = (winSize.height + bigPopupSize.height)/2.0 - 1.75*Constants.cellSize
+            title3Label.position.y = (winSize.height + bigPopupSize.height)/2.0 - 2.5*Constants.cellSize
+        }
+        
+
         title1Label.isHidden = false
         
         if popupType.rawValue >= PopupType.Match3.rawValue && popupType.rawValue <= PopupType.Chocolate.rawValue {
@@ -347,8 +384,12 @@ class Popups{
             
             
             winCoverFrame.isHidden = false
-            winFrame.isHidden = false
+            smallFrame.isHidden = false
             title1Label.isHidden = false
+            
+            title1Label.position.y = (winSize.height + smallPopupSize.height)/2.0 - Constants.cellSize
+            title2Label.position.y = (winSize.height + smallPopupSize.height)/2.0 - 1.75*Constants.cellSize
+            title3Label.position.y = (winSize.height + smallPopupSize.height)/2.0 - 2.5*Constants.cellSize
         }
     }
     
