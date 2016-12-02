@@ -132,12 +132,7 @@ class GameEngine {
     }
     
     func IsLost()->Bool{
-        //TBD Check if the board is full and there's nothing to do
-        if gameModel.maxMoves <= gameModel.moveCount && gameModel.maxMoves != 0 {
-            return true
-        }
-        
-        return false
+        return gameModel.IsLost()
     }
     
     func OnUpdate( currentTime: TimeInterval ){

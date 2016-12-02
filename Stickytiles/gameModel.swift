@@ -29,7 +29,7 @@ class GameModel {
     
     static let maxLevel:Int = 7 //tbd
     
-    static let delay = 0.35
+    static let delay = 0.25
     
     private var label : SKLabelNode?
     
@@ -265,21 +265,23 @@ class GameModel {
         let gameSample = gameSamples[min(level, GameModel.maxLevel - 1)]
         
         for index in 0...(gameSample.fruits.count-1){
-            let tile = GetEmptyTile()
             
-            let gameItem = gameSample.fruits[ index ]
+            if let tile = GetEmptyTile() {
             
-            tile.SetID(Id:gameItem[0])
-            
-            if gameItem[0] == TileNode.CHOLOLATE_ID {
-                chAdded += 1
+                let gameItem = gameSample.fruits[ index ]
+                
+                tile.SetID(Id:gameItem[0])
+                
+                if gameItem[0] == TileNode.CHOLOLATE_ID {
+                    chAdded += 1
+                }
+                
+                tile.SetRowAndCol(row: gameItem[2], col: gameItem[1], cellSize: cellSize, viewOffset: viewOffset)
+                
+                gameTiles.append(tile)
+                
+                tile.sprite?.alpha = 1.0
             }
-            
-            tile.SetRowAndCol(row: gameItem[2], col: gameItem[1], cellSize: cellSize, viewOffset: viewOffset)
-            
-            gameTiles.append(tile)
-            
-            tile.sprite?.alpha = 1.0
         }
         
         chGoal = gameSample.goals[0] //tbd hard coded
@@ -309,15 +311,16 @@ class GameModel {
             if GetID(id: TileNode.CHOLOLATE_ID) == nil {
                 
                 //First find an empty tile
-                let tile = GetEmptyTile()
+                if let tile = GetEmptyTile() {
                 
-                if let emptyCell = FindEmptyCellForChocolate(){
-                    
-                    tile.SetID(Id: TileNode.CHOLOLATE_ID)
-                    tile.SetRowAndCol(row: Int(emptyCell.y), col: Int(emptyCell.x), cellSize: cellSize, viewOffset: viewOffset)
-                    gameTiles.append(tile)
-                    chAdded += 1
-                    return tile
+                    if let emptyCell = FindEmptyCellForChocolate(){
+                        
+                        tile.SetID(Id: TileNode.CHOLOLATE_ID)
+                        tile.SetRowAndCol(row: Int(emptyCell.y), col: Int(emptyCell.x), cellSize: cellSize, viewOffset: viewOffset)
+                        gameTiles.append(tile)
+                        chAdded += 1
+                        return tile
+                    }
                 }
             }
         }
@@ -341,15 +344,15 @@ class GameModel {
         if tilesToBeAdded > 0 {
             for _ in 1...tilesToBeAdded{
                 //First find an empty tile
-                let tile = GetEmptyTile()
-                
-                if let emptyCell = FindEmptyCell(){
-                    
-                    tile.SetID(Id: GetRandomTileID() )
-                    
-                    tile.SetRowAndCol(row: Int(emptyCell.y), col: Int(emptyCell.x), cellSize: cellSize, viewOffset: viewOffset)
-                    gameTiles.append(tile)
-                    newTiles.append(tile)
+                if let tile = GetEmptyTile() {
+                    if let emptyCell = FindEmptyCell(){
+                        
+                        tile.SetID(Id: GetRandomTileID() )
+                        
+                        tile.SetRowAndCol(row: Int(emptyCell.y), col: Int(emptyCell.x), cellSize: cellSize, viewOffset: viewOffset)
+                        gameTiles.append(tile)
+                        newTiles.append(tile)
+                    }
                 }
             }
         }
@@ -369,11 +372,14 @@ class GameModel {
     
     func AddTile(id: Int, pos:CGPoint)->TileNode?{
         //First find an empty tile
-        let tile = GetEmptyTile() //TBD
-        tile.SetID(Id: id)
-        tile.SetRowAndCol(row: Int(pos.y), col: Int(pos.x), cellSize: cellSize, viewOffset: viewOffset)
-        gameTiles.append(tile)
-        return tile
+        if let tile = GetEmptyTile() {
+            tile.SetID(Id: id)
+            tile.SetRowAndCol(row: Int(pos.y), col: Int(pos.x), cellSize: cellSize, viewOffset: viewOffset)
+            gameTiles.append(tile)
+            return tile
+        }
+        
+        return nil
     }
 
     
@@ -429,14 +435,20 @@ class GameModel {
         return ( candidates>0 ) ? selectedEmptyCell :  nil
     }
     
-    func GetEmptyTile()->TileNode{
-        let tile = allTiles[0]
+    func GetEmptyTile()->TileNode?{
+        if allTiles.count > 0 {
+            
+            let tile = allTiles[0]
+            
+            allTiles.remove(at: 0)
+            
+            tile.Reset()
+            
+            return tile
+            
+        }
         
-        allTiles.remove(at: 0)
-        
-        tile.Reset()
-        
-        return tile
+        return nil
     }
         
     //tbd remove
@@ -582,6 +594,34 @@ class GameModel {
             }
         }
     }
+    
+    func IsFull()->Bool{
+        return gameTiles.count == boardSize*boardSize
+    }
+    
+    func IsLost()->Bool{
+        
+        if maxMoves <= moveCount && maxMoves != 0 {
+            return true
+        }
+        
+        if IsFull() {
+            for tile in gameTiles{
+                switch tile.GetID() {
+                case TileNode.BUBBLE_ID, TileNode.STAR5_ID, TileNode.STAR7_ID:
+                    return false
+                    
+                default:
+                    break
+                }
+            }
+            
+            return true
+        }
+        
+        return false
+    }
+
         
     private init() {
         
@@ -661,20 +701,26 @@ class GameModel {
             //goals [Chcolate, targetScore, maxMoves, targetApples, targetSpecial, targetStars, colorCount, baloon frequency]
 
             gameSamples.append( GameSample( fruits:[
-                [16,0,0],
-                [16,1,1],
-                [1,2,0],
-                [1,3,2],
-                [1,4,0],
-                [1,5,2],
-                [2,0,1],
-                [2,1,0],
-                [16,2,1],
-                [16,3,0],
-                [2,4,1],
-                [2,5,0]
+                [15,0,0],
+                [15,1,1],
+                [15,2,0],
+                [15,3,2],
+                [15,4,0],
+                [15,5,2],
+                [15,0,1],
+                [15,1,0],
+                [15,2,1],
+                [15,3,0],
+                [15,4,1],
+                [15,5,0],
+                [15,0,5],
+                [15,1,4],
+                [15,2,5],
+                [15,3,4],
+                [15,4,5],
+                [15,5,4]
                 ],
-                goals: [0,40,40,0,0,0,4,0]
+                goals: [0,40,0,0,0,0,6,10]
                 ) )
         
         gameSamples.append( GameSample( fruits:[
