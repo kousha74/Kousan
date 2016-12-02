@@ -78,6 +78,7 @@ class Popups{
         bigFrame.zPosition = Constants.popupZIndex
         sknodes.append(bigFrame)
         
+        
         smallFrame = SKShapeNode(rect: CGRect(x: Int(-smallPopupSize.width*0.5), y: Int(-smallPopupSize.height*0.5), width: Int(smallPopupSize.width), height: Int(smallPopupSize.height)), cornerRadius: 10)
         smallFrame.position = CGPoint(x: winSize.width/2.0, y: winSize.height/2.0)
         smallFrame.fillColor = UIColor(red: 1.0, green: 0.6, blue: 0.2 , alpha: 0.85)
@@ -329,7 +330,7 @@ class Popups{
             break
             
         case .Baloon:
-            title1Label.text = "Tap a ballon"
+            title1Label.text = "Tap a baloon"
             title2Label.text = "to remove it"
             title2Label.isHidden = false
             iconButton.texture = SKTexture(image: #imageLiteral(resourceName: "Balloon"))
