@@ -27,7 +27,7 @@ class GameEngine {
         m_move_direction = MOVE_DIRECTION_NONE
     }
     
-    private var m_direction: Direction = .None
+    var m_direction: Direction = .None
     
     private var m_GameSceneProtocol:GameSceneProtocol?
     
@@ -36,6 +36,8 @@ class GameEngine {
     private var shouldAddTile = false
     
     static let MIN_CLUSTER_SIZE = 3
+    
+    var isDemo = false
     
     // MARK : Constants
     let MOVE_DIRECTION_NONE:Int = 0
@@ -264,8 +266,9 @@ class GameEngine {
             break
         }
         
-        Timer.scheduledTimer(timeInterval: TimeInterval( ( m_direction != .None ) ? GameModel.delay : 0.0 ), target: self, selector:#selector(GameEngine.FindClusters), userInfo: nil, repeats: false)
-        
+        if !isDemo {
+            Timer.scheduledTimer(timeInterval: TimeInterval( ( m_direction != .None ) ? GameModel.delay : 0.0 ), target: self, selector:#selector(GameEngine.FindClusters), userInfo: nil, repeats: false)
+        }
     }
     
     func GetDirection( touchPos:CGPoint, releasePos:CGPoint)->Direction
@@ -754,7 +757,7 @@ class GameEngine {
 
         Timer.scheduledTimer(timeInterval: TimeInterval( GameModel.delay ), target: self, selector:#selector(GameEngine.FindClusters), userInfo: nil, repeats: false)
     }
-    
+       
     func AddTile(id: Int, pos:CGPoint){
         if let tile = gameModel.AddTile(id: id, pos: pos) {
             m_GameSceneProtocol?.onNewTile(tile: tile)

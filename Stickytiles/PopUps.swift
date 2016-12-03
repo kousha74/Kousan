@@ -16,7 +16,7 @@ class Popups{
     }
     
     enum PopupType:Int{
-        case Win, Lose, Match3, Match4, Match5, Match6, Row, Col, Four, Yellow, Green, Blocker, Blocked, Baloon, Question, Chocolate, Next, Prev, Close, Info, None
+        case Win, Lose, Match3, Match4, Match5, Match6, push, Row, Col, Four, Yellow, Green, Blocker, Blocked, Baloon, Question, Chocolate, Next, Prev, Close, Info, None
     }
     
     //For Win Dialog
@@ -250,6 +250,13 @@ class Popups{
             title2Label.text = "to remove them"
             title2Label.isHidden = false
             match3Image.isHidden = false
+            break
+        
+        case .push:
+            title1Label.text = "Swipping pushes everything"
+            title2Label.text = "against the wall"
+            title2Label.isHidden = false
+            match4Image.isHidden = false
             break
             
         case .Match4:

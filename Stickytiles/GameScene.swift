@@ -32,11 +32,15 @@ class GameScene: SKScene,GameSceneProtocol {
     let musicButton = SKSpriteNode(imageNamed: "MusicOn")
     let soundButton = SKSpriteNode(imageNamed: "SoundOn")
     let helpButton = SKSpriteNode(imageNamed: "HelpIcon")
+    let handIcon = SKSpriteNode(imageNamed: "hand")
     
     var gameManager:GameManager?
     var gameModel: GameModel = GameModel.sharedInstance
     
     private var popups: Popups?
+    
+    private var demoState : Popups.PopupType = Popups.PopupType.None
+    private var demoDone = false
         
     override func didMove(to view: SKView) {
         
@@ -96,7 +100,6 @@ class GameScene: SKScene,GameSceneProtocol {
         moveCountShape.lineWidth = 1
         //addChild(moveCountShape)
         
-        
         moveCountLabel.position = CGPoint(x: viewOffset.x + CGFloat(boardSize), y: viewOffset.y + CGFloat(boardSize) + 2.0*CGFloat(boardPadding) + 0.5*CGFloat(cellSize) )
         moveCountLabel.verticalAlignmentMode = SKLabelVerticalAlignmentMode.center
         moveCountLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.right
@@ -143,7 +146,15 @@ class GameScene: SKScene,GameSceneProtocol {
             soundButton.texture = SKTexture(imageNamed: "SoundOff")
         }
         
-        GameEngine.sharedInstance.LoadGame(level: gameModel.getCurrentLevel() )
+        if gameModel.getCurrentLevel() == 0 {
+            GameEngine.sharedInstance.isDemo = true
+            gameModel.RemoveTiles()
+            demoState = .push
+            popups?.OpenPopup(type: demoState)
+        }
+        else {
+            GameEngine.sharedInstance.LoadGame(level: gameModel.getCurrentLevel() )
+        }
     }
     
     func OnGameLoaded(){
@@ -185,16 +196,16 @@ class GameScene: SKScene,GameSceneProtocol {
         popups?.OpenPopup( type: Popups.PopupType.Lose)
     }
     
-    func removeTiles()
+   /* func removeTiles()
     {
         if ( gameModel.GetTileCount() > 0 ) {
             for index in 0...gameModel.GetTileCount()-1{
                 gameModel.GetSpriteNode(index: index).removeFromParent();
             }
         }
-    }
+    }*/
     
-    func addTiles()
+    func addTiles() //TBD
     {
         if ( gameModel.GetTileCount() > 0 ) {
             for index in 0...gameModel.GetTileCount()-1{
@@ -213,9 +224,12 @@ class GameScene: SKScene,GameSceneProtocol {
         
         if ( popups?.IsOpen() )!{
             
-            if popups?.GetPopupType() == Popups.PopupType.Info {
+            if demoState != .None {
                 popups?.ClosePopup()
-                popups?.OpenRandomHelpPopup()
+                OnDemoPopupClosed()
+            }
+            else if popups?.GetPopupType() == Popups.PopupType.Info {
+                popups?.ClosePopup()
             }
             else if let touchedButton = popups?.GetTouchedButton(nodes: touchedNodes) {
                 switch ( touchedButton ){
@@ -235,7 +249,6 @@ class GameScene: SKScene,GameSceneProtocol {
                     
                 case .Next:
                     popups?.ClosePopup()
-                    removeTiles() //TBD
                     gameModel.IncreaseCurrentLevel()
                     GameEngine.sharedInstance.LoadGame(level: gameModel.getCurrentLevel())
                     break
@@ -363,5 +376,67 @@ class GameScene: SKScene,GameSceneProtocol {
     
     func onAddChild(child: SKNode){
         addChild(child)
+    }
+    
+    func OnDemoPopupClosed(){
+        switch demoState {
+        case .push:
+            ShowPushDemo()
+            break
+        default:
+            demoState = .None
+            GameEngine.sharedInstance.isDemo = false
+            GameEngine.sharedInstance.LoadGame(level: gameModel.getCurrentLevel() )
+            break
+        }
+    }
+    
+    func ShowPushDemo(){
+        
+        let gameEngine = GameEngine.sharedInstance
+        
+        let boardSize : Int = gameModel.GetCellSize()*gameModel.boardSize
+        let viewOffset = gameModel.GetViewOffset()
+        var pos = CGPoint(x: viewOffset.x + CGFloat( boardSize/2) , y: viewOffset.y + CGFloat(boardSize/2) )
+        handIcon.position = pos
+        handIcon.zPosition = 10.0
+        addChild(handIcon)
+        
+        //Adding tiles
+        gameModel.RemoveTiles()
+        gameEngine.AddTile(id: 1, pos: CGPoint(x: 2, y: 2))
+        gameEngine.AddTile(id: 1, pos: CGPoint(x: 2, y: 3))
+        gameEngine.AddTile(id: 2, pos: CGPoint(x: 3, y: 2))
+        gameEngine.AddTile(id: 2, pos: CGPoint(x: 3, y: 5))
+        gameEngine.AddTile(id: 3, pos: CGPoint(x: 4, y: 0))
+        gameEngine.AddTile(id: 4, pos: CGPoint(x: 4, y: 2))
+        gameEngine.AddTile(id: 5, pos: CGPoint(x: 5, y: 1))
+        gameEngine.AddTile(id: 6, pos: CGPoint(x: 5, y: 3))
+        
+        pos.x -= 2.0*CGFloat(gameModel.GetCellSize())
+        let actionMove1 = SKAction.move(to: pos, duration: 2.0)
+        pos.x += 2.0*CGFloat(gameModel.GetCellSize())
+        let actionMove2 = SKAction.move(to: pos, duration: 2.0)
+        let actionWait = SKAction.wait(forDuration: 1.0)
+        let actionTick = SKAction.run {
+            self.gameModel.Tick()
+        }
+        let actionDone = SKAction.run {
+            self.demoState = .None
+            self.handIcon.removeFromParent()
+            self.OnDemoPopupClosed()
+        }
+        
+        let actionPush1 = SKAction.run {
+            gameEngine.m_direction = .Left
+            gameEngine.PushAgainstTheWall()
+        }
+        
+        let actionPush2 = SKAction.run {
+            gameEngine.m_direction = .Right
+            gameEngine.PushAgainstTheWall()
+        }
+        
+        handIcon.run( SKAction.sequence([actionTick,actionMove1,actionTick,actionPush1,actionWait,actionTick,actionMove2,actionTick,actionPush2,actionWait,actionWait,actionDone]))
     }
 }

@@ -235,15 +235,18 @@ class GameModel {
             )
     }
     
-    func loadGame( level:Int)
-    {
+    func RemoveTiles(){
         for tile in gameTiles{
             tile.sprite?.removeFromParent()
             allTiles.append(tile)
         }
         
-        gameTiles.removeAll()
-        
+        gameTiles.removeAll()        
+    }
+    
+    func loadGame( level:Int)
+    {
+        RemoveTiles()
         moveCount = 0
         score = 0
         
@@ -359,6 +362,18 @@ class GameModel {
         
         return newTiles
     }
+    
+ /*   func AddTile( Id:Int, row:Int, col:Int)->TileNode?{
+        
+        if let tile = GetEmptyTile() {
+            tile.SetID(Id: Id )
+            tile.SetRowAndCol(row: row, col: col, cellSize: cellSize, viewOffset: viewOffset)
+            gameTiles.append(tile)
+            return tile
+        }
+        
+        return nil
+    }*/
     
     func GetRandomTileID()->Int{
         
