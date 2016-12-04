@@ -32,7 +32,7 @@ class GameModel {
     
     private var maxLevelCompleted:Int = -1
     
-    static let maxLevel:Int = 7 //tbd
+    static let maxLevel:Int = 49 //tbd
     
     static let delay = 0.25
     
@@ -689,6 +689,16 @@ class GameModel {
                     }
                 }
             }
+            
+            if firstLevelQuestion < 0 {
+                for fruit in gameSample.fruits {
+                    if fruit[0] == TileNode.QUESTION_ID {
+                        firstLevelQuestion = i
+                        break
+                    }
+                }
+            }
+
         }
     }
 
@@ -849,7 +859,25 @@ class GameModel {
                                         goals: [0,40,40,0,0,0,4,5]
         ) )
 
+        //level8
         gameSamples.append( GameSample( fruits:[
+            [3,0,0],
+            [3,1,1],
+            [1,2,0],
+            [TileNode.QUESTION_ID,3,2],
+            [1,4,0],
+            [1,5,2],
+            [4,0,1],
+            [4,1,0],
+            [2,2,1],
+            [2,3,0],
+            [2,4,1],
+            [2,5,0]
+            ],
+                                        goals: [0,40,40,0,0,0,4,5]
+        ) )
+        
+       gameSamples.append( GameSample( fruits:[
             [TileNode.CHOLOLATE_ID,0,5]
             ,[TileNode.BLOCKED_ID,3,3]
             ],
