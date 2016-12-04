@@ -165,6 +165,13 @@ class GameScene: SKScene,GameSceneProtocol {
             popups?.OpenPopup(type: demoState, isDemo:true)
             
         }
+        else if gameModel.getCurrentLevel() == gameModel.firstLevelStar {
+            GameEngine.sharedInstance.isDemo = true
+            gameModel.RemoveTiles()
+            demoState = .Match5
+            popups?.OpenPopup(type: demoState, isDemo:true)
+            
+        }
         else {
             GameEngine.sharedInstance.LoadGame(level: gameModel.getCurrentLevel() )
         }
@@ -399,6 +406,9 @@ class GameScene: SKScene,GameSceneProtocol {
             break
         case .Match4:
             ShowMatch4Demo()
+            break
+        case .Match5:
+            ShowMatch5Demo()
             break
         default:
             demoState = .None
@@ -697,6 +707,69 @@ class GameScene: SKScene,GameSceneProtocol {
             tile2?.sprite?.run(SKAction.sequence([actionRepeat,SKAction.removeFromParent()]))
             tile3?.sprite?.run(SKAction.sequence([actionRepeat,SKAction.removeFromParent()]))
             tile4?.sprite?.run(SKAction.sequence([actionRepeat,SKAction.removeFromParent()]))
+        }
+        
+        handIcon.run( SKAction.sequence([actionTick,actionMove1,actionTick,actionPush1,actionWait,actionRepeat2,actionWait,actionWait,actionDone]))
+    }
+
+    func ShowMatch5Demo(){
+        
+        let gameEngine = GameEngine.sharedInstance
+        
+        let boardSize : Int = gameModel.GetCellSize()*gameModel.boardSize
+        let viewOffset = gameModel.GetViewOffset()
+        var pos = CGPoint(x: viewOffset.x + CGFloat( boardSize/2) , y: viewOffset.y + CGFloat(boardSize/2) )
+        handIcon.position = pos
+        handIcon.zPosition = 10.0
+        addChild(handIcon)
+        
+        //Adding tiles
+        gameModel.RemoveTiles()
+        let tile1 = gameEngine.AddTile2(id: 1, pos: CGPoint(x: 2, y: 2))
+        let tile2 = gameEngine.AddTile2(id: 1, pos: CGPoint(x: 2, y: 3))
+        let tile3 = gameEngine.AddTile2(id: 1, pos: CGPoint(x: 1, y: 4))
+        let tile4 = gameEngine.AddTile2(id: 1, pos: CGPoint(x: 3, y: 3))
+        let tile5 = gameEngine.AddTile2(id: 1, pos: CGPoint(x: 4, y: 3))
+        gameEngine.AddTile(id: 2, pos: CGPoint(x: 3, y: 4))
+        gameEngine.AddTile(id: 3, pos: CGPoint(x: 4, y: 0))
+        gameEngine.AddTile(id: 4, pos: CGPoint(x: 4, y: 2))
+        gameEngine.AddTile(id: 5, pos: CGPoint(x: 5, y: 1))
+        gameEngine.AddTile(id: 6, pos: CGPoint(x: 5, y: 3))
+        
+        pos.x -= 2.0*CGFloat(gameModel.GetCellSize())
+        let actionMove1 = SKAction.move(to: pos, duration: 2.0)
+        pos.x += 2.0*CGFloat(gameModel.GetCellSize())
+        let actionWait = SKAction.wait(forDuration: 1.5)
+        
+        let actionTick = SKAction.run {
+            self.gameModel.Tick()
+        }
+        
+        let actionChime = SKAction.run {
+            self.gameModel.SoundChime()
+            tile1?.SetClusterType(type: TileNode.ClusterType.Five)
+        }
+        
+        let actionDone = SKAction.run {
+            self.demoState = .Yellow
+            self.handIcon.removeFromParent()
+            self.popups?.OpenPopup(type: self.demoState, isDemo:true )
+        }
+        
+        let actionPush1 = SKAction.run {
+            gameEngine.m_direction = .Left
+            gameEngine.PushAgainstTheWall()
+        }
+        
+        let scaleUp = SKAction.scale(to: 1.15, duration: GameModel.delay)
+        let scaleDown = SKAction.scale(to: 1.0, duration: GameModel.delay)
+        let actionRepeat = SKAction.repeat(SKAction.sequence([scaleUp,scaleDown]), count: 4)
+        let actionRepeat2 = SKAction.run {
+            tile1?.sprite?.run(SKAction.sequence([actionRepeat,actionChime]))
+            tile2?.sprite?.run(SKAction.sequence([actionRepeat,SKAction.removeFromParent()]))
+            tile3?.sprite?.run(SKAction.sequence([actionRepeat,SKAction.removeFromParent()]))
+            tile4?.sprite?.run(SKAction.sequence([actionRepeat,SKAction.removeFromParent()]))
+            tile5?.sprite?.run(SKAction.sequence([actionRepeat,SKAction.removeFromParent()]))
         }
         
         handIcon.run( SKAction.sequence([actionTick,actionMove1,actionTick,actionPush1,actionWait,actionRepeat2,actionWait,actionWait,actionDone]))
