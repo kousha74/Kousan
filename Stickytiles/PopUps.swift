@@ -274,7 +274,6 @@ class Popups{
             title2Label.isHidden = false
             title3Label.text = "the wall"
             title3Label.isHidden = false
-            match4Image.isHidden = false
             break
             
         case .Match4:

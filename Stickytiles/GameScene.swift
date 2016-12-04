@@ -40,7 +40,6 @@ class GameScene: SKScene,GameSceneProtocol {
     private var popups: Popups?
     
     private var demoState : Popups.PopupType = Popups.PopupType.None
-    private var demoDone = false
         
     override func didMove(to view: SKView) {
         
@@ -386,6 +385,9 @@ class GameScene: SKScene,GameSceneProtocol {
         case .Match3:
             ShowMatchDemo()
             break
+        case .Blocker:
+            ShowBlockerDemo()
+            break
         default:
             demoState = .None
             GameEngine.sharedInstance.isDemo = false
@@ -421,7 +423,7 @@ class GameScene: SKScene,GameSceneProtocol {
         let actionMove1 = SKAction.move(to: pos, duration: 2.0)
         pos.x += 2.0*CGFloat(gameModel.GetCellSize())
         let actionMove2 = SKAction.move(to: pos, duration: 2.0)
-        let actionWait = SKAction.wait(forDuration: 1.0)
+        let actionWait = SKAction.wait(forDuration: 1.5)
         let actionTick = SKAction.run {
             self.gameModel.Tick()
         }
@@ -441,7 +443,7 @@ class GameScene: SKScene,GameSceneProtocol {
             gameEngine.PushAgainstTheWall()
         }
         
-        handIcon.run( SKAction.sequence([actionTick,actionMove1,actionTick,actionPush1,actionWait,actionTick,actionMove2,actionTick,actionPush2,actionWait,actionWait,actionDone]))
+        handIcon.run( SKAction.sequence([actionTick,actionMove1,actionTick,actionPush1,actionWait,actionTick,actionMove2,actionTick,actionPush2,actionWait,actionDone]))
     }
     
     func ShowMatchDemo(){
@@ -480,7 +482,7 @@ class GameScene: SKScene,GameSceneProtocol {
         }
         
         let actionDone = SKAction.run {
-            self.demoState = .Enjoy
+            self.demoState = .Blocker
             self.handIcon.removeFromParent()
             self.popups?.OpenPopup(type: self.demoState, isDemo:true )
         }
@@ -500,6 +502,54 @@ class GameScene: SKScene,GameSceneProtocol {
         }
 
         handIcon.run( SKAction.sequence([actionTick,actionMove1,actionTick,actionPush1,actionWait,actionRepeat2,actionWait,actionWait,actionDone]))
+    }
+
+    func ShowBlockerDemo(){
+        
+        let gameEngine = GameEngine.sharedInstance
+        
+        let viewOffset = gameModel.GetViewOffset()
+        var pos = CGPoint(x: viewOffset.x + 3.5*CGFloat(gameModel.GetCellSize()) , y: viewOffset.y + 2.0*CGFloat(gameModel.GetCellSize()) )
+        handIcon.position = pos
+        handIcon.zPosition = 10.0
+        addChild(handIcon)
+        
+        //Adding tiles
+        gameModel.RemoveTiles()
+        gameEngine.AddTile(id: 1, pos: CGPoint(x: 2, y: 2))
+        gameEngine.AddTile(id: 1, pos: CGPoint(x: 2, y: 3))
+        gameEngine.AddTile(id: 2, pos: CGPoint(x: 5, y: 2))
+        gameEngine.AddTile(id: 2, pos: CGPoint(x: 3, y: 5))
+        gameEngine.AddTile(id: 3, pos: CGPoint(x: 4, y: 0))
+        gameEngine.AddTile(id: 4, pos: CGPoint(x: 4, y: 2))
+        gameEngine.AddTile(id: 5, pos: CGPoint(x: 5, y: 1))
+        gameEngine.AddTile(id: 6, pos: CGPoint(x: 5, y: 3))
+        
+        let actionAddBlocker = SKAction.run {
+            gameEngine.AddTile(id: TileNode.BLOCKER_ID, pos: CGPoint(x: 3, y: 2))
+        }
+        
+        pos.x -= 2.0*CGFloat(gameModel.GetCellSize())
+        let actionMove1 = SKAction.moveTo(x: viewOffset.x + CGFloat(gameModel.GetCellSize())/2.0 , duration: 2.0)
+        let actionWait = SKAction.wait(forDuration: 1.5)
+        
+        let actionTick = SKAction.run {
+            self.gameModel.Tick()
+        }
+        
+        
+        let actionDone = SKAction.run {
+            self.demoState = .Enjoy
+            self.handIcon.removeFromParent()
+            self.popups?.OpenPopup(type: self.demoState, isDemo:true )
+        }
+        
+        let actionPush1 = SKAction.run {
+            gameEngine.m_direction = .Left
+            gameEngine.PushAgainstTheWall()
+        }
+        
+        handIcon.run( SKAction.sequence([actionWait,actionTick,actionAddBlocker, actionWait, actionMove1,actionTick,actionPush1,actionWait, actionDone]))
     }
 
 }
