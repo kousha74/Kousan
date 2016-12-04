@@ -172,6 +172,20 @@ class GameScene: SKScene,GameSceneProtocol {
             popups?.OpenPopup(type: demoState, isDemo:true)
             
         }
+        else if gameModel.getCurrentLevel() == gameModel.firstLevelBaloon {
+            GameEngine.sharedInstance.isDemo = true
+            gameModel.RemoveTiles()
+            demoState = .Baloon
+            popups?.OpenPopup(type: demoState, isDemo:true)
+            
+        }
+        else if gameModel.getCurrentLevel() == gameModel.firstLevelBlocked {
+            GameEngine.sharedInstance.isDemo = true
+            gameModel.RemoveTiles()
+            demoState = .Blocked
+            popups?.OpenPopup(type: demoState, isDemo:true)
+            
+        }
         else {
             GameEngine.sharedInstance.LoadGame(level: gameModel.getCurrentLevel() )
         }

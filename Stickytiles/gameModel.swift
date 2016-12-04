@@ -94,6 +94,7 @@ class GameModel {
     var firstLevelBlocked = -1
     var firstLevelSpecial = -1
     var firstLevelStar = -1
+    var firstLevelQuestion = -1
     
     func GetMoveCount()->Int{
         return moveCount
@@ -812,6 +813,42 @@ class GameModel {
                                         goals: [0,0,40,0,0,1,4,0]
         ) )
         
+        //level6
+        gameSamples.append( GameSample( fruits:[
+            [3,0,0],
+            [3,1,1],
+            [1,2,0],
+            [TileNode.BUBBLE_ID,3,2],
+            [1,4,0],
+            [1,5,2],
+            [4,0,1],
+            [4,1,0],
+            [2,2,1],
+            [2,3,0],
+            [2,4,1],
+            [2,5,0]
+            ],
+                                        goals: [0,40,40,0,0,0,4,5]
+        ) )
+
+        //level7
+        gameSamples.append( GameSample( fruits:[
+            [3,0,0],
+            [3,1,1],
+            [1,2,0],
+            [TileNode.BLOCKED_ID,3,2],
+            [1,4,0],
+            [1,5,2],
+            [4,0,1],
+            [4,1,0],
+            [2,2,1],
+            [2,3,0],
+            [2,4,1],
+            [2,5,0]
+            ],
+                                        goals: [0,40,40,0,0,0,4,5]
+        ) )
+
         gameSamples.append( GameSample( fruits:[
             [TileNode.CHOLOLATE_ID,0,5]
             ,[TileNode.BLOCKED_ID,3,3]
