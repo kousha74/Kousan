@@ -84,8 +84,6 @@ class GameEngine {
         m_GameSceneProtocol?.OnGameLoaded()
     }
     
-    
-    
     func OnTouch(pos:CGPoint){
         
         touchPos.x = pos.x

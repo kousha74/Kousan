@@ -145,6 +145,13 @@ class GameScene: SKScene,GameSceneProtocol {
             soundButton.texture = SKTexture(imageNamed: "SoundOff")
         }
         
+        if !ShowDemo() {
+            GameEngine.sharedInstance.LoadGame(level: gameModel.getCurrentLevel() )
+        }
+    }
+    
+    func ShowDemo()->Bool{
+        
         if gameModel.getCurrentLevel() == 0 {
             GameEngine.sharedInstance.isDemo = true
             gameModel.RemoveTiles()
@@ -184,11 +191,9 @@ class GameScene: SKScene,GameSceneProtocol {
             gameModel.RemoveTiles()
             demoState = .Blocked
             popups?.OpenPopup(type: demoState, isDemo:true)
-            
         }
-        else {
-            GameEngine.sharedInstance.LoadGame(level: gameModel.getCurrentLevel() )
-        }
+        
+        return (popups?.IsOpen())!
     }
     
     func OnGameLoaded(){
@@ -276,7 +281,10 @@ class GameScene: SKScene,GameSceneProtocol {
                 case .Next:
                     popups?.ClosePopup()
                     gameModel.IncreaseCurrentLevel()
-                    GameEngine.sharedInstance.LoadGame(level: gameModel.getCurrentLevel())
+                    
+                    if !ShowDemo() {
+                        GameEngine.sharedInstance.LoadGame(level: gameModel.getCurrentLevel())
+                    }
                     break
                     
                 case .None:
