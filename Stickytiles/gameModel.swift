@@ -12,6 +12,11 @@ import AVFoundation
 import StoreKit
 
 class GameSample{
+    
+    enum Goals:Int {
+        case  chocolates, targetScore, maxMoves, targetApples, targetSpecials, targetStars, colorCount, baloonFrequency
+    }
+
     var fruits = [[Int]]()
     var goals = [Int]()
     
@@ -61,7 +66,7 @@ class GameModel {
     var score:Int = 0
     
     //To support goals
-    var chGoal = 0
+    var targetChocolates = 0
     var chAdded = 0
     var chRemoved = 0
     
@@ -81,6 +86,14 @@ class GameModel {
     var colorCount = 0
     
     var baloonFrequency = 0
+    
+    
+    //First levels with special target
+    var firstLevelChocolate = -1
+    var firstLevelBaloon = -1
+    var firstLevelBlocked = -1
+    var firstLevelSpecial = -1
+    var firstLevelStar = -1
     
     func GetMoveCount()->Int{
         return moveCount
@@ -251,7 +264,7 @@ class GameModel {
         score = 0
         
         //Resetting goals
-        chGoal = 0
+        targetChocolates = 0
         chAdded = 0
         chRemoved = 0
         targetScore = 0
@@ -287,14 +300,14 @@ class GameModel {
             }
         }
         
-        chGoal = gameSample.goals[0] //tbd hard coded
-        targetScore = gameSample.goals[1] //tbd hard coded
-        maxMoves = gameSample.goals[2] //tbd hard coded
-        targetApples = gameSample.goals[3] //tbd hard coded
-        targetSpecials = gameSample.goals[4] //tbd hard coded
-        targetStars = gameSample.goals[5] //tbd hard coded
-        colorCount = gameSample.goals[6]
-        baloonFrequency = gameSample.goals[7]
+        targetChocolates = gameSample.goals[ GameSample.Goals.chocolates.rawValue ]
+        targetScore = gameSample.goals[ GameSample.Goals.targetScore.rawValue ]
+        maxMoves = gameSample.goals[ GameSample.Goals.maxMoves.rawValue ]
+        targetApples = gameSample.goals[ GameSample.Goals.targetApples.rawValue ]
+        targetSpecials = gameSample.goals[ GameSample.Goals.targetSpecials.rawValue ]
+        targetStars = gameSample.goals[ GameSample.Goals.targetStars.rawValue ]
+        colorCount = gameSample.goals[ GameSample.Goals.colorCount.rawValue ]
+        baloonFrequency = gameSample.goals[ GameSample.Goals.baloonFrequency.rawValue ]
     }
     
     //find the first tile with the given ID
@@ -310,7 +323,7 @@ class GameModel {
     
     func AddChocolate()->TileNode?{
         
-        if chAdded < chGoal {
+        if chAdded < targetChocolates {
             if GetID(id: TileNode.CHOLOLATE_ID) == nil {
                 
                 //First find an empty tile
@@ -636,6 +649,47 @@ class GameModel {
         
         return false
     }
+    
+    private func FindFirstLevels(){
+        //To find first level of each scenario
+        for i in 0...gameSamples.count - 1 {
+            let gameSample = gameSamples[i]
+            
+            if ( firstLevelChocolate < 0 ){
+                if gameSample.goals[ GameSample.Goals.chocolates.rawValue ] > 0 {
+                    firstLevelChocolate = i
+                }
+            }
+            
+            if firstLevelSpecial < 0 {
+                if gameSample.goals[ GameSample.Goals.targetSpecials.rawValue ] > 0 {
+                    firstLevelSpecial = i
+                }
+            }
+            
+            if firstLevelStar < 0 {
+                if gameSample.goals[ GameSample.Goals.targetStars.rawValue ] > 0 {
+                    firstLevelStar = i
+                }
+                
+            }
+            
+            if firstLevelBaloon < 0 {
+                if gameSample.goals[ GameSample.Goals.baloonFrequency.rawValue ] > 0 {
+                    firstLevelBaloon = i
+                }
+            }
+            
+            if firstLevelBlocked < 0 {
+                for fruit in gameSample.fruits {
+                    if fruit[0] == TileNode.BLOCKED_ID {
+                        firstLevelBlocked = i
+                        break
+                    }
+                }
+            }
+        }
+    }
 
         
     private init() {
@@ -716,26 +770,11 @@ class GameModel {
             //goals [Chcolate, targetScore, maxMoves, targetApples, targetSpecial, targetStars, colorCount, baloon frequency]
 
             gameSamples.append( GameSample( fruits:[
-                [15,0,0],
-                [15,1,1],
-                [15,2,0],
-                [15,3,2],
-                [15,4,0],
-                [15,5,2],
-                [15,0,1],
-                [15,1,0],
-                [15,2,1],
-                [15,3,0],
-                [15,4,1],
-                [15,5,0],
-                [15,0,5],
-                [15,1,4],
-                [15,2,5],
-                [15,3,4],
-                [15,4,5],
-                [15,5,4]
+                [1,0,0],
+                [1,1,1],
+                [2,2,0]
                 ],
-                goals: [0,40,0,0,0,0,6,10]
+                goals: [0,40,0,0,0,0,6,0]
                 ) )
         
         gameSamples.append( GameSample( fruits:[
@@ -757,21 +796,20 @@ class GameModel {
         ) )
         
         gameSamples.append( GameSample( fruits:[
-            [16,0,0],
-            [16,1,1],
+            [3,0,0],
+            [3,1,1],
             [1,2,0],
             [1,3,2],
             [1,4,0],
             [1,5,2],
-            [16,0,1],
-            [16,1,0],
+            [4,0,1],
+            [4,1,0],
             [2,2,1],
             [2,3,0],
             [2,4,1],
-            [2,5,0],
-            [TileNode.BLOCKED_ID,3,3]
+            [2,5,0]
             ],
-                                        goals: [0,40,40,0,0,0,4,10]
+                                        goals: [0,0,40,0,0,1,4,0]
         ) )
         
         gameSamples.append( GameSample( fruits:[
@@ -795,6 +833,7 @@ class GameModel {
                                         goals: [0,0,50,0,3,0,4,10]
         ) )
         
+        FindFirstLevels()
         
             print ("There are \(gameSamples.count) samples")
         

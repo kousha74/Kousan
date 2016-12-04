@@ -100,8 +100,8 @@ class GameEngine {
     func IsWon()->Bool{
         
         //check chocolates
-        if gameModel.chGoal != 0 {
-            if gameModel.chGoal == gameModel.chRemoved {
+        if gameModel.targetChocolates != 0 {
+            if gameModel.targetChocolates == gameModel.chRemoved {
                 return true
             }
         }
