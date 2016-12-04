@@ -16,7 +16,7 @@ class Popups{
     }
     
     enum PopupType:Int{
-        case Win, Lose, Match3, Match4, Match5, Match6, push, Row, Col, Four, Yellow, Green, Blocker, Blocked, Baloon, Question, Chocolate, Next, Prev, Close, Info, None
+        case Win, Lose, Match3, Match4, Match5, Match6, push, Row, Col, Four, Yellow, Green, Blocker, Blocked, Baloon, Question, Chocolate, Enjoy, Info, None
     }
     
     //For Win Dialog
@@ -35,6 +35,7 @@ class Popups{
     private let match4Image = SKSpriteNode(imageNamed: "Match4")
     private let match5Image = SKSpriteNode(imageNamed: "Match5")
     private let match6Image = SKSpriteNode(imageNamed: "Match6")
+    private let logoImage = SKSpriteNode(imageNamed: "logo")
 
     private let iconButton = SKSpriteNode(imageNamed: "PrevPage")
 
@@ -88,23 +89,27 @@ class Popups{
         sknodes.append(smallFrame)
         
         
-        match3Image.position = CGPoint(x: winSize.width/2.0, y: winSize.height/2.25)
+        match3Image.position = CGPoint(x: winSize.width/2.0, y: winSize.height/2.0)
         match3Image.zPosition = Constants.popupZIndex
         sknodes.append(match3Image)
         
-        match4Image.position = CGPoint(x: winSize.width/2.0, y: winSize.height/2.25)
+        match4Image.position = CGPoint(x: winSize.width/2.0, y: winSize.height/2.0)
         match4Image.zPosition = Constants.popupZIndex
         sknodes.append(match4Image)
         
-        match5Image.position = CGPoint(x: winSize.width/2.0, y: winSize.height/2.25)
+        match5Image.position = CGPoint(x: winSize.width/2.0, y: winSize.height/2.0)
         match5Image.zPosition = Constants.popupZIndex
         sknodes.append(match5Image)
         
-        match6Image.position = CGPoint(x: winSize.width/2.0, y: winSize.height/2.25)
+        match6Image.position = CGPoint(x: winSize.width/2.0, y: winSize.height/2.0)
         match6Image.zPosition = Constants.popupZIndex
         sknodes.append(match6Image)
         
-        iconButton.position = CGPoint(x: winSize.width/2.0, y: winSize.height/2.25)
+        logoImage.position = CGPoint(x: winSize.width/2.0, y: winSize.height/2.0)
+        logoImage.zPosition = Constants.popupZIndex
+        sknodes.append(logoImage)
+        
+        iconButton.position = CGPoint(x: winSize.width/2.0, y: winSize.height/2.0)
         iconButton.zPosition = Constants.popupZIndex
         sknodes.append(iconButton)
         
@@ -187,7 +192,7 @@ class Popups{
     
     func IsSmall()->Bool{
         switch popupType {
-        case .Win, .Lose, .Close, .Info:
+        case .Win, .Lose, .Info:
             return true
             
         default:
@@ -219,13 +224,13 @@ class Popups{
 
         title1Label.isHidden = false
         
-        if popupType.rawValue >= PopupType.Match3.rawValue && popupType.rawValue <= PopupType.Chocolate.rawValue {
+        if popupType.rawValue >= PopupType.Match3.rawValue && popupType.rawValue <= PopupType.Enjoy.rawValue {
             closeButton.isHidden = false
             nextButton.isHidden = false
             prevButton.isHidden = false
         }
         
-        if popupType.rawValue >= PopupType.Row.rawValue && popupType.rawValue <= PopupType.Chocolate.rawValue {
+        if popupType.rawValue >= PopupType.Row.rawValue && popupType.rawValue <= PopupType.Enjoy.rawValue {
             iconButton.isHidden = false
         }
         
@@ -359,6 +364,11 @@ class Popups{
             iconButton.texture = SKTexture(image: #imageLiteral(resourceName: "chocolate"))
             break
             
+        case .Enjoy:
+            title1Label.text = "Enjoy the game!"
+            iconButton.isHidden = true
+            logoImage.isHidden = false
+            break
             
         default:
             title1Label.text = "Text missing!!!"
@@ -459,7 +469,7 @@ class Popups{
     
     func onNextButton(){
         
-        if popupType == .Chocolate{
+        if popupType == .Enjoy{
             popupType = .Match3
         }
         else{
@@ -471,7 +481,7 @@ class Popups{
     
     func onPrevButton(){
         if popupType == .Match3{
-            popupType = .Chocolate
+            popupType = .Enjoy
         }
         else{
             popupType = PopupType( rawValue: popupType.rawValue - 1)!
