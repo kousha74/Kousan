@@ -42,6 +42,7 @@ class Popups{
     private let title1Label = SKLabelNode(text: "title1")
     private let title2Label = SKLabelNode(text: "title2")
     private let title3Label = SKLabelNode(text: "Tap to continue")
+    private let tapLabel = SKLabelNode(text: "Tap to continue")
     
     private let gameModel:GameModel
     private let gameSceneProtocol:GameSceneProtocol
@@ -53,6 +54,7 @@ class Popups{
     private let bigPopupSize = CGSize(width: 300 - Constants.cellSize, height: 400)
     private let smallPopupSize = CGSize(width: 300 - Constants.cellSize, height: 200)
     private let winSize: CGSize
+    private var isDemo = false
     
     required init( bounds: CGRect, gameSceneProtocol: GameSceneProtocol ) {
         
@@ -149,7 +151,6 @@ class Popups{
         closeButton.zPosition = Constants.popupZIndex
         sknodes.append(closeButton)
         
-        
         title1Label.position = CGPoint(x: bounds.size.width * 0.5, y: minY + bigPopupSize.height - Constants.cellSize )
         title1Label.fontSize = 24
         title1Label.fontColor = Constants.fontColor
@@ -171,17 +172,20 @@ class Popups{
         title3Label.zPosition = Constants.popupZIndex
         sknodes.append(title3Label)
         
+        tapLabel.position = CGPoint(x: bounds.size.width * 0.5, y: ( bounds.height - bigPopupSize.height )/2.0 + Constants.cellSize )
+        tapLabel.fontSize = 24
+        tapLabel.fontColor = Constants.fontColor
+        tapLabel.fontName = Constants.fontName
+        tapLabel.zPosition = Constants.popupZIndex
+        sknodes.append(tapLabel)
+        
         //adding items and hide them
         for node in sknodes{
             node.isHidden = true
             gameSceneProtocol.onAddChild(child: node)
         }
     }
-    
-    func OpenRandomHelpPopup(){
-        OpenPopup(type: .Blocker)
-    }
-    
+       
     func GetPopupType()->PopupType{
         return popupType
     }
@@ -225,9 +229,14 @@ class Popups{
         title1Label.isHidden = false
         
         if popupType.rawValue >= PopupType.Match3.rawValue && popupType.rawValue <= PopupType.Enjoy.rawValue {
-            closeButton.isHidden = false
-            nextButton.isHidden = false
-            prevButton.isHidden = false
+            if !isDemo {
+                closeButton.isHidden = false
+                nextButton.isHidden = false
+                prevButton.isHidden = false
+            }
+            else{
+                tapLabel.isHidden = false
+            }
         }
         
         if popupType.rawValue >= PopupType.Row.rawValue && popupType.rawValue <= PopupType.Enjoy.rawValue {
@@ -252,15 +261,19 @@ class Popups{
         
         case .Match3:
             title1Label.text = "Match 3 fruits"
-            title2Label.text = "to remove them"
+            title2Label.text = "or more to"
             title2Label.isHidden = false
+            title3Label.text = "remove them"
+            title3Label.isHidden = false
             match3Image.isHidden = false
             break
         
         case .push:
-            title1Label.text = "Swipping pushes everything"
-            title2Label.text = "against the wall"
+            title1Label.text = "Swipe to push"
+            title2Label.text = "everyting against"
             title2Label.isHidden = false
+            title3Label.text = "the wall"
+            title3Label.isHidden = false
             match4Image.isHidden = false
             break
             
@@ -411,8 +424,10 @@ class Popups{
         }
     }
     
-    func OpenPopup( type: PopupType ){
+    func OpenPopup( type: PopupType, isDemo:Bool ){
         if !isOpen {
+            
+            self.isDemo = isDemo
             
             isOpen = true
             

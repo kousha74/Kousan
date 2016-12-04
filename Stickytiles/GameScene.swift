@@ -150,7 +150,7 @@ class GameScene: SKScene,GameSceneProtocol {
             GameEngine.sharedInstance.isDemo = true
             gameModel.RemoveTiles()
             demoState = .push
-            popups?.OpenPopup(type: demoState)
+            popups?.OpenPopup(type: demoState, isDemo:true)
         }
         else {
             GameEngine.sharedInstance.LoadGame(level: gameModel.getCurrentLevel() )
@@ -188,12 +188,12 @@ class GameScene: SKScene,GameSceneProtocol {
     
     func OnGameWon(){
         gameModel.SoundWin()
-        popups?.OpenPopup( type: Popups.PopupType.Win)
+        popups?.OpenPopup( type: Popups.PopupType.Win, isDemo: false)
     }
     
     func OnGameLost(){
         gameModel.SoundWin() //TBD
-        popups?.OpenPopup( type: Popups.PopupType.Lose)
+        popups?.OpenPopup( type: Popups.PopupType.Lose, isDemo:false )
     }
     
    /* func removeTiles()
@@ -299,7 +299,7 @@ class GameScene: SKScene,GameSceneProtocol {
                 
             }
             else if ( firstTouchedNode.isEqual(to: helpButton )){
-                popups?.OpenPopup(type: Popups.PopupType.Match3)
+                popups?.OpenPopup(type: Popups.PopupType.Match3, isDemo:false)
             }
             else
             {
@@ -428,7 +428,7 @@ class GameScene: SKScene,GameSceneProtocol {
         let actionDone = SKAction.run {
             self.demoState = .Match3
             self.handIcon.removeFromParent()
-            self.popups?.OpenPopup(type: self.demoState)
+            self.popups?.OpenPopup(type: self.demoState, isDemo:true )
         }
         
         let actionPush1 = SKAction.run {
@@ -469,7 +469,7 @@ class GameScene: SKScene,GameSceneProtocol {
         pos.x -= 2.0*CGFloat(gameModel.GetCellSize())
         let actionMove1 = SKAction.move(to: pos, duration: 2.0)
         pos.x += 2.0*CGFloat(gameModel.GetCellSize())
-        let actionWait = SKAction.wait(forDuration: 1.0)
+        let actionWait = SKAction.wait(forDuration: 1.5)
         
         let actionTick = SKAction.run {
             self.gameModel.Tick()
@@ -480,9 +480,9 @@ class GameScene: SKScene,GameSceneProtocol {
         }
         
         let actionDone = SKAction.run {
-            self.demoState = .None
+            self.demoState = .Enjoy
             self.handIcon.removeFromParent()
-            self.OnDemoPopupClosed()
+            self.popups?.OpenPopup(type: self.demoState, isDemo:true )
         }
         
         let actionPush1 = SKAction.run {
