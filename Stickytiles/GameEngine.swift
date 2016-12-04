@@ -757,14 +757,25 @@ class GameEngine {
 
         Timer.scheduledTimer(timeInterval: TimeInterval( GameModel.delay ), target: self, selector:#selector(GameEngine.FindClusters), userInfo: nil, repeats: false)
     }
-       
+    
+    
     func AddTile(id: Int, pos:CGPoint){
+        if AddTile2(id: id, pos: pos) != nil {
+            //nothing to do
+        }
+    }
+
+    func AddTile2(id: Int, pos:CGPoint)->TileNode?{
         if let tile = gameModel.AddTile(id: id, pos: pos) {
             m_GameSceneProtocol?.onNewTile(tile: tile)
             tile.sprite?.alpha = 0.0
             tile.sprite?.run( SKAction.fadeIn(withDuration: GameModel.delay ) )
+            return tile
         }
+        
+        return nil
     }
+
     
     func GetClusterType(cluster:[TileNode])->TileNode.ClusterType{
         
