@@ -768,7 +768,7 @@ class GameModel {
         
         for _ in 1...boardSize*boardSize{
 
-            let Tile = TileNode(x: 0, y: 0, id: 0, locked: false, cellSize: cellSize, viewOffset: viewOffset)
+            let Tile = TileNode(x: 0, y: 0, id: 1, locked: false, cellSize: cellSize, viewOffset: viewOffset)
             
             allTiles.append( Tile )
         }
