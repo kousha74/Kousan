@@ -38,14 +38,14 @@ class TileNode {
     var pos:CGPoint
     var sprite : SKSpriteNode?
     
-    init( x: Int, y: Int, id: Int, cellSize: Int, viewOffset: CGPoint){
+    init(){
         
-        self.id = id
-        pos = CGPoint(x: x, y: y)
+        id = 0
+        pos = CGPoint(x: 0, y: 0)
             
         sprite = SKSpriteNode(imageNamed: "Apple" )
-        sprite?.position.x = viewOffset.x + (CGFloat(x)+CGFloat(0.5))*CGFloat(cellSize)
-        sprite?.position.y = viewOffset.y + (CGFloat(y)+CGFloat(0.5))*CGFloat(cellSize)
+        sprite?.position.x = 0.0
+        sprite?.position.y = 0.0
     }
     
     func CanBeRemoved()->Bool{
