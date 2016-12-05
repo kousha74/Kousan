@@ -458,7 +458,7 @@ class GameEngine {
             m_GameSceneProtocol?.OnGameLost()
         }
         else{
-            if ( ( gameModel.AreAdsAvailable() ) && ((gameModel.GetMoveCount()%25) == 0 )){
+            if ( ( gameModel.AreAdsAvailable() ) && ((gameModel.GetMoveCount()%25) == 0 ) && ( gameModel.GetMoveCount() > 0 )){
                 Chartboost.showInterstitial(CBLocationHomeScreen)
             }
         }

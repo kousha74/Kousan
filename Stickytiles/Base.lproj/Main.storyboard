@@ -22,7 +22,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="gd1-52-5Cv">
-                                <rect key="frame" x="80" y="128.5" width="215" height="410"/>
+                                <rect key="frame" x="80" y="164" width="215" height="339"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kousan" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XBV-Cp-i0w">
                                         <rect key="frame" x="0.0" y="0.0" width="215" height="56"/>
@@ -37,29 +37,22 @@
                                             <segue destination="1cM-Vp-O44" kind="presentation" id="w15-ui-JHT"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xhY-Ch-EHm">
-                                        <rect key="frame" x="0.0" y="147" width="215" height="51"/>
-                                        <state key="normal" image="HowtoPlay"/>
-                                        <connections>
-                                            <action selector="OnHowToPlayButtonPressed:" destination="5Ie-E2-vTb" eventType="touchUpInside" id="XuB-6k-yl2"/>
-                                        </connections>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kSt-rt-X7f">
-                                        <rect key="frame" x="0.0" y="218" width="215" height="51"/>
+                                        <rect key="frame" x="0.0" y="147" width="215" height="51"/>
                                         <state key="normal" image="RemoveAds"/>
                                         <connections>
                                             <action selector="OnRemoveAdsPressed:" destination="5Ie-E2-vTb" eventType="touchUpInside" id="z7M-dv-JJS"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JAF-nd-yEB">
-                                        <rect key="frame" x="0.0" y="289" width="215" height="51"/>
+                                        <rect key="frame" x="0.0" y="218" width="215" height="51"/>
                                         <state key="normal" image="RestorePurchase"/>
                                         <connections>
                                             <action selector="OnRestorePurchasePressed:" destination="5Ie-E2-vTb" eventType="touchUpInside" id="BK4-pt-Zld"/>
                                         </connections>
                                     </button>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="ig4-HE-ZVb">
-                                        <rect key="frame" x="0.0" y="360" width="215" height="50"/>
+                                        <rect key="frame" x="0.0" y="289" width="215" height="50"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LPX-RV-emZ">
                                                 <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
@@ -1079,7 +1072,6 @@
         <image name="Help2" width="148" height="148"/>
         <image name="Help3" width="148" height="148"/>
         <image name="HomeG" width="50" height="50"/>
-        <image name="HowtoPlay" width="201" height="51"/>
         <image name="MusicOn" width="50" height="50"/>
         <image name="NextPage" width="50" height="50"/>
         <image name="Play" width="201" height="51"/>

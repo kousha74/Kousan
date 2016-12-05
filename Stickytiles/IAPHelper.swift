@@ -157,6 +157,7 @@ extension IAPHelper: SKPaymentTransactionObserver {
     }
  
     SKPaymentQueue.default().finishTransaction(transaction)
+    
   }
  
   private func deliverPurchaseNotificationFor(identifier: String?) {
