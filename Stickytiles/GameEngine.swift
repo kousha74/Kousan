@@ -77,7 +77,7 @@ class GameEngine {
             m_GameSceneProtocol?.onAddChild(child: tile.sprite!)
         }
         
-        //tbd remove
+        //Adding random tiles to make sure there are enough tiles
         AddTiles()
         
         m_GameSceneProtocol?.UpdateLabels()

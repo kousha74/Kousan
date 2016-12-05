@@ -88,7 +88,7 @@ class GameScene: SKScene,GameSceneProtocol {
         
         print("\(size.width)-----\(size.height)")
         
-        helpButton.position = CGPoint(x: viewOffset.x + CGFloat(boardSize) - 0.5*CGFloat(cellSize), y: viewOffset.y + CGFloat(boardSize) + 2.0*CGFloat(cellSize) ) //tbd hard coded value
+        helpButton.position = CGPoint(x: viewOffset.x + CGFloat(boardSize) - 0.5*CGFloat(cellSize), y: viewOffset.y + CGFloat(boardSize) + 2.0*CGFloat(cellSize) ) 
         addChild(helpButton)
         
         //Move count
@@ -239,16 +239,6 @@ class GameScene: SKScene,GameSceneProtocol {
     func OnGameLost(){
         gameModel.SoundWin() //TBD
         popups?.OpenPopup( type: Popups.PopupType.Lose, isDemo:false )
-    }
-    
-    
-    func addTiles() //TBD
-    {
-        if ( gameModel.GetTileCount() > 0 ) {
-            for index in 0...gameModel.GetTileCount()-1{
-                addChild( gameModel.GetSpriteNode(index: index) )
-            }
-        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
