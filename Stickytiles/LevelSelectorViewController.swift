@@ -156,7 +156,7 @@ class LevelSelectorViewController: UIViewController {
                 button.setTitle(String(button.tag+levelOffset+1), for: .normal)
             }
             else {
-                button.setBackgroundImage(#imageLiteral(resourceName: "lockImage"),for: .normal)
+                button.setBackgroundImage(#imageLiteral(resourceName: "locked"),for: .normal)
                 button.setTitle("", for: .normal)
             }
         }
