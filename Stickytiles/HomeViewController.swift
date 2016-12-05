@@ -49,10 +49,6 @@ class HomeViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-    @IBAction func OnHowToPlayButtonPressed(_ sender: UIButton) {
-        let helpVC = self.storyboard?.instantiateViewController(withIdentifier: "helpVC")
-        self.present(helpVC!, animated: true, completion: nil)
-    }
     
     @IBAction func OnRemoveAdsPressed(_ sender: AnyObject) {
         

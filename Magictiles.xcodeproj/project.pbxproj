@@ -11,9 +11,7 @@
 		840ADED51DA756AE006E527C /* tick.wav in Resources */ = {isa = PBXBuildFile; fileRef = 840ADED41DA756AE006E527C /* tick.wav */; };
 		840ADED71DA756BD006E527C /* win.wav in Resources */ = {isa = PBXBuildFile; fileRef = 840ADED61DA756BD006E527C /* win.wav */; };
 		84149D901DB13377006A8100 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84149D8F1DB13377006A8100 /* StoreKit.framework */; };
-		841D49FA1D9B79E700BBD3B2 /* GameOverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841D49F91D9B79E700BBD3B2 /* GameOverViewController.swift */; };
 		841DCC8B1DE52784008B7995 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841DCC8A1DE52784008B7995 /* Constants.swift */; };
-		842273951DA476320084C3F9 /* HelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842273941DA476320084C3F9 /* HelpViewController.swift */; };
 		843FAD7F1D9C9EC60085C3B8 /* LevelSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843FAD7E1D9C9EC60085C3B8 /* LevelSelectorViewController.swift */; };
 		845F2D8B1D9C8AF70039C9AD /* gameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845F2D8A1D9C8AF70039C9AD /* gameModel.swift */; };
 		846BA9E11D96DC1300F6ED87 /* background-music-aac.caf in Resources */ = {isa = PBXBuildFile; fileRef = 846BA9DE1D96DC1300F6ED87 /* background-music-aac.caf */; };
@@ -57,9 +55,7 @@
 		840ADED41DA756AE006E527C /* tick.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = tick.wav; sourceTree = "<group>"; };
 		840ADED61DA756BD006E527C /* win.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = win.wav; sourceTree = "<group>"; };
 		84149D8F1DB13377006A8100 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
-		841D49F91D9B79E700BBD3B2 /* GameOverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOverViewController.swift; sourceTree = "<group>"; };
 		841DCC8A1DE52784008B7995 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		842273941DA476320084C3F9 /* HelpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpViewController.swift; sourceTree = "<group>"; };
 		843FAD7E1D9C9EC60085C3B8 /* LevelSelectorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelSelectorViewController.swift; sourceTree = "<group>"; };
 		845F2D8A1D9C8AF70039C9AD /* gameModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = gameModel.swift; sourceTree = "<group>"; };
 		846BA9DE1D96DC1300F6ED87 /* background-music-aac.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "background-music-aac.caf"; sourceTree = "<group>"; };
@@ -184,7 +180,6 @@
 				84A88E531D94AB06006D1C57 /* GameScene.swift */,
 				84A88E551D94AB06006D1C57 /* GameViewController.swift */,
 				84A88E571D94AB06006D1C57 /* Main.storyboard */,
-				841D49F91D9B79E700BBD3B2 /* GameOverViewController.swift */,
 				84A88E731D94ACB1006D1C57 /* HomeViewController.swift */,
 				843FAD7E1D9C9EC60085C3B8 /* LevelSelectorViewController.swift */,
 				84A88E5A1D94AB06006D1C57 /* Assets.xcassets */,
@@ -192,7 +187,6 @@
 				84A88E5F1D94AB06006D1C57 /* Info.plist */,
 				84D500311D9DE26700A701D5 /* TileNode.swift */,
 				84D500331D9DF19600A701D5 /* GameEngine.swift */,
-				842273941DA476320084C3F9 /* HelpViewController.swift */,
 				841DCC8A1DE52784008B7995 /* Constants.swift */,
 				84F08E4F1DE756E900244E0C /* PopUps.swift */,
 			);
@@ -340,10 +334,8 @@
 				841DCC8B1DE52784008B7995 /* Constants.swift in Sources */,
 				84F08E501DE756E900244E0C /* PopUps.swift in Sources */,
 				84D500321D9DE26700A701D5 /* TileNode.swift in Sources */,
-				841D49FA1D9B79E700BBD3B2 /* GameOverViewController.swift in Sources */,
 				84D500341D9DF19600A701D5 /* GameEngine.swift in Sources */,
 				84A88E741D94ACB1006D1C57 /* HomeViewController.swift in Sources */,
-				842273951DA476320084C3F9 /* HelpViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
