@@ -52,10 +52,11 @@ class GameModel {
     
     private var audioPlayer : AVAudioPlayer?
     private var audioPlayer2 : AVAudioPlayer?
-    private var audioPlayer3 : AVAudioPlayer?
+    private var audioPlayerWin : AVAudioPlayer?
     private var audioPlayerWave : AVAudioPlayer?
     private var audioPlayerLaser : AVAudioPlayer?
     private var audioPlayerChime : AVAudioPlayer?
+    private var audioPlayerLose : AVAudioPlayer?
     
     // the minimum number of tiles on the board
     private let MIN_TILES = 12
@@ -176,10 +177,16 @@ class GameModel {
     
     func SoundWin(){
         if ( IsAudioOn() ){
-            audioPlayer3?.play()
+            audioPlayerWin?.play()
         }
     }
-
+    
+    func SoundLose(){
+        if ( IsAudioOn() ){
+            audioPlayerLose?.play()
+        }
+    }
+    
     
     func Tick(){
         if ( IsAudioOn() ){
@@ -734,8 +741,8 @@ class GameModel {
         
         let soundURL3 = Bundle.main.url(forResource: "win", withExtension: "wav")
         do {
-            try audioPlayer3 = AVAudioPlayer(contentsOf: soundURL3!)
-            audioPlayer3?.numberOfLoops = 0
+            try audioPlayerWin = AVAudioPlayer(contentsOf: soundURL3!)
+            audioPlayerWin?.numberOfLoops = 0
         } catch {
             print("NO AUDIO PLAYER")
         }
@@ -762,7 +769,17 @@ class GameModel {
             audioPlayerChime?.numberOfLoops = 0
         } catch {
             print("NO AUDIO PLAYER")
+
         }
+        
+        let soundURL7 = Bundle.main.url(forResource: "lose", withExtension: "wav")
+        do {
+            try audioPlayerLose = AVAudioPlayer(contentsOf: soundURL7!)
+            audioPlayerLose?.numberOfLoops = 0
+        } catch {
+            print("NO AUDIO PLAYER")
+        }
+
         
         allTiles = [TileNode]()
         
@@ -791,7 +808,7 @@ class GameModel {
         gameSamples.append( GameSample( fruits:[
             [TileNode.CHOLOLATE_ID,0,5]
             ],
-                                        goals: [3,0,50,0,0,0,4,0]
+                                        goals: [3,0,5,0,0,0,4,0]
         ) )
         
         gameSamples.append( GameSample( fruits:[

@@ -237,7 +237,7 @@ class GameScene: SKScene,GameSceneProtocol {
     }
     
     func OnGameLost(){
-        gameModel.SoundWin() //TBD
+        gameModel.SoundLose()
         popups?.OpenPopup( type: Popups.PopupType.Lose, isDemo:false )
     }
     
