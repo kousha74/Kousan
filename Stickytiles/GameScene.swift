@@ -16,6 +16,7 @@ protocol GameSceneProtocol{
     func OnGameWon()
     func OnGameLost()
     func OnGameLoaded()
+    func OnToast( msg:String )
 }
 
 
@@ -40,7 +41,7 @@ class GameScene: SKScene,GameSceneProtocol {
     private var popups: Popups?
     
     private var demoState : Popups.PopupType = Popups.PopupType.None
-        
+    
     override func didMove(to view: SKView) {
         
         GameEngine.sharedInstance.SetParent(parent: self)
@@ -148,6 +149,22 @@ class GameScene: SKScene,GameSceneProtocol {
         if !ShowDemo() {
             GameEngine.sharedInstance.LoadGame(level: gameModel.getCurrentLevel() )
         }
+    }
+    
+    func OnToast( msg:String){
+        let msgLabel = SKLabelNode(text: msg)
+        msgLabel.position = CGPoint(x: size.width/2.0 + CGFloat(arc4random()%100) - 50.0, y: gameModel.GetViewOffset().y + CGFloat(arc4random()%100) )
+        msgLabel.verticalAlignmentMode = SKLabelVerticalAlignmentMode.center
+        msgLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.center
+        msgLabel.fontSize = 36
+        msgLabel.fontColor = Constants.fontColor
+        msgLabel.fontName = Constants.fontName
+        msgLabel.zPosition = Constants.popupZIndex
+        addChild(msgLabel)
+        
+        let actionMove = SKAction.moveBy(x: 0.0, y: CGFloat(gameModel.boardSize*(gameModel.GetCellSize()-1)), duration: 1.5)
+        
+        msgLabel.run(SKAction.sequence([actionMove,SKAction.removeFromParent()]))
     }
     
     func ShowDemo()->Bool{

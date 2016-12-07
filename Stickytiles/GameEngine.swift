@@ -396,6 +396,28 @@ class GameEngine {
                                     tile2.SetClusterType(type: clusterType)
                                     //this tile must be locked, so it won't be removed immediately
                                     tile2.SetFlag(flag: TileNode.IS_LOCKED, isSet: true)
+                                    
+                                    
+                                    switch clusterType {
+                                    case .Four:
+                                        m_GameSceneProtocol?.OnToast(msg: "Power Fruit")
+                                        break
+                                    case .Row:
+                                        m_GameSceneProtocol?.OnToast(msg: "Row Remover")
+                                        break
+                                    case .Col:
+                                        m_GameSceneProtocol?.OnToast(msg: "Column Remover")
+                                        break
+                                    case .Five:
+                                        m_GameSceneProtocol?.OnToast(msg: "Yellow Star")
+                                        break
+                                    case .Six:
+                                        m_GameSceneProtocol?.OnToast(msg: "Green Star")
+                                        break
+                                    default:
+                                        break
+                                    }
+                                    
                                     clusterType = TileNode.ClusterType.None
                                 }
                                 else {
@@ -423,6 +445,10 @@ class GameEngine {
         let tile2 = gameModel.FindFlag(flag: TileNode.TBP, isSet: true)
         
         if ( clusterFound ) || ( tile2 != nil ) {
+            
+            if clusterFound {
+                m_GameSceneProtocol?.OnToast(msg: "Nice Job!")
+            }
             
             if (!specialClusterFound){
                 gameModel.SoundWave()
