@@ -12,10 +12,17 @@ import AVFoundation
 import StoreKit
 
 class GameSample{
-    var gameItems = [[Int]]()
     
-    init( localArr: [[Int]]) {
-        gameItems = localArr
+    enum Goals:Int {
+        case  chocolates, targetScore, maxMoves, targetApples, targetSpecials, targetStars, colorCount, baloonFrequency
+    }
+
+    var fruits = [[Int]]()
+    var goals = [Int]()
+    
+    init( fruits: [[Int]], goals: [Int]) {
+        self.fruits = fruits
+        self.goals = goals
     }
 }
 
@@ -25,9 +32,9 @@ class GameModel {
     
     private var maxLevelCompleted:Int = -1
     
-    static let maxLevel:Int = 49
+    static let maxLevel:Int = 49 //tbd
     
-    static let delay = 0.35
+    static let delay = 0.25
     
     private var label : SKLabelNode?
     
@@ -45,17 +52,50 @@ class GameModel {
     
     private var audioPlayer : AVAudioPlayer?
     private var audioPlayer2 : AVAudioPlayer?
-    private var audioPlayer3 : AVAudioPlayer?
+    private var audioPlayerWin : AVAudioPlayer?
     private var audioPlayerWave : AVAudioPlayer?
     private var audioPlayerLaser : AVAudioPlayer?
     private var audioPlayerChime : AVAudioPlayer?
+    private var audioPlayerLose : AVAudioPlayer?
     
-    private let COLOR_COUNT = 4 //tbd
+    // the minimum number of tiles on the board
+    private let MIN_TILES = 12
     
     let boardSize : Int = 6
     
     var moveCount:Int = 0
     var score:Int = 0
+    
+    //To support goals
+    var targetChocolates = 0
+    var chAdded = 0
+    var chRemoved = 0
+    
+    var targetScore = 0
+    
+    var maxMoves = 0
+    
+    var targetApples = 0
+    var applesRemoved = 0
+    
+    var targetSpecials = 0
+    var specialsRemoved = 0
+    
+    var targetStars = 0
+    var starsRemoved = 0
+    
+    var colorCount = 0
+    
+    var baloonFrequency = 0
+    
+    
+    //First levels with special target
+    var firstLevelChocolate = -1
+    var firstLevelBaloon = -1
+    var firstLevelBlocked = -1
+    var firstLevelSpecial = -1
+    var firstLevelStar = -1
+    var firstLevelQuestion = -1
     
     func GetMoveCount()->Int{
         return moveCount
@@ -82,14 +122,14 @@ class GameModel {
     }
     
     func OnProductPurchased( productID: String ) {
-        if ( productID == StickyTilesProducts.removeAds ){
+        if ( productID == GameProducts.removeAds ){
             userDefaults.set( 1, forKey: "removeAds")
         }
     }
     
     func IsProductPurchased( productID: String )->Bool{
         
-        if ( productID == StickyTilesProducts.removeAds ){
+        if ( productID == GameProducts.removeAds ){
             return ( userDefaults.integer(forKey: "removeAds") != 0 )
         }
 
@@ -97,7 +137,7 @@ class GameModel {
     }
     
     func AreAdsAvailable()->Bool{
-        return ( userDefaults.integer(forKey: "removeAds") == 0 ) && ( currentLevel > 10 )
+        return ( userDefaults.integer(forKey: "removeAds") == 0 ) && ( currentLevel > 3 )
     }
     
     class var sharedInstance: GameModel {
@@ -137,10 +177,16 @@ class GameModel {
     
     func SoundWin(){
         if ( IsAudioOn() ){
-            audioPlayer3?.play()
+            audioPlayerWin?.play()
         }
     }
-
+    
+    func SoundLose(){
+        if ( IsAudioOn() ){
+            audioPlayerLose?.play()
+        }
+    }
+    
     
     func Tick(){
         if ( IsAudioOn() ){
@@ -210,69 +256,166 @@ class GameModel {
             )
     }
     
-    func loadGame( level:Int)
-    {
+    func RemoveTiles(){
         for tile in gameTiles{
             tile.sprite?.removeFromParent()
             allTiles.append(tile)
         }
         
-        gameTiles.removeAll()
-        
-        let getSample = gameSamples[level]
-        
-        for index in 0...(getSample.gameItems.count-1){
-            let tile = GetEmptyTile()
-            
-            let gameItem = getSample.gameItems[ index ]
-            
-            tile.SetID(Id:gameItem[0])
-            
-            tile.SetRowAndCol(row: gameItem[2], col: gameItem[1], cellSize: cellSize, viewOffset: viewOffset)
-            
-            gameTiles.append(tile)
-            
-            tile.sprite?.alpha = 1.0
-        }
-        
-        moveCount = 0
-        score = 0
+        gameTiles.removeAll()        
     }
     
-    func AddTile()->TileNode?{
-        //First find an empty tile
-        let tile = GetEmptyTile()
+    func loadGame( level:Int)
+    {
+        RemoveTiles()
+        moveCount = 0
+        score = 0
         
-        if let emptyCell = FindEmptyCell(){
+        //Resetting goals
+        targetChocolates = 0
+        chAdded = 0
+        chRemoved = 0
+        targetScore = 0
+        maxMoves = 0
+        targetApples = 0
+        applesRemoved = 0
+        targetSpecials = 0
+        specialsRemoved = 0
+        targetStars = 0
+        starsRemoved = 0
+        
+        colorCount = 0
+
+        let gameSample = gameSamples[min(level, GameModel.maxLevel - 1)]
+        
+        for index in 0...(gameSample.fruits.count-1){
             
-            //TBD
-            // +2 for bubble and chocolate
-            var Id = Int(arc4random_uniform(UInt32(COLOR_COUNT))) + 1
+            if let tile = GetEmptyTile() {
             
-            if ( Id == COLOR_COUNT + 1 ){
-                Id = 10
+                let gameItem = gameSample.fruits[ index ]
+                
+                tile.SetID(Id:gameItem[0])
+                
+                if gameItem[0] == TileNode.CHOLOLATE_ID {
+                    chAdded += 1
+                }
+                
+                tile.SetRowAndCol(row: gameItem[2], col: gameItem[1], cellSize: cellSize, viewOffset: viewOffset)
+                
+                gameTiles.append(tile)
+                
+                tile.sprite?.alpha = 1.0
             }
-            
-            if ( Id == COLOR_COUNT + 2 ){
-                Id = 13
+        }
+        
+        targetChocolates = gameSample.goals[ GameSample.Goals.chocolates.rawValue ]
+        targetScore = gameSample.goals[ GameSample.Goals.targetScore.rawValue ]
+        maxMoves = gameSample.goals[ GameSample.Goals.maxMoves.rawValue ]
+        targetApples = gameSample.goals[ GameSample.Goals.targetApples.rawValue ]
+        targetSpecials = gameSample.goals[ GameSample.Goals.targetSpecials.rawValue ]
+        targetStars = gameSample.goals[ GameSample.Goals.targetStars.rawValue ]
+        colorCount = gameSample.goals[ GameSample.Goals.colorCount.rawValue ]
+        baloonFrequency = gameSample.goals[ GameSample.Goals.baloonFrequency.rawValue ]
+    }
+    
+    //find the first tile with the given ID
+    func GetID( id: Int )->TileNode?{
+        for tile in gameTiles{
+            if tile.GetID() == id{
+                return tile
             }
-            
-            tile.SetID(Id: Id)
-            tile.SetRowAndCol(row: Int(emptyCell.y), col: Int(emptyCell.x), cellSize: cellSize, viewOffset: viewOffset)
-            gameTiles.append(tile)
-            return tile
         }
         
         return nil
     }
     
+    func AddChocolate()->TileNode?{
+        
+        if chAdded < targetChocolates {
+            if GetID(id: TileNode.CHOLOLATE_ID) == nil {
+                
+                //First find an empty tile
+                if let tile = GetEmptyTile() {
+                
+                    if let emptyCell = FindEmptyCellForChocolate(){
+                        
+                        tile.SetID(Id: TileNode.CHOLOLATE_ID)
+                        tile.SetRowAndCol(row: Int(emptyCell.y), col: Int(emptyCell.x), cellSize: cellSize, viewOffset: viewOffset)
+                        gameTiles.append(tile)
+                        chAdded += 1
+                        return tile
+                    }
+                }
+            }
+        }
+        
+        return nil
+    }
+    
+    func AddTiles()->[TileNode]{
+        
+        var newTiles = [TileNode]()
+        
+        var tilesToBeAdded = max( 1, MIN_TILES - gameTiles.count )
+            
+        //Check if chocolate should be added
+        if let chTile = AddChocolate() {
+            newTiles.append(chTile)
+            tilesToBeAdded -= 1
+        }
+        
+        
+        if tilesToBeAdded > 0 {
+            for _ in 1...tilesToBeAdded{
+                //First find an empty tile
+                if let tile = GetEmptyTile() {
+                    if let emptyCell = FindEmptyCell(){
+                        
+                        tile.SetID(Id: GetRandomTileID() )
+                        
+                        tile.SetRowAndCol(row: Int(emptyCell.y), col: Int(emptyCell.x), cellSize: cellSize, viewOffset: viewOffset)
+                        gameTiles.append(tile)
+                        newTiles.append(tile)
+                    }
+                }
+            }
+        }
+        
+        return newTiles
+    }
+    
+ /*   func AddTile( Id:Int, row:Int, col:Int)->TileNode?{
+        
+        if let tile = GetEmptyTile() {
+            tile.SetID(Id: Id )
+            tile.SetRowAndCol(row: row, col: col, cellSize: cellSize, viewOffset: viewOffset)
+            gameTiles.append(tile)
+            return tile
+        }
+        
+        return nil
+    }*/
+    
+    func GetRandomTileID()->Int{
+        
+        if baloonFrequency != 0 && arc4random_uniform(UInt32(baloonFrequency)) == 0 {
+            return TileNode.BUBBLE_ID
+        }
+        else{
+            return Int(arc4random_uniform(UInt32(colorCount))) + 1
+        }
+    }
+    
     func AddTile(id: Int, pos:CGPoint)->TileNode?{
         //First find an empty tile
-        let tile = GetEmptyTile() //TBD
-        tile.SetID(Id: id)
-        tile.SetRowAndCol(row: Int(pos.y), col: Int(pos.x), cellSize: cellSize, viewOffset: viewOffset)
-        gameTiles.append(tile)
-        return tile
+        if let tile = GetEmptyTile() {
+            tile.SetID(Id: id)
+            tile.SetRowAndCol(row: Int(pos.y), col: Int(pos.x), cellSize: cellSize, viewOffset: viewOffset)
+            gameTiles.append(tile)
+            return tile
+        }
+        
+        return nil
     }
 
     
@@ -298,14 +441,50 @@ class GameModel {
         return ( candidates>0 ) ? selectedEmptyCell :  nil
     }
     
-    func GetEmptyTile()->TileNode{
-        let tile = allTiles[0]
+    func FindEmptyCellForChocolate()->CGPoint?{
+        var selectedEmptyCell = CGPoint(x: -1, y: -1)
+        var emptyCell = CGPoint(x: -1, y: -1)
+        var candidates : UInt32 = 0
+        var tileFound = false
         
-        allTiles.remove(at: 0)
+        for col in 0...boardSize-1{
+            tileFound = false
+            for row in 0...boardSize-1{
+                emptyCell.x = CGFloat(col)
+                emptyCell.y = CGFloat(row)
+                
+                if GetTile(pos: emptyCell) == nil {
+                    if tileFound {
+                        candidates += 1
+                        if ( arc4random_uniform(candidates) == 0 ){
+                            selectedEmptyCell = emptyCell
+                        }
+                    }
+                    
+                }
+                else{
+                    tileFound = true
+                }
+            }
+        }
         
-        tile.Reset()
+        return ( candidates>0 ) ? selectedEmptyCell :  nil
+    }
+    
+    func GetEmptyTile()->TileNode?{
+        if allTiles.count > 0 {
+            
+            let tile = allTiles[0]
+            
+            allTiles.remove(at: 0)
+            
+            tile.Reset()
+            
+            return tile
+            
+        }
         
-        return tile
+        return nil
     }
         
     //tbd remove
@@ -411,19 +590,129 @@ class GameModel {
     
     func RemoveTile(tile:TileNode){
         
+        //tbd bad loop
         for i in 0...gameTiles.count-1{
             if ( gameTiles[i] === tile ){
+                
+                if gameTiles[i].GetID() != TileNode.BLOCKER_ID && gameTiles[i].GetID() != TileNode.BUBBLE_ID{
+                    ChangeScore(delta: 1)
+                }
+                
+                switch gameTiles[i].GetID() {
+                case TileNode.CHOLOLATE_ID:
+                    chRemoved += 1
+                    break
+                    
+                case TileNode.APPLE_ID:
+                    applesRemoved += 1
+                    break
+                    
+                case TileNode.STAR5_ID, TileNode.STAR7_ID:
+                    starsRemoved += 1
+                    break
+                    
+                default:
+                    break;
+                }
+                
+                switch gameTiles[i].GetClusterType(){
+                case .Four, .Row, .Col:
+                    specialsRemoved += 1
+                    break
+                    
+                default:
+                    break
+                }
+                
                 gameTiles.remove(at: i)
                 allTiles.append(tile)
-                ChangeScore(delta: 1)
                 break
             }
         }
     }
+    
+    func IsFull()->Bool{
+        return gameTiles.count == boardSize*boardSize
+    }
+    
+    func IsLost()->Bool{
+        
+        if maxMoves <= moveCount && maxMoves != 0 {
+            return true
+        }
+        
+        if IsFull() {
+            for tile in gameTiles{
+                switch tile.GetID() {
+                case TileNode.BUBBLE_ID, TileNode.STAR5_ID, TileNode.STAR7_ID:
+                    return false
+                    
+                default:
+                    break
+                }
+            }
+            
+            return true
+        }
+        
+        return false
+    }
+    
+    private func FindFirstLevels(){
+        //To find first level of each scenario
+        for i in 0...gameSamples.count - 1 {
+            let gameSample = gameSamples[i]
+            
+            if ( firstLevelChocolate < 0 ){
+                if gameSample.goals[ GameSample.Goals.chocolates.rawValue ] > 0 {
+                    firstLevelChocolate = i
+                }
+            }
+            
+            if firstLevelSpecial < 0 {
+                if gameSample.goals[ GameSample.Goals.targetSpecials.rawValue ] > 0 {
+                    firstLevelSpecial = i
+                }
+            }
+            
+            if firstLevelStar < 0 {
+                if gameSample.goals[ GameSample.Goals.targetStars.rawValue ] > 0 {
+                    firstLevelStar = i
+                }
+                
+            }
+            
+            if firstLevelBaloon < 0 {
+                if gameSample.goals[ GameSample.Goals.baloonFrequency.rawValue ] > 0 {
+                    firstLevelBaloon = i
+                }
+            }
+            
+            if firstLevelBlocked < 0 {
+                for fruit in gameSample.fruits {
+                    if fruit[0] == TileNode.BLOCKED_ID {
+                        firstLevelBlocked = i
+                        break
+                    }
+                }
+            }
+            
+            if firstLevelQuestion < 0 {
+                for fruit in gameSample.fruits {
+                    if fruit[0] == TileNode.QUESTION_ID {
+                        firstLevelQuestion = i
+                        break
+                    }
+                }
+            }
+
+        }
+    }
+
         
     private init() {
         
-        maxLevelCompleted = userDefaults.integer(forKey: "maxLevelCompleted") // put - 1 back
+        maxLevelCompleted = userDefaults.integer(forKey: "maxLevelCompleted") - 1
         
         // For debugging only
         //maxLevelCompleted = 49
@@ -452,8 +741,8 @@ class GameModel {
         
         let soundURL3 = Bundle.main.url(forResource: "win", withExtension: "wav")
         do {
-            try audioPlayer3 = AVAudioPlayer(contentsOf: soundURL3!)
-            audioPlayer3?.numberOfLoops = 0
+            try audioPlayerWin = AVAudioPlayer(contentsOf: soundURL3!)
+            audioPlayerWin?.numberOfLoops = 0
         } catch {
             print("NO AUDIO PLAYER")
         }
@@ -480,13 +769,23 @@ class GameModel {
             audioPlayerChime?.numberOfLoops = 0
         } catch {
             print("NO AUDIO PLAYER")
+
         }
+        
+        let soundURL7 = Bundle.main.url(forResource: "lose", withExtension: "wav")
+        do {
+            try audioPlayerLose = AVAudioPlayer(contentsOf: soundURL7!)
+            audioPlayerLose?.numberOfLoops = 0
+        } catch {
+            print("NO AUDIO PLAYER")
+        }
+
         
         allTiles = [TileNode]()
         
         for _ in 1...boardSize*boardSize{
 
-            let Tile = TileNode(x: 0, y: 0, id: 0, locked: false, cellSize: cellSize, viewOffset: viewOffset)
+            let Tile = TileNode()
             
             allTiles.append( Tile )
         }
@@ -495,43 +794,128 @@ class GameModel {
         
         gameSamples = [GameSample]()
         
-            //[id,x,y,sizex,sizey,locked]
+            //fruits [id,x,y]
+            //goals [Chcolate, targetScore, maxMoves, targetApples, targetSpecial, targetStars, colorCount, baloon frequency]
+
+            gameSamples.append( GameSample( fruits:[
+                [1,0,0],
+                [1,1,1],
+                [2,2,0]
+                ],
+                goals: [0,40,0,0,0,0,6,0]
+                ) )
         
-            // 1-5
-            /*gameSamples.append( GameSample( localArr:[[1,0,1,1,1,0],[1,0,2,1,1,0],[1,0,3,1,1,0],[1,0,4,1,1,0],[1,0,5,1,1,0],[1,1,0,1,1,0]]) )
+        gameSamples.append( GameSample( fruits:[
+            [TileNode.CHOLOLATE_ID,0,5]
+            ],
+                                        goals: [3,0,5,0,0,0,4,0]
+        ) )
         
-            gameSamples.append( GameSample( localArr:[[2,0,0,1,1,0],[1,0,1,1,1,0],[1,0,2,1,1,0],[1,0,3,1,1,0],[1,0,4,1,1,0],[1,0,5,1,1,0],[1,1,0,1,1,0],[2,1,1,1,1,0],[2,1,2,1,1,0],[2,1,3,1,1,0],[2,1,4,1,1,0],[2,1,5,1,1,0]]) )
-            gameSamples.append( GameSample( localArr:[[2,0,0,1,1,0],[1,0,1,1,1,0],[1,0,2,1,1,0],[1,0,3,1,1,0],[1,0,4,1,1,0],[1,0,5,1,1,0],[1,5,0,1,1,0],[2,5,1,1,1,0],[2,5,2,1,1,0],[2,5,3,1,1,0],[2,5,4,1,1,0],[2,5,5,1,1,0]]) )
-            gameSamples.append( GameSample( localArr:[[2,0,0,1,1,0],[1,0,1,1,1,0],[1,0,2,1,1,0],[1,0,3,1,1,0],[1,0,4,1,1,0],[1,0,5,1,1,0],[1,2,0,1,1,0],[2,2,1,1,1,0],[2,2,2,1,1,0],[2,2,3,1,1,0],[2,2,4,1,1,0],[2,2,5,1,1,0]]) )*/
-            gameSamples.append( GameSample( localArr:[[3,0,0,1,1,0],[1,0,1,1,1,0],[1,0,2,1,1,0],[1,0,3,1,1,0],[1,0,4,1,1,0],[1,0,5,1,1,0],[1,1,0,1,1,0],[2,1,1,1,1,0],[2,1,2,1,1,0],[2,1,3,1,1,0],[2,1,4,1,1,0],[2,1,5,1,1,0],[2,2,0,1,1,0],[3,2,1,1,1,0],[3,2,2,1,1,0],[15,2,3,1,1,0],[3,3,4,1,1,0],[3,3,5,1,1,0]]) )
+        gameSamples.append( GameSample( fruits:[
+            [1,0,5]
+            ],
+                                        goals: [0,0,50,10,0,0,4,0]
+        ) )
         
-            // 6-10
-            /*gameSamples.append( GameSample( localArr:[[2,1,0,1,1,0],[2,1,1,1,1,0],[2,1,2,1,1,0],[2,1,3,1,1,0],[2,1,4,1,1,0],[2,1,5,1,1,0],[4,3,3,1,1,0],[4,3,4,1,1,0],[4,3,5,1,1,0],[4,4,0,1,1,0],[4,3,1,1,1,0],[4,3,2,1,1,0],[3,5,0,1,1,0],[3,5,1,1,1,0],[3,5,2,1,1,0],[3,5,3,1,1,0],[3,5,4,1,1,0],[3,5,5,1,1,0]]) )*/
-            gameSamples.append( GameSample( localArr:[[2,0,0,1,1,0],[1,0,1,1,1,0],[1,0,2,1,1,0],[1,0,3,1,1,0],[1,0,4,1,1,0],[1,0,5,1,1,0],[1,2,0,1,1,0],[2,2,1,1,1,0],[2,2,2,1,1,0],[2,2,3,1,1,0],[2,2,4,1,1,0],[2,2,5,1,1,0],[3,5,0,1,1,0],[3,5,1,1,1,0],[3,5,2,1,1,0],[3,5,3,1,1,0],[3,5,4,1,1,0],[3,5,5,1,1,0]]) )
-            /*gameSamples.append( GameSample( localArr:[[1,0,0,1,1,0],[1,1,1,1,1,0],[1,0,2,1,1,0],[1,1,3,1,1,0],[1,0,4,1,1,0],[1,1,5,1,1,0],[2,0,1,1,1,0],[2,0,3,1,1,0],[2,0,5,1,1,0],[2,1,0,1,1,0],[2,1,2,1,1,0],[2,1,4,1,1,0]]) )
-            gameSamples.append( GameSample( localArr:[[3,0,0,1,1,0],[3,0,1,1,1,0],[1,0,2,1,1,0],[1,0,3,1,1,0],[1,0,4,1,1,0],[1,0,5,1,1,0],[1,2,0,1,1,0],[2,1,1,1,1,0],[2,1,2,1,1,0],[2,1,3,1,1,0],[2,1,4,1,1,0],[2,1,5,1,1,0],[2,1,0,1,1,0],[1,2,1,1,1,0],[3,2,2,1,1,0],[3,2,3,1,1,0],[3,2,4,1,1,0],[3,2,5,1,1,0]]) )*/
-            gameSamples.append( GameSample( localArr:[
-                [1,0,0,1,1,0],
-                [1,0,1,1,1,0],
-                [1,0,2,1,1,0],
-                [1,0,3,1,1,0],
-                
-                [2,1,0,1,1,0],
-                [2,1,1,1,1,0],
-                [2,1,2,1,1,0],
-                [2,1,3,1,1,0],
-                
-                [4,3,0,1,1,0],
-                [4,3,1,1,1,0],
-                [4,3,2,1,1,0],
-                [4,3,3,1,1,0],
-                
-                [3,2,0,1,1,0],
-                [3,2,1,1,1,0],
-                [3,2,2,1,1,0],
-                [3,2,3,1,1,0]
-                ]) )
+        gameSamples.append( GameSample( fruits:[
+            [1,0,5]
+            ],
+                                        goals: [0,0,50,0,3,0,4,0]
+        ) )
         
+        gameSamples.append( GameSample( fruits:[
+            [3,0,0],
+            [3,1,1],
+            [1,2,0],
+            [1,3,2],
+            [1,4,0],
+            [1,5,2],
+            [4,0,1],
+            [4,1,0],
+            [2,2,1],
+            [2,3,0],
+            [2,4,1],
+            [2,5,0]
+            ],
+                                        goals: [0,0,40,0,0,1,4,0]
+        ) )
+        
+        //level6
+        gameSamples.append( GameSample( fruits:[
+            [3,0,0],
+            [3,1,1],
+            [1,2,0],
+            [TileNode.BUBBLE_ID,3,2],
+            [1,4,0],
+            [1,5,2],
+            [4,0,1],
+            [4,1,0],
+            [2,2,1],
+            [2,3,0],
+            [2,4,1],
+            [2,5,0]
+            ],
+                                        goals: [0,40,40,0,0,0,4,5]
+        ) )
+
+        //level7
+        gameSamples.append( GameSample( fruits:[
+            [3,0,0],
+            [3,1,1],
+            [1,2,0],
+            [TileNode.BLOCKED_ID,3,2],
+            [1,4,0],
+            [1,5,2],
+            [4,0,1],
+            [4,1,0],
+            [2,2,1],
+            [2,3,0],
+            [2,4,1],
+            [2,5,0]
+            ],
+                                        goals: [0,40,40,0,0,0,4,5]
+        ) )
+
+        //level8
+        gameSamples.append( GameSample( fruits:[
+            [3,0,0],
+            [3,1,1],
+            [1,2,0],
+            [TileNode.QUESTION_ID,3,2],
+            [1,4,0],
+            [1,5,2],
+            [4,0,1],
+            [4,1,0],
+            [2,2,1],
+            [2,3,0],
+            [2,4,1],
+            [2,5,0]
+            ],
+                                        goals: [0,40,40,0,0,0,4,5]
+        ) )
+        
+       gameSamples.append( GameSample( fruits:[
+            [TileNode.CHOLOLATE_ID,0,5]
+            ,[TileNode.BLOCKED_ID,3,3]
+            ],
+                                        goals: [3,0,50,0,0,0,4,10]
+        ) )
+        
+        gameSamples.append( GameSample( fruits:[
+            [1,0,5]
+            ,[TileNode.BLOCKED_ID,3,3]
+            ],
+                                        goals: [0,0,50,10,0,0,4,10]
+        ) )
+        
+        gameSamples.append( GameSample( fruits:[
+            [1,0,5]
+            ,[TileNode.BLOCKED_ID,3,3]
+            ],
+                                        goals: [0,0,50,0,3,0,4,10]
+        ) )
+        
+        FindFirstLevels()
         
             print ("There are \(gameSamples.count) samples")
         

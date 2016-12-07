@@ -153,10 +153,10 @@ class LevelSelectorViewController: UIViewController {
             }
             else if ( (button.tag + levelOffset) == (maxLevelCompleted + 1) ) {
                 button.setBackgroundImage(#imageLiteral(resourceName: "questionImage"),for: .normal)
-                button.setTitle("", for: .normal)
+                button.setTitle(String(button.tag+levelOffset+1), for: .normal)
             }
             else {
-                button.setBackgroundImage(#imageLiteral(resourceName: "lockImage"),for: .normal)
+                button.setBackgroundImage(#imageLiteral(resourceName: "locked"),for: .normal)
                 button.setTitle("", for: .normal)
             }
         }

@@ -12,7 +12,7 @@
         <!--Home View Controller-->
         <scene sceneID="WrZ-3Q-QFc">
             <objects>
-                <viewController storyboardIdentifier="homevc" id="5Ie-E2-vTb" customClass="HomeViewController" customModule="Stickytiles" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="homevc" id="5Ie-E2-vTb" customClass="HomeViewController" customModule="Magictiles" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="w4m-8E-fGg"/>
                         <viewControllerLayoutGuide type="bottom" id="zCt-7s-REC"/>
@@ -22,9 +22,9 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="gd1-52-5Cv">
-                                <rect key="frame" x="80" y="128.5" width="215" height="410"/>
+                                <rect key="frame" x="80" y="164" width="215" height="339"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sticky Tiles" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XBV-Cp-i0w">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kousan" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XBV-Cp-i0w">
                                         <rect key="frame" x="0.0" y="0.0" width="215" height="56"/>
                                         <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="36"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -37,29 +37,22 @@
                                             <segue destination="1cM-Vp-O44" kind="presentation" id="w15-ui-JHT"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xhY-Ch-EHm">
-                                        <rect key="frame" x="0.0" y="147" width="215" height="51"/>
-                                        <state key="normal" image="HowtoPlay"/>
-                                        <connections>
-                                            <action selector="OnHowToPlayButtonPressed:" destination="5Ie-E2-vTb" eventType="touchUpInside" id="XuB-6k-yl2"/>
-                                        </connections>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kSt-rt-X7f">
-                                        <rect key="frame" x="0.0" y="218" width="215" height="51"/>
+                                        <rect key="frame" x="0.0" y="147" width="215" height="51"/>
                                         <state key="normal" image="RemoveAds"/>
                                         <connections>
                                             <action selector="OnRemoveAdsPressed:" destination="5Ie-E2-vTb" eventType="touchUpInside" id="z7M-dv-JJS"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JAF-nd-yEB">
-                                        <rect key="frame" x="0.0" y="289" width="215" height="51"/>
+                                        <rect key="frame" x="0.0" y="218" width="215" height="51"/>
                                         <state key="normal" image="RestorePurchase"/>
                                         <connections>
                                             <action selector="OnRestorePurchasePressed:" destination="5Ie-E2-vTb" eventType="touchUpInside" id="BK4-pt-Zld"/>
                                         </connections>
                                     </button>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="ig4-HE-ZVb">
-                                        <rect key="frame" x="0.0" y="360" width="215" height="50"/>
+                                        <rect key="frame" x="0.0" y="289" width="215" height="50"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LPX-RV-emZ">
                                                 <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
@@ -112,7 +105,7 @@
         <!--Level Selector View Controller-->
         <scene sceneID="wtl-3H-GSQ">
             <objects>
-                <viewController storyboardIdentifier="levelvc" id="1cM-Vp-O44" customClass="LevelSelectorViewController" customModule="Stickytiles" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="levelvc" id="1cM-Vp-O44" customClass="LevelSelectorViewController" customModule="Magictiles" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="H8x-av-CQo"/>
                         <viewControllerLayoutGuide type="bottom" id="Sa6-Mo-fcQ"/>
@@ -638,327 +631,10 @@
             </objects>
             <point key="canvasLocation" x="204" y="-37.331334332833585"/>
         </scene>
-        <!--Help View Controller-->
-        <scene sceneID="SNV-ti-dkl">
-            <objects>
-                <pageViewController storyboardIdentifier="helpVC" autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="1hi-G4-Tdr" customClass="HelpViewController" customModule="Stickytiles" customModuleProvider="target" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="5YN-6J-9hq" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1625" y="591"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="Mvy-hg-dny">
-            <objects>
-                <viewController storyboardIdentifier="Help1" id="QDX-gQ-uny" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="ofN-c3-zKK"/>
-                        <viewControllerLayoutGuide type="bottom" id="la0-Yy-rRD"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="coh-pF-lK3">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="XWU-YO-H4v">
-                                <rect key="frame" x="39.5" y="175.5" width="296" height="316"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Initially, You are given a scrambled board" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wFO-4O-NBa">
-                                        <rect key="frame" x="0.0" y="0.0" width="296" height="25"/>
-                                        <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="16"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Help1" translatesAutoresizingMaskIntoConstraints="NO" id="Mvg-PB-J96">
-                                        <rect key="frame" x="0.0" y="25" width="296" height="291"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="291" id="8x5-bo-wvZ"/>
-                                            <constraint firstAttribute="width" constant="296" id="Vwu-RL-WFX"/>
-                                        </constraints>
-                                    </imageView>
-                                </subviews>
-                            </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9I3-00-9T7">
-                                <rect key="frame" x="309" y="597" width="50" height="50"/>
-                                <state key="normal" image="HomeG"/>
-                                <connections>
-                                    <segue destination="5Ie-E2-vTb" kind="presentation" id="NbQ-hq-cOO"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                        <constraints>
-                            <constraint firstItem="XWU-YO-H4v" firstAttribute="centerX" secondItem="coh-pF-lK3" secondAttribute="centerX" id="0de-pV-rvs"/>
-                            <constraint firstItem="XWU-YO-H4v" firstAttribute="centerY" secondItem="coh-pF-lK3" secondAttribute="centerY" id="3uG-nt-b2H"/>
-                            <constraint firstItem="la0-Yy-rRD" firstAttribute="top" secondItem="9I3-00-9T7" secondAttribute="bottom" constant="20" id="lJz-am-DBw"/>
-                            <constraint firstItem="9I3-00-9T7" firstAttribute="trailing" secondItem="coh-pF-lK3" secondAttribute="trailingMargin" id="t8Z-qK-pcl"/>
-                        </constraints>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="eNe-zz-dHz" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-842" y="591"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="k4g-ek-00k">
-            <objects>
-                <viewController storyboardIdentifier="Help2" id="9KA-me-NzA" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="LMn-t6-i13"/>
-                        <viewControllerLayoutGuide type="bottom" id="veo-bJ-EYg"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Ol8-ry-Vk0">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="kSw-s7-gGy">
-                                <rect key="frame" x="39.5" y="175.5" width="296" height="316"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sort tiles vertically to win" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yQ8-t7-6Ax">
-                                        <rect key="frame" x="0.0" y="0.0" width="296" height="25"/>
-                                        <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="16"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Help2" translatesAutoresizingMaskIntoConstraints="NO" id="E9u-ZB-a8G">
-                                        <rect key="frame" x="0.0" y="25" width="296" height="291"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="291" id="Q3J-9L-W7h"/>
-                                            <constraint firstAttribute="width" constant="296" id="kR2-FR-8Dc"/>
-                                        </constraints>
-                                    </imageView>
-                                </subviews>
-                            </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vQL-J4-AUd">
-                                <rect key="frame" x="309" y="597" width="50" height="50"/>
-                                <state key="normal" image="HomeG"/>
-                                <connections>
-                                    <segue destination="5Ie-E2-vTb" kind="presentation" id="WFJ-Gf-ahp"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                        <constraints>
-                            <constraint firstItem="vQL-J4-AUd" firstAttribute="trailing" secondItem="Ol8-ry-Vk0" secondAttribute="trailingMargin" id="2gR-lb-tBT"/>
-                            <constraint firstItem="kSw-s7-gGy" firstAttribute="centerY" secondItem="Ol8-ry-Vk0" secondAttribute="centerY" id="9na-cJ-EBz"/>
-                            <constraint firstItem="veo-bJ-EYg" firstAttribute="top" secondItem="vQL-J4-AUd" secondAttribute="bottom" constant="20" id="B4a-5H-DJx"/>
-                            <constraint firstItem="kSw-s7-gGy" firstAttribute="centerX" secondItem="Ol8-ry-Vk0" secondAttribute="centerX" id="nHv-QJ-AfU"/>
-                        </constraints>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ZZl-bj-lBD" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-78" y="617"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="MJI-VM-j2R">
-            <objects>
-                <viewController storyboardIdentifier="Help3" id="oxh-t1-0hU" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="14P-zp-ALl"/>
-                        <viewControllerLayoutGuide type="bottom" id="H68-Ob-yM8"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="JhR-6U-gEC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="MZy-XA-R2H">
-                                <rect key="frame" x="39.5" y="125.5" width="296" height="416"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="When you move a tile horizontally or vertically, all the neighboring tiles will move as well" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k61-0j-YCn">
-                                        <rect key="frame" x="0.0" y="0.0" width="296" height="125"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="125" id="lYR-JR-crg"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="16"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Help3" translatesAutoresizingMaskIntoConstraints="NO" id="o2m-6B-YaW">
-                                        <rect key="frame" x="0.0" y="125" width="296" height="291"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="291" id="bf7-IQ-6Xs"/>
-                                            <constraint firstAttribute="width" constant="296" id="tKr-OP-rhR"/>
-                                        </constraints>
-                                    </imageView>
-                                </subviews>
-                            </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eTo-kH-1xK">
-                                <rect key="frame" x="309" y="597" width="50" height="50"/>
-                                <state key="normal" image="HomeG"/>
-                                <connections>
-                                    <segue destination="5Ie-E2-vTb" kind="presentation" id="Oyk-XL-ERO"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                        <constraints>
-                            <constraint firstItem="MZy-XA-R2H" firstAttribute="centerX" secondItem="JhR-6U-gEC" secondAttribute="centerX" id="7rX-d7-9O8"/>
-                            <constraint firstItem="H68-Ob-yM8" firstAttribute="top" secondItem="eTo-kH-1xK" secondAttribute="bottom" constant="20" id="UdM-nG-sSG"/>
-                            <constraint firstItem="eTo-kH-1xK" firstAttribute="trailing" secondItem="JhR-6U-gEC" secondAttribute="trailingMargin" id="egF-wl-7LQ"/>
-                            <constraint firstItem="MZy-XA-R2H" firstAttribute="centerY" secondItem="JhR-6U-gEC" secondAttribute="centerY" id="tOg-vi-0wQ"/>
-                        </constraints>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="uqR-HH-DDJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="741.60000000000002" y="616.64167916041981"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="a8m-je-22g">
-            <objects>
-                <viewController storyboardIdentifier="Help4" id="Nq6-eK-lXL" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="vgt-Oe-SQE"/>
-                        <viewControllerLayoutGuide type="bottom" id="CDK-Pg-5Ec"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="mUK-GA-uov">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="wjv-CK-r4k">
-                                <rect key="frame" x="70" y="141" width="235" height="385.5"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Icons &amp; Symbols" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mV4-Jg-1wb">
-                                        <rect key="frame" x="0.0" y="0.0" width="235" height="37.5"/>
-                                        <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="24"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9BL-Fe-SBT">
-                                        <rect key="frame" x="0.0" y="45.5" width="235" height="50"/>
-                                        <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="locked" translatesAutoresizingMaskIntoConstraints="NO" id="P3D-X3-y6b">
-                                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="50" id="YAQ-Lw-4X9"/>
-                                                    <constraint firstAttribute="height" constant="50" id="fNG-Kt-4ax"/>
-                                                </constraints>
-                                            </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  Locked tiles don't move" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9WW-VG-8D5">
-                                                <rect key="frame" x="50" y="0.0" width="185" height="50"/>
-                                                <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                        </subviews>
-                                    </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xQm-rP-36a">
-                                        <rect key="frame" x="0.0" y="103.5" width="235" height="50"/>
-                                        <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HomeG" translatesAutoresizingMaskIntoConstraints="NO" id="E2w-Xd-rOb">
-                                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="50" id="QXr-y7-swS"/>
-                                                    <constraint firstAttribute="width" constant="50" id="eEV-E8-1iz"/>
-                                                </constraints>
-                                            </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  Home button" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nAP-v7-pRn">
-                                                <rect key="frame" x="50" y="0.0" width="185" height="50"/>
-                                                <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                        </subviews>
-                                    </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DnT-ox-ZHY">
-                                        <rect key="frame" x="0.0" y="161.5" width="235" height="50"/>
-                                        <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="GridG" translatesAutoresizingMaskIntoConstraints="NO" id="q11-7R-hPg">
-                                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="50" id="UtV-dc-quN"/>
-                                                    <constraint firstAttribute="width" constant="50" id="pYc-dP-wdj"/>
-                                                </constraints>
-                                            </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  Level Selector button" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AoK-VE-8mH">
-                                                <rect key="frame" x="50" y="0.0" width="185" height="50"/>
-                                                <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                        </subviews>
-                                    </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9ae-PG-ZSw">
-                                        <rect key="frame" x="0.0" y="219.5" width="235" height="50"/>
-                                        <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="FastForwardG" translatesAutoresizingMaskIntoConstraints="NO" id="hzR-GE-seW">
-                                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="50" id="gOu-3G-9hU"/>
-                                                    <constraint firstAttribute="height" constant="50" id="jCn-S6-SJ3"/>
-                                                </constraints>
-                                            </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  Next Level button" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rLq-98-EX4">
-                                                <rect key="frame" x="50" y="0.0" width="185" height="50"/>
-                                                <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                        </subviews>
-                                    </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7QZ-Qp-M7O">
-                                        <rect key="frame" x="0.0" y="277.5" width="235" height="50"/>
-                                        <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MusicOn" translatesAutoresizingMaskIntoConstraints="NO" id="ape-Lk-crL">
-                                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="50" id="dyM-qG-VZS"/>
-                                                    <constraint firstAttribute="height" constant="50" id="siP-dZ-AX6"/>
-                                                </constraints>
-                                            </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  Music on/off button" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9ZA-2a-cf0">
-                                                <rect key="frame" x="50" y="0.0" width="185" height="50"/>
-                                                <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                        </subviews>
-                                    </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bhv-X2-naw">
-                                        <rect key="frame" x="0.0" y="335.5" width="235" height="50"/>
-                                        <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SoundOn" translatesAutoresizingMaskIntoConstraints="NO" id="Sek-LW-xbN">
-                                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="50" id="0ng-Gt-kcB"/>
-                                                    <constraint firstAttribute="height" constant="50" id="nQv-Pk-6xv"/>
-                                                </constraints>
-                                            </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  Sounds on/off button" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Ni-OT-BZc">
-                                                <rect key="frame" x="50" y="0.0" width="185" height="50"/>
-                                                <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                        </subviews>
-                                    </stackView>
-                                </subviews>
-                                <color key="backgroundColor" red="0.36533129549999999" green="0.2829946042" blue="0.66214005239999996" alpha="1" colorSpace="calibratedRGB"/>
-                            </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jxg-3D-2zS">
-                                <rect key="frame" x="309" y="597" width="50" height="50"/>
-                                <state key="normal" image="HomeG"/>
-                                <connections>
-                                    <segue destination="5Ie-E2-vTb" kind="presentation" id="60e-sw-RP4"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                        <constraints>
-                            <constraint firstItem="CDK-Pg-5Ec" firstAttribute="top" secondItem="Jxg-3D-2zS" secondAttribute="bottom" constant="20" id="45p-kU-S5K"/>
-                            <constraint firstItem="Jxg-3D-2zS" firstAttribute="trailing" secondItem="mUK-GA-uov" secondAttribute="trailingMargin" id="TOh-Vn-R4h"/>
-                            <constraint firstItem="wjv-CK-r4k" firstAttribute="centerX" secondItem="mUK-GA-uov" secondAttribute="centerX" id="WDb-Rn-8ko"/>
-                            <constraint firstItem="wjv-CK-r4k" firstAttribute="centerY" secondItem="mUK-GA-uov" secondAttribute="centerY" id="fFD-W7-3M3"/>
-                        </constraints>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="qME-jP-Vgb" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1518" y="617"/>
-        </scene>
         <!--Game View Controller-->
         <scene sceneID="tXr-a1-R10">
             <objects>
-                <viewController id="BV1-FR-VrT" customClass="GameViewController" customModule="Stickytiles" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BV1-FR-VrT" customClass="GameViewController" customModule="Magictiles" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="8aa-yV-Osq"/>
                         <viewControllerLayoutGuide type="bottom" id="qHh-Mt-9TT"/>
@@ -969,7 +645,6 @@
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <connections>
-                        <segue destination="GOx-oM-wlG" kind="presentation" identifier="gameOverSegue" modalTransitionStyle="partialCurl" id="akC-dz-1eV"/>
                         <segue destination="1cM-Vp-O44" kind="presentation" identifier="levelSelector" id="pB8-kn-G9r"/>
                         <segue destination="5Ie-E2-vTb" kind="presentation" identifier="homePage" id="sc2-Uc-Emz"/>
                     </connections>
@@ -978,126 +653,22 @@
             </objects>
             <point key="canvasLocation" x="2215" y="-392"/>
         </scene>
-        <!--Game Over View Controller-->
-        <scene sceneID="0aP-G9-hpi">
-            <objects>
-                <viewController id="GOx-oM-wlG" customClass="GameOverViewController" customModule="Stickytiles" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="nve-yN-LAM"/>
-                        <viewControllerLayoutGuide type="bottom" id="MCD-dS-fD9"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="zN4-By-Gsr">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZXu-Y7-uhs">
-                                <rect key="frame" x="37.5" y="183.5" width="300" height="300"/>
-                                <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="SFR-km-Q0C">
-                                        <rect key="frame" x="23" y="60" width="254" height="180"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Congratulations!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lq4-9g-fvR">
-                                                <rect key="frame" x="0.0" y="0.0" width="254" height="50"/>
-                                                <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="31"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b9p-ag-xa5">
-                                                <rect key="frame" x="0.0" y="65" width="254" height="50"/>
-                                                <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="18" translatesAutoresizingMaskIntoConstraints="NO" id="hCQ-C4-2M9">
-                                                <rect key="frame" x="0.0" y="130" width="254" height="50"/>
-                                                <subviews>
-                                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xdv-bA-U8b">
-                                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                                        <state key="normal" image="HomeG"/>
-                                                        <connections>
-                                                            <action selector="OnButtonClick:" destination="GOx-oM-wlG" eventType="touchUpInside" id="ur1-2f-3Xb"/>
-                                                        </connections>
-                                                    </button>
-                                                    <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tNI-s4-rx4">
-                                                        <rect key="frame" x="68" y="0.0" width="50" height="50"/>
-                                                        <state key="normal" image="RewindG"/>
-                                                        <connections>
-                                                            <action selector="OnButtonClick:" destination="GOx-oM-wlG" eventType="touchUpInside" id="nI8-aK-6Gj"/>
-                                                        </connections>
-                                                    </button>
-                                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ft6-nv-lwx">
-                                                        <rect key="frame" x="136" y="0.0" width="50" height="50"/>
-                                                        <state key="normal" image="GridG"/>
-                                                        <connections>
-                                                            <action selector="OnButtonClick:" destination="GOx-oM-wlG" eventType="touchUpInside" id="IKI-EW-7ew"/>
-                                                        </connections>
-                                                    </button>
-                                                    <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EuM-h9-Vqa">
-                                                        <rect key="frame" x="204" y="0.0" width="50" height="50"/>
-                                                        <state key="normal" image="FastForwardG"/>
-                                                        <connections>
-                                                            <action selector="OnButtonClick:" destination="GOx-oM-wlG" eventType="touchUpInside" id="yEA-1h-AXs"/>
-                                                        </connections>
-                                                    </button>
-                                                </subviews>
-                                            </stackView>
-                                        </subviews>
-                                    </stackView>
-                                </subviews>
-                                <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="300" id="KvC-pS-GDY"/>
-                                    <constraint firstAttribute="height" constant="300" id="jsB-Pa-Aol"/>
-                                    <constraint firstItem="SFR-km-Q0C" firstAttribute="centerX" secondItem="ZXu-Y7-uhs" secondAttribute="centerX" id="kjc-uU-QL2"/>
-                                    <constraint firstItem="SFR-km-Q0C" firstAttribute="centerY" secondItem="ZXu-Y7-uhs" secondAttribute="centerY" id="sA8-fT-V3n"/>
-                                </constraints>
-                            </view>
-                        </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                        <constraints>
-                            <constraint firstItem="ZXu-Y7-uhs" firstAttribute="centerY" secondItem="zN4-By-Gsr" secondAttribute="centerY" id="AlC-8N-zFZ"/>
-                            <constraint firstItem="ZXu-Y7-uhs" firstAttribute="centerX" secondItem="zN4-By-Gsr" secondAttribute="centerX" id="hbF-gk-TLl"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="theLabel" destination="b9p-ag-xa5" id="6I6-qO-AQO"/>
-                        <outlet property="theView" destination="ZXu-Y7-uhs" id="bu4-9S-fMn"/>
-                        <segue destination="BV1-FR-VrT" kind="presentation" identifier="gameSceneSegue" id="LWH-FU-trT"/>
-                        <segue destination="1cM-Vp-O44" kind="presentation" identifier="levelSceneSegue" id="qtL-fx-UaX"/>
-                        <segue destination="5Ie-E2-vTb" kind="presentation" identifier="homeSegue" id="wzo-oJ-MNV"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="T3Z-k2-XQd" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="136.80000000000001" y="-1049.3253373313344"/>
-        </scene>
     </scenes>
     <resources>
-        <image name="FastForwardG" width="50" height="50"/>
-        <image name="GridG" width="50" height="50"/>
-        <image name="Help1" width="148" height="148"/>
-        <image name="Help2" width="148" height="148"/>
-        <image name="Help3" width="148" height="148"/>
         <image name="HomeG" width="50" height="50"/>
-        <image name="HowtoPlay" width="201" height="51"/>
-        <image name="MusicOn" width="50" height="50"/>
         <image name="NextPage" width="50" height="50"/>
         <image name="Play" width="201" height="51"/>
         <image name="PrevPage" width="50" height="50"/>
         <image name="RemoveAds" width="201" height="51"/>
         <image name="RestorePurchase" width="201" height="51"/>
-        <image name="RewindG" width="50" height="50"/>
-        <image name="SoundOn" width="50" height="50"/>
         <image name="email" width="50" height="50"/>
         <image name="fb" width="50" height="50"/>
         <image name="lockImage" width="30" height="30"/>
-        <image name="locked" width="50" height="50"/>
         <image name="shareButton" width="50" height="50"/>
         <image name="tweeter" width="50" height="50"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Oyk-XL-ERO"/>
-        <segue reference="pB8-kn-G9r"/>
-        <segue reference="LWH-FU-trT"/>
+        <segue reference="sc2-Uc-Emz"/>
+        <segue reference="w15-ui-JHT"/>
     </inferredMetricsTieBreakers>
 </document>

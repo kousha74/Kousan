@@ -12,12 +12,14 @@ import SpriteKit
 class TileNode {
     
     // MARK : constants
+    static let APPLE_ID = 1
     static let BUBBLE_ID = 10
     static let STAR5_ID = 11
     static let STAR7_ID = 12
     static let CHOLOLATE_ID = 13
     static let BLOCKER_ID = 14
     static let BLOCKED_ID = 15
+    static let QUESTION_ID = 16
     
     static let IS_MOVING:Int = 0
     static let IS_VISITED:Int = 1
@@ -36,23 +38,24 @@ class TileNode {
     var pos:CGPoint
     var sprite : SKSpriteNode?
     
-    init( x: Int, y: Int, id: Int, locked:Bool, cellSize: Int, viewOffset: CGPoint){
+    init(){
         
-        self.id = id
-        pos = CGPoint(x: x, y: y)
-    
-        if ( locked ){
-            flags[ TileNode.IS_LOCKED] = true
-        }
-        
-        sprite = SKSpriteNode(imageNamed: GetTileImage() )
-        sprite?.position.x = viewOffset.x + (CGFloat(x)+CGFloat(0.5))*CGFloat(cellSize)
-        sprite?.position.y = viewOffset.y + (CGFloat(y)+CGFloat(0.5))*CGFloat(cellSize)
+        id = 0
+        pos = CGPoint(x: 0, y: 0)
+            
+        sprite = SKSpriteNode(imageNamed: "Apple" )
+        sprite?.position.x = 0.0
+        sprite?.position.y = 0.0
     }
     
-    func IsBlock()->Bool{
-        return id == TileNode.BLOCKED_ID || id == TileNode.BLOCKER_ID
+    func CanBeRemoved()->Bool{
+        return id != TileNode.BLOCKED_ID && id != TileNode.BLOCKER_ID && id != TileNode.CHOLOLATE_ID && !GetFlag(flag: TileNode.IS_LOCKED)
     }
+    
+    func CanMove()->Bool{
+        return id != TileNode.BLOCKED_ID && id != TileNode.BLOCKER_ID
+    }
+    
     //Resets the tile to be reused
     func Reset(){
         id = 0
@@ -83,7 +86,7 @@ class TileNode {
             break
         }
         
-        sprite?.texture = SKTexture(imageNamed:GetTileImage())
+        SetTileImage()
     }
     
     func GetClusterType()->ClusterType{
@@ -92,7 +95,7 @@ class TileNode {
     
     func SetID(Id:Int){
         id = Id
-        sprite?.texture = SKTexture(imageNamed:GetTileImage())
+        SetTileImage()
     }
     
     func GetID()->Int{
@@ -114,25 +117,39 @@ class TileNode {
         sprite?.position.y = viewOffset.y + (CGFloat(row)+CGFloat(0.5))*CGFloat(cellSize)
     }
     
-    func GetTileImage()->String{
+    func IsFruit()->Bool{
+        return id < TileNode.BUBBLE_ID
+    }
+    
+    func SetTileImage(){
         
         //special tiles
-        if ( id >= TileNode.BUBBLE_ID ) {
+        if !IsFruit() {
             switch(id){
             case TileNode.BUBBLE_ID:
-                return "Balloon"
+                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "Balloon"))
+                return
             case TileNode.STAR5_ID:
-                return "Star5"
+                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "Star5"))
+                return
             case TileNode.STAR7_ID:
-                return "Star7"
+                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "Star7"))
+                return
             case TileNode.CHOLOLATE_ID:
-                return "chocolate"
+                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "chocolate"))
+                return
             case TileNode.BLOCKER_ID:
-                return "texture1"
+                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "blocker"))
+                return
             case TileNode.BLOCKED_ID:
-                return "Blocked"
+                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "Blocked"))
+                return
+            case TileNode.QUESTION_ID:
+                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "QuestionMark"))
+                return
             default:
-                return "gray"
+                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "QuestionMark"))
+                return
                 
             }
         }
@@ -141,93 +158,131 @@ class TileNode {
         case .None:
             switch(id){
             case 1:
-                return "Apple"
+                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "Apple"))
+                return
             case 2:
-                return "Apricot"
+                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "Apricot"))
+                return
             case 3:
-                return "Cherry"
+                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "Cherry"))
+                return
             case 4:
-                return "Kiwi"
+                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "Kiwi"))
+                return
             case 5:
-                return "Lemon"
+                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "Lemon"))
+                return
             case 6:
-                return "Orange"
+                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "Orange"))
+                return
             default:
-                return "gray"
+                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "Apple"))
+                return
                 
             }
             
         case .Row:
             switch(id){
             case 1:
-                return "AppleR"
+                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "AppleR"))
+                return
             case 2:
-                return "ApricotR"
+                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "ApricotR"))
+                return
             case 3:
-                return "CherryR"
+                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "CherryR"))
+                return
             case 4:
-                return "KiwiR"
+                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "KiwiR"))
+                return
             case 5:
-                return "LemonR"
+                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "LemonR"))
+                return
             case 6:
-                return "OrangeR"
+                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "OrangeR"))
+                return
             default:
-                return "gray"
+                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "AppleR"))
+                return
+                
             }
             
         case .Col:
             switch(id){
             case 1:
-                return "AppleC"
+                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "AppleC"))
+                return
             case 2:
-                return "ApricotC"
+                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "ApricotC"))
+                return
             case 3:
-                return "CherryC"
+                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "CherryC"))
+                return
             case 4:
-                return "KiwiC"
+                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "KiwiC"))
+                return
             case 5:
-                return "LemonC"
+                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "LemonC"))
+                return
             case 6:
-                return "OrangeC"
+                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "OrangeC"))
+                return
             default:
-                return "gray"
+                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "AppleC"))
+                return
+                
             }
             
         case .Four:
             switch(id){
             case 1:
-                return "Apple4"
+                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "Apple4"))
+                return
             case 2:
-                return "Apricot4"
+                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "Apricot4"))
+                return
             case 3:
-                return "Cherry4"
+                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "Cherry4"))
+                return
             case 4:
-                return "Kiwi4"
+                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "Kiwi4"))
+                return
             case 5:
-                return "Lemon4"
+                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "Lemon4"))
+                return
             case 6:
-                return "Orange4"
+                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "Orange4"))
+                return
             default:
-                return "gray"
+                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "Apple4"))
+                return
+                
             }
             
         default:
-        
             switch(id){
             case 1:
-                return "Apple"
+                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "Apple"))
+                return
             case 2:
-                return "Apricot"
+                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "Apricot"))
+                return
             case 3:
-                return "Cherry"
+                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "Cherry"))
+                return
             case 4:
-                return "Kiwi"
+                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "Kiwi"))
+                return
             case 5:
-                return "Lemon"
+                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "Lemon"))
+                return
             case 6:
-                return "Orange"
+                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "Orange"))
+                return
             default:
-                return "gray"
+                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "Apple"))
+                return
+                
             }
         }
     }
