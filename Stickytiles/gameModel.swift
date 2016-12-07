@@ -796,20 +796,178 @@ class GameModel {
         
             //fruits [id,x,y]
             //goals [Chcolate, targetScore, maxMoves, targetApples, targetSpecial, targetStars, colorCount, baloon frequency]
-
+        
+            //Level 1
             gameSamples.append( GameSample( fruits:[
                 [1,0,0],
                 [1,1,1],
-                [2,2,0]
+                [1,0,2],
+                [1,1,3],
+                [1,0,4],
+                [1,1,5],
+                [2,0,1],
+                [2,1,0],
+                [2,0,3],
+                [2,1,2],
+                [2,0,5],
+                [2,1,4]
                 ],
-                goals: [0,40,0,0,0,0,6,0]
+                goals: [0,40,0,0,0,0,4,0]
                 ) )
         
+        // Level 2
         gameSamples.append( GameSample( fruits:[
+            [1,0,0],
+            [1,1,1],
+            [1,2,0],
+            [1,3,1],
+            [1,4,0],
+            [1,5,1],
+            [2,0,1],
+            [2,1,0],
+            [2,2,1],
+            [2,3,0],
+            [2,4,1],
+            [2,5,0]
+            ],
+            goals: [0,50,50,0,0,0,4,0]
+        ) )
+        
+        //level 3
+        gameSamples.append( GameSample( fruits:[
+            [1,0,0],
+            [2,1,1],
+            [3,2,0],
+            [4,3,1],
+            [5,4,0],
+            [6,5,1],
+            [6,0,1],
+            [5,1,0],
+            [4,2,1],
+            [3,3,0],
+            [2,4,1],
+            [1,5,0]
+            ],
+                                        goals: [0,50,50,0,0,0,4,0]
+        ) )
+        
+        //Level 4
+        gameSamples.append( GameSample( fruits:[
+            [1,0,0],
+            [2,1,1],
+            [3,2,0],
+            [4,3,1],
+            [1,4,0],
+            [2,5,1],
+            [3,0,1],
+            [4,1,0],
+            [4,2,1],
+            [3,3,0],
+            [2,4,1],
+            [1,5,0]
+            ],
+                                        goals: [0,0,50,10,0,0,4,0]
+        ) )
+        
+        //Level 5
+        gameSamples.append( GameSample( fruits:[
+            [1,0,0],
+            [2,1,1],
+            [3,2,0],
+            [4,3,1],
+            [1,4,0],
+            [2,5,1],
             [TileNode.CHOLOLATE_ID,0,5]
             ],
-                                        goals: [3,0,5,0,0,0,4,0]
+                                        goals: [3,0,0,0,0,0,4,0]
         ) )
+        
+        
+        //Level 6
+        gameSamples.append( GameSample( fruits:[
+            [1,0,0],
+            [2,1,1],
+            [3,2,0],
+            [4,3,1],
+            [1,4,0],
+            [2,5,1],
+            [TileNode.CHOLOLATE_ID,0,5]
+            ],
+                                        goals: [3,0,50,0,0,0,4,0]
+        ) )
+        
+        //level 7 baloon
+        gameSamples.append( GameSample( fruits:[
+            [TileNode.BUBBLE_ID,0,0],
+            [2,1,1],
+            [3,2,0],
+            [4,3,1],
+            [TileNode.BUBBLE_ID,4,0],
+            [6,5,1],
+            [6,0,1],
+            [5,1,0],
+            [4,2,1],
+            [3,3,0],
+            [TileNode.BUBBLE_ID,4,1],
+            [1,5,0]
+            ],
+                                        goals: [0,50,0,0,0,0,4,20]
+        ) )
+        
+        //Level 8
+        gameSamples.append( GameSample( fruits:[
+            [1,0,0],
+            [2,1,1],
+            [3,2,0],
+            [4,3,1],
+            [1,4,0],
+            [2,5,1],
+            [3,0,1],
+            [4,1,0],
+            [4,2,1],
+            [3,3,0],
+            [2,4,1],
+            [1,5,0]
+            ],
+                                        goals: [0,0,60,15,0,0,4,0]
+        ) )
+        
+        
+        //Level 9
+        gameSamples.append( GameSample( fruits:[
+            [1,0,0],
+            [2,1,1],
+            [3,2,0],
+            [4,3,1],
+            [1,4,0],
+            [2,5,1],
+            [TileNode.CHOLOLATE_ID,0,5]
+            ],
+                                        goals: [5,0,60,0,0,0,4,0]
+        ) )
+        
+        
+        //level 10
+        gameSamples.append( GameSample( fruits:[
+            [1,0,0],
+            [2,1,1],
+            [3,2,0],
+            [4,3,1],
+            [1,4,0],
+            [2,5,1],
+            [3,0,1],
+            [4,1,0],
+            [4,2,1],
+            [3,3,0],
+            [2,4,1],
+            [1,5,0]
+            ],
+                                        goals: [0,60,50,0,0,0,4,0]
+        ) )
+        
+        
+        
+        
         
         gameSamples.append( GameSample( fruits:[
             [1,0,5]
