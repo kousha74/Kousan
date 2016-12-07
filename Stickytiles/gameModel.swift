@@ -59,7 +59,7 @@ class GameModel {
     private var audioPlayerLose : AVAudioPlayer?
     
     // the minimum number of tiles on the board
-    private let MIN_TILES = 12
+    let MIN_TILES = 12
     
     let boardSize : Int = 6
     
@@ -963,6 +963,176 @@ class GameModel {
             [1,5,0]
             ],
                                         goals: [0,60,50,0,0,0,4,0]
+        ) )
+        
+        //goals [Chcolate, targetScore, maxMoves, targetApples, targetSpecial, targetStars, colorCount, baloon frequency]
+        //level 11
+        gameSamples.append( GameSample( fruits:[
+            [TileNode.BLOCKED_ID,0,2],
+            [TileNode.BLOCKED_ID,1,2],
+            [TileNode.BLOCKED_ID,4,2],
+            [TileNode.BLOCKED_ID,5,2]
+            ],
+                                        goals: [0,40,50,0,0,0,4,0]
+        ) )
+        
+        //level 12
+        gameSamples.append( GameSample( fruits:[
+            [TileNode.BLOCKED_ID,0,1],
+            [TileNode.BLOCKED_ID,1,2],
+            [TileNode.BLOCKED_ID,2,3],
+            [TileNode.BLOCKED_ID,3,4],
+            [TileNode.CHOLOLATE_ID,0,2]
+            ],
+                                        goals: [2,0,50,0,0,0,4,0]
+        ) )
+        
+        //level 13
+        gameSamples.append( GameSample( fruits:[
+            [TileNode.BLOCKED_ID,0,1],
+            [TileNode.BLOCKED_ID,1,2],
+            [TileNode.BLOCKED_ID,2,3],
+            [TileNode.BLOCKED_ID,3,4],
+            [TileNode.CHOLOLATE_ID,0,2],
+            [1,0,3],
+            [2,1,3],
+            [1,0,4],
+            [2,1,4],
+            [3,2,4],
+            ],
+                                        goals: [2,0,50,0,0,0,4,0]
+        ) )
+        
+        //level 14
+        gameSamples.append( GameSample( fruits:[
+            [TileNode.BLOCKED_ID,0,1],
+            [TileNode.BLOCKED_ID,1,2],
+            [TileNode.BLOCKED_ID,2,3],
+            [TileNode.BLOCKED_ID,3,4],
+            [TileNode.CHOLOLATE_ID,0,2],
+            [1,0,3],
+            [2,1,3],
+            [1,0,4],
+            [4,1,4],
+            [3,2,4],
+            [3,0,5],
+            [2,1,5],
+            [1,2,5],
+            [4,3,5]
+            ],
+                                        goals: [2,0,50,0,0,0,4,0]
+        ) )
+        
+        //level 15
+        gameSamples.append( GameSample( fruits:[
+            [TileNode.BLOCKED_ID,0,1],
+            [TileNode.BLOCKED_ID,1,2],
+            [TileNode.BLOCKED_ID,2,3],
+            [TileNode.BLOCKED_ID,3,4],
+            [TileNode.BLOCKED_ID,4,4],
+            [TileNode.CHOLOLATE_ID,0,2],
+            [1,0,3],
+            [2,1,3],
+            [1,0,4],
+            [4,1,4],
+            [3,2,4],
+            [3,0,5],
+            [2,1,5],
+            [1,2,5],
+            [4,3,5]
+            ],
+                                        goals: [2,0,50,0,0,0,4,0]
+        ) )
+        
+        //goals [Chcolate, targetScore, maxMoves, targetApples, targetSpecial, targetStars, colorCount, baloon frequency]
+        //level 16
+        gameSamples.append( GameSample( fruits:[
+            [1,0,0],
+            [2,1,1],
+            [3,2,0],
+            [4,3,1],
+            [1,4,0],
+            [2,5,1],
+            [3,0,1],
+            [4,1,0],
+            [4,2,1],
+            [3,3,0],
+            [2,4,1],
+            [1,5,0]
+            ],
+                                        goals: [0,0,50,0,2,0,4,0]
+        ) )
+        
+        //level 17
+        gameSamples.append( GameSample( fruits:[
+            [TileNode.BLOCKED_ID,0,2],
+            [TileNode.BLOCKED_ID,0,3],
+            [TileNode.BLOCKED_ID,5,2],
+            [TileNode.BLOCKED_ID,5,3]
+            ],
+                                        goals: [0,0,50,0,2,0,4,0]
+        ) )
+        
+        //level 18
+        gameSamples.append( GameSample( fruits:[
+            [1,0,0],
+            [2,1,1],
+            [3,2,0],
+            [4,3,1],
+            [1,4,0],
+            [2,5,1],
+            [3,0,1],
+            [4,1,0],
+            [4,2,1],
+            [3,3,0],
+            [2,4,1],
+            [1,5,0]
+            ],
+                                        goals: [0,0,50,0,2,0,6,0]
+        ) )
+      
+        //level 19
+        gameSamples.append( GameSample( fruits:[
+            [1,2,0],
+            [1,1,1],
+            [1,3,1],
+            [1,2,2],
+            [TileNode.BUBBLE_ID,2,1],
+            
+            [2,2,3],
+            [2,1,4],
+            [2,3,4],
+            [2,2,5],
+            [TileNode.BUBBLE_ID,2,4],
+            
+            [3,4,1],
+            [3,5,2],
+            [3,4,3],
+            [3,5,4]
+            ],
+                                        goals: [0,0,50,0,3,0,6,10]
+        ) )
+        
+        //level 20
+        gameSamples.append( GameSample( fruits:[
+            [1,2,0],
+            [1,1,1],
+            [1,3,1],
+            [1,4,1],
+            [1,2,2],
+            [TileNode.BUBBLE_ID,2,1],
+            
+            [2,2,3],
+            [2,1,4],
+            [2,3,4],
+            [2,2,5],
+            [TileNode.BUBBLE_ID,2,4],
+            
+            [3,5,2],
+            [3,4,3],
+            [3,5,4]
+            ],
+                                        goals: [0,0,50,0,0,1,6,10]
         ) )
         
         

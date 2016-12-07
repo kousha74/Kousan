@@ -77,8 +77,10 @@ class GameEngine {
             m_GameSceneProtocol?.onAddChild(child: tile.sprite!)
         }
         
-        //Adding random tiles to make sure there are enough tiles
-        AddTiles()
+        if gameModel.GetTileCount() < gameModel.MIN_TILES {
+            //Adding random tiles to make sure there are enough tiles
+            AddTiles()
+        }
         
         m_GameSceneProtocol?.UpdateLabels()
         m_GameSceneProtocol?.OnGameLoaded()
