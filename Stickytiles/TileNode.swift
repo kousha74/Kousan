@@ -39,7 +39,7 @@ class TileNode {
     var pos:CGPoint
     var sprite : SKSpriteNode?
 
-    private let coverSprite = SKSpriteNode(texture: SKTexture(image: #imageLiteral(resourceName: "blank")))
+    
 
     init(){
         
@@ -50,10 +50,32 @@ class TileNode {
         sprite?.position.x = 0.0
         sprite?.position.y = 0.0
         
+    }
+    
+    func createCoverSprite()->SKNode{
+        let coverSprite = SKSpriteNode(texture: SKTexture(image: #imageLiteral(resourceName: "blank")))
         coverSprite.position = CGPoint(x: 0, y: 0)
         coverSprite.zPosition = Constants.arrowZIndex
         
-        sprite?.addChild(coverSprite)
+        switch coverCount {
+        case 0:
+            coverSprite.alpha = 0.0
+            break
+            
+        case 1:
+            coverSprite.alpha = 0.65
+            break
+            
+        case 2:
+            coverSprite.alpha = 0.85
+            break
+            
+        default:
+            coverSprite.alpha = 0.0
+            break
+        }
+        
+        return coverSprite
     }
     
     func GetCoverCount()->Int{
@@ -63,6 +85,9 @@ class TileNode {
     func RemoveCoverB()->Bool{
         if coverCount > 0 {
             coverCount -= 1
+            if coverCount == 0 {
+                sprite?.removeAllChildren()
+            }
             SetTileImage()
             return true
         }
@@ -88,6 +113,7 @@ class TileNode {
         clusterType = ClusterType.None
         
         sprite?.removeAllActions()
+        sprite?.removeAllChildren()
         sprite?.alpha = 1.0
         
         coverCount = 0
@@ -230,22 +256,9 @@ class TileNode {
             break
         }
         
-        switch coverCount {
-        case 0:
-            coverSprite.alpha = 0.0
-            break
-            
-        case 1:
-            coverSprite.alpha = 0.65
-            break
-            
-        case 2:
-            coverSprite.alpha = 0.85
-            break
-            
-        default:
-            coverSprite.alpha = 0.0
-            break
+        if coverCount > 0 {
+            sprite?.removeAllChildren()
+            sprite?.addChild( createCoverSprite() )
         }
     }
     

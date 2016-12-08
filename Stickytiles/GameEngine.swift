@@ -529,7 +529,10 @@ class GameEngine {
                     neighborTile.SetID(Id: gameModel.GetRandomTileID())
                 }
                 
-                neighborTile.RemoveCover()
+                if ( neighborTile.RemoveCoverB() )
+                {
+                    gameModel.SoundGlass()
+                }
             }
             
             pos.x = CGFloat( tile.GetCol() )
@@ -539,7 +542,10 @@ class GameEngine {
                     neighborTile.SetID(Id: gameModel.GetRandomTileID())
                 }
                 
-                neighborTile.RemoveCover()
+                if ( neighborTile.RemoveCoverB() )
+                {
+                    gameModel.SoundGlass()
+                }
             }
             
             pos.x = CGFloat( tile.GetCol() + 1 )
@@ -549,7 +555,10 @@ class GameEngine {
                     neighborTile.SetID(Id: gameModel.GetRandomTileID())
                 }
                 
-                neighborTile.RemoveCover()
+                if ( neighborTile.RemoveCoverB() )
+                {
+                    gameModel.SoundGlass()
+                }
             }
             
             pos.x = CGFloat( tile.GetCol() - 1 )
@@ -559,7 +568,10 @@ class GameEngine {
                     neighborTile.SetID(Id: gameModel.GetRandomTileID())
                 }
                 
-                neighborTile.RemoveCover()
+                if ( neighborTile.RemoveCoverB() )
+                {
+                    gameModel.SoundGlass()
+                }
             }
         }
     }
