@@ -79,7 +79,7 @@ class GameEngine {
         
         if gameModel.GetTileCount() < gameModel.MIN_TILES {
             //Adding random tiles to make sure there are enough tiles
-            AddTiles()
+            //AddTiles()
         }
         
         m_GameSceneProtocol?.UpdateLabels()
@@ -502,7 +502,7 @@ class GameEngine {
     }
     
     func SameColor(tile1:TileNode, tile2:TileNode)->Bool{
-        return ( tile1.GetID() == tile2.GetID() ) && ( tile1.GetID() < TileNode.BUBBLE_ID )
+        return ( tile1.GetID() == tile2.GetID() ) && ( tile1.IsFruit() ) && tile1.GetCoverCount()==0 && tile2.GetCoverCount()==0
     }
     
     func DeleteTile(tile:TileNode){
@@ -519,14 +519,17 @@ class GameEngine {
         if tile.IsFruit(){
             
             var pos = CGPoint(x: tile.GetCol(), y: tile.GetRow() )
-            
+            //tbd consider using an array
             
             pos.x = CGFloat( tile.GetCol() )
             pos.y = CGFloat( tile.GetRow() + 1 )
             if let neighborTile = gameModel.GetTile(pos: pos){
+                
                 if neighborTile.GetID() == TileNode.QUESTION_ID{
                     neighborTile.SetID(Id: gameModel.GetRandomTileID())
                 }
+                
+                neighborTile.RemoveCover()
             }
             
             pos.x = CGFloat( tile.GetCol() )
@@ -535,6 +538,8 @@ class GameEngine {
                 if neighborTile.GetID() == TileNode.QUESTION_ID{
                     neighborTile.SetID(Id: gameModel.GetRandomTileID())
                 }
+                
+                neighborTile.RemoveCover()
             }
             
             pos.x = CGFloat( tile.GetCol() + 1 )
@@ -543,6 +548,8 @@ class GameEngine {
                 if neighborTile.GetID() == TileNode.QUESTION_ID{
                     neighborTile.SetID(Id: gameModel.GetRandomTileID())
                 }
+                
+                neighborTile.RemoveCover()
             }
             
             pos.x = CGFloat( tile.GetCol() - 1 )
@@ -551,6 +558,8 @@ class GameEngine {
                 if neighborTile.GetID() == TileNode.QUESTION_ID{
                     neighborTile.SetID(Id: gameModel.GetRandomTileID())
                 }
+                
+                neighborTile.RemoveCover()
             }
         }
     }
@@ -561,17 +570,7 @@ class GameEngine {
             if let temp = gameModel.GetTile(pos: CGPoint(x:CGFloat(col), y: CGFloat(row))) {
                 let tile2 = temp
                 tile2.SetFlag(flag: TileNode.IS_VISITED, isSet: true )
-                
-                if tile2.CanBeRemoved(){
-                    if ( tile2.GetClusterType() == TileNode.ClusterType.None ){
-                        //delete the tile
-                        DeleteTile(tile: tile2 )
-                        
-                    }
-                    else{
-                        tile2.SetFlag(flag: TileNode.TBP, isSet: true)
-                    }
-                }
+                TryToDelete(tile: tile2)
             }
         }
     }
@@ -582,17 +581,7 @@ class GameEngine {
             if let temp = gameModel.GetTile(pos: CGPoint(x:CGFloat(col), y: CGFloat(row))) {
                 let tile2 = temp
                 tile2.SetFlag(flag: TileNode.IS_VISITED, isSet: true )
-                if tile2.CanBeRemoved(){
-                    if ( tile2.GetClusterType() == TileNode.ClusterType.None ){
-                        //delete the tile
-                        
-                            DeleteTile(tile: tile2 )
-                        
-                    }
-                    else{
-                        tile2.SetFlag(flag: TileNode.TBP, isSet: true)
-                    }
-                }
+                TryToDelete(tile: tile2)
             }
         }
     }
@@ -603,16 +592,24 @@ class GameEngine {
             let deltaCol = abs( tile.GetCol() - tile2.GetCol() )
             if deltaRow == deltaCol{
                 tile2.SetFlag(flag: TileNode.IS_VISITED, isSet: true )
-                if tile2.CanBeRemoved(){
-                    if ( tile2.GetClusterType() == TileNode.ClusterType.None ){
-                        //delete the tile
-                        DeleteTile(tile: tile2 )
-                        
-                    }
-                    else{
-                        tile2.SetFlag(flag: TileNode.TBP, isSet: true)
-                    }
+                TryToDelete(tile: tile2)
+            }
+        }
+    }
+    
+    func TryToDelete( tile:TileNode ){
+        
+        let id = tile.GetID()
+        
+        if id != TileNode.BLOCKED_ID && id != TileNode.BLOCKER_ID && id != TileNode.CHOLOLATE_ID {
+            if ( tile.GetClusterType() == TileNode.ClusterType.None ){
+                if  !tile.RemoveCoverB() {
+                    //delete the tile
+                    DeleteTile(tile: tile )
                 }
+            }
+            else{
+                tile.SetFlag(flag: TileNode.TBP, isSet: true)
             }
         }
     }
@@ -857,8 +854,6 @@ class GameEngine {
         if ( tile.GetID() < TileNode.BUBBLE_ID ){
             var newTilePos = CGPoint(x: 0, y: 0)
             
-            let id = tile.GetID()
-            
             while ( !queue.isEmpty )
             {
                 let currentTile = queue[0]
@@ -870,7 +865,7 @@ class GameEngine {
                     newTilePos.y = currentTile.pos.y + pos.y
                 
                     if let newTile = gameModel.GetTile(pos: newTilePos){
-                        if ( !newTile.GetFlag(flag: TileNode.IS_VISITED ) ) && ( newTile.GetID() == id )
+                        if ( !newTile.GetFlag(flag: TileNode.IS_VISITED ) ) && ( SameColor(tile1: tile, tile2: newTile) )
                         {
                             newTile.SetFlag(flag: TileNode.IS_VISITED, isSet: true )
                             cluster.append(newTile)

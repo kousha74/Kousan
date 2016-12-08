@@ -17,6 +17,7 @@
 		846BA9E21D96DC1300F6ED87 /* pew-pew-lei.caf in Resources */ = {isa = PBXBuildFile; fileRef = 846BA9DF1D96DC1300F6ED87 /* pew-pew-lei.caf */; };
 		846BA9E31D96DC1300F6ED87 /* sprites.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 846BA9E01D96DC1300F6ED87 /* sprites.atlas */; };
 		84776ADC1DE150480089BDDA /* Chartboost.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84776ADB1DE150480089BDDA /* Chartboost.framework */; };
+		8477BB991DF91EFF0023110B /* breaking-glass.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8477BB981DF91EFF0023110B /* breaking-glass.wav */; };
 		847B89D91DE0DB9C0032388B /* spinsinewave.wav in Resources */ = {isa = PBXBuildFile; fileRef = 847B89D81DE0DB9C0032388B /* spinsinewave.wav */; };
 		847B89DB1DE0DE6F0032388B /* laser.wav in Resources */ = {isa = PBXBuildFile; fileRef = 847B89DA1DE0DE6F0032388B /* laser.wav */; };
 		847B89DD1DE0DE7B0032388B /* chime.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 847B89DC1DE0DE7B0032388B /* chime.mp3 */; };
@@ -63,6 +64,7 @@
 		846BA9E01D96DC1300F6ED87 /* sprites.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = sprites.atlas; sourceTree = "<group>"; };
 		84776ADA1DE14BD60089BDDA /* framework_bridging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = framework_bridging.h; sourceTree = "<group>"; };
 		84776ADB1DE150480089BDDA /* Chartboost.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Chartboost.framework; sourceTree = "<group>"; };
+		8477BB981DF91EFF0023110B /* breaking-glass.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "breaking-glass.wav"; sourceTree = "<group>"; };
 		847B89D81DE0DB9C0032388B /* spinsinewave.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = spinsinewave.wav; sourceTree = "<group>"; };
 		847B89DA1DE0DE6F0032388B /* laser.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = laser.wav; sourceTree = "<group>"; };
 		847B89DC1DE0DE7B0032388B /* chime.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = chime.mp3; sourceTree = "<group>"; };
@@ -142,6 +144,7 @@
 				847B89DA1DE0DE6F0032388B /* laser.wav */,
 				848550A11DF51A4E00F94979 /* lose.wav */,
 				847B89D81DE0DB9C0032388B /* spinsinewave.wav */,
+				8477BB981DF91EFF0023110B /* breaking-glass.wav */,
 				8485509F1DF51A3F00F94979 /* win.wav */,
 				840ADED41DA756AE006E527C /* tick.wav */,
 				840ADED21DA74E0D006E527C /* bgMusic.wav */,
@@ -305,6 +308,7 @@
 				84A88E591D94AB06006D1C57 /* Main.storyboard in Resources */,
 				848550A01DF51A3F00F94979 /* win.wav in Resources */,
 				84A88E501D94AB06006D1C57 /* GameScene.sks in Resources */,
+				8477BB991DF91EFF0023110B /* breaking-glass.wav in Resources */,
 				84A88E5B1D94AB06006D1C57 /* Assets.xcassets in Resources */,
 				847B89DB1DE0DE6F0032388B /* laser.wav in Resources */,
 				840ADED51DA756AE006E527C /* tick.wav in Resources */,

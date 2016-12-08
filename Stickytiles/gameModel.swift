@@ -57,6 +57,7 @@ class GameModel {
     private var audioPlayerLaser : AVAudioPlayer?
     private var audioPlayerChime : AVAudioPlayer?
     private var audioPlayerLose : AVAudioPlayer?
+    private var audioPlayerGlass : AVAudioPlayer?
     
     // the minimum number of tiles on the board
     let MIN_TILES = 12
@@ -194,6 +195,12 @@ class GameModel {
         }
     }
     
+    func SoundGlass(){
+        if ( IsAudioOn() ){
+            audioPlayerGlass?.play()
+        }
+    }
+    
     func SoundWave(){
         if ( IsAudioOn() ){
             audioPlayerWave?.play()
@@ -294,7 +301,8 @@ class GameModel {
             
                 let gameItem = gameSample.fruits[ index ]
                 
-                tile.SetID(Id:gameItem[0])
+                //the cover count is optional at index 3
+                tile.SetID(Id:gameItem[0], covers: ( gameItem.count > 3 ) ? gameItem[3] : 0 )
                 
                 if gameItem[0] == TileNode.CHOLOLATE_ID {
                     chAdded += 1
@@ -602,7 +610,7 @@ class GameModel {
                 case TileNode.CHOLOLATE_ID:
                     chRemoved += 1
                     break
-                    
+                
                 case TileNode.APPLE_ID:
                     applesRemoved += 1
                     break
@@ -715,7 +723,7 @@ class GameModel {
         maxLevelCompleted = userDefaults.integer(forKey: "maxLevelCompleted") - 1
         
         // For debugging only
-        //maxLevelCompleted = 49
+        maxLevelCompleted = 22
 
         
         let soundURL = Bundle.main.url(forResource: "bgMusic", withExtension: "wav")
@@ -779,7 +787,15 @@ class GameModel {
         } catch {
             print("NO AUDIO PLAYER")
         }
-
+        
+        let soundURL8 = Bundle.main.url(forResource: "breaking-glass", withExtension: "wav")
+        do {
+            try audioPlayerGlass = AVAudioPlayer(contentsOf: soundURL8!)
+            audioPlayerGlass?.numberOfLoops = 0
+        } catch {
+            print("NO AUDIO PLAYER")
+        }
+        
         
         allTiles = [TileNode]()
         
@@ -1134,6 +1150,25 @@ class GameModel {
             ],
                                         goals: [0,0,50,0,0,1,6,10]
         ) )
+        
+        
+        gameSamples.append( GameSample( fruits:[
+            [1,0,0,2],
+            [1,0,2,2],
+            [1,0,4,2],
+            [1,2,0,2],
+            [1,2,2,2],
+            [1,2,4,2],
+            [1,4,0,2],
+            [1,4,2,2],
+            [1,4,4,2]
+            ],
+                                        goals: [0,100,100,0,0,0,3,0]
+        ) )
+       
+        
+        
+        
         
         
         

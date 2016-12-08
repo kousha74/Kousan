@@ -35,25 +35,46 @@ class TileNode {
     // MARK : member variables
     private var clusterType = ClusterType.None
     private var id:Int
+    private var coverCount = 0
     var pos:CGPoint
     var sprite : SKSpriteNode?
-    
+
+    private let coverSprite = SKSpriteNode(texture: SKTexture(image: #imageLiteral(resourceName: "blank")))
+
     init(){
         
         id = 0
         pos = CGPoint(x: 0, y: 0)
-            
+        
         sprite = SKSpriteNode(imageNamed: "Apple" )
         sprite?.position.x = 0.0
         sprite?.position.y = 0.0
+        
+        coverSprite.position = CGPoint(x: 0, y: 0)
+        coverSprite.zPosition = Constants.arrowZIndex
+        
+        sprite?.addChild(coverSprite)
     }
     
-    func CanBeRemoved()->Bool{
-        return id != TileNode.BLOCKED_ID && id != TileNode.BLOCKER_ID && id != TileNode.CHOLOLATE_ID && !GetFlag(flag: TileNode.IS_LOCKED)
+    func GetCoverCount()->Int{
+        return coverCount
     }
+    
+    func RemoveCoverB()->Bool{
+        if coverCount > 0 {
+            coverCount -= 1
+            SetTileImage()
+            return true
+        }
+        
+        return false
+    }
+    
+    
+    
     
     func CanMove()->Bool{
-        return id != TileNode.BLOCKED_ID && id != TileNode.BLOCKER_ID
+        return id != TileNode.BLOCKED_ID && id != TileNode.BLOCKER_ID && coverCount == 0
     }
     
     //Resets the tile to be reused
@@ -67,8 +88,9 @@ class TileNode {
         clusterType = ClusterType.None
         
         sprite?.removeAllActions()
-        sprite?.removeAllChildren()
         sprite?.alpha = 1.0
+        
+        coverCount = 0
     }
     
     func SetClusterType( type:ClusterType ){
@@ -94,8 +116,9 @@ class TileNode {
         return clusterType
     }
     
-    func SetID(Id:Int){
+    func SetID( Id:Int, covers:Int = 0){
         id = Id
+        coverCount = covers
         SetTileImage()
     }
     
@@ -207,6 +230,23 @@ class TileNode {
             break
         }
         
+        switch coverCount {
+        case 0:
+            coverSprite.alpha = 0.0
+            break
+            
+        case 1:
+            coverSprite.alpha = 0.65
+            break
+            
+        case 2:
+            coverSprite.alpha = 0.85
+            break
+            
+        default:
+            coverSprite.alpha = 0.0
+            break
+        }
     }
     
     func Occupies( pos: CGPoint )->Bool
@@ -226,10 +266,6 @@ class TileNode {
             duration: TimeInterval(GameModel.delay))
         
         self.sprite?.run(actionMove)
-    }
-    
-    func IsMoving()->Bool{
-        return flags[TileNode.IS_MOVING]
     }
     
     func SetFlag( flag: Int, isSet:Bool){
