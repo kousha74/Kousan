@@ -190,7 +190,6 @@ class TileNode {
             arrowSprite.position = CGPoint(x: 0, y: 0)
             arrowSprite.zPosition = Constants.arrowZIndex
             sprite?.addChild(arrowSprite)
-            print("Marked as arrow")
             break
         case .Col:
             let arrowSprite = SKSpriteNode(texture: SKTexture(image: #imageLiteral(resourceName: "ArrowC")))
