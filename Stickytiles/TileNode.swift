@@ -38,7 +38,8 @@ class TileNode {
     private var coverCount = 0
     var pos:CGPoint
     var sprite : SKSpriteNode?
-
+    
+    let childSprite = SKSpriteNode(texture: SKTexture(image: #imageLiteral(resourceName: "blank")))
     
 
     init(){
@@ -50,32 +51,33 @@ class TileNode {
         sprite?.position.x = 0.0
         sprite?.position.y = 0.0
         
+        childSprite.position = CGPoint(x: 0, y: 0)
+        childSprite.zPosition = Constants.arrowZIndex
+        sprite?.addChild(childSprite)
+        
     }
     
-    func createCoverSprite()->SKNode{
-        let coverSprite = SKSpriteNode(texture: SKTexture(image: #imageLiteral(resourceName: "blank")))
-        coverSprite.position = CGPoint(x: 0, y: 0)
-        coverSprite.zPosition = Constants.arrowZIndex
+    func SetCoverSprite(){
+
+        childSprite.texture = SKTexture(image: #imageLiteral(resourceName: "blank"))
         
         switch coverCount {
         case 0:
-            coverSprite.alpha = 0.0
+            childSprite.alpha = 0.0
             break
             
         case 1:
-            coverSprite.alpha = 0.65
+            childSprite.alpha = 0.65
             break
             
         case 2:
-            coverSprite.alpha = 0.85
+            childSprite.alpha = 0.85
             break
             
         default:
-            coverSprite.alpha = 0.0
+            childSprite.alpha = 0.0
             break
         }
-        
-        return coverSprite
     }
     
     func GetCoverCount()->Int{
@@ -85,9 +87,6 @@ class TileNode {
     func RemoveCoverB()->Bool{
         if coverCount > 0 {
             coverCount -= 1
-            if coverCount == 0 {
-                sprite?.removeAllChildren()
-            }
             SetTileImage()
             return true
         }
@@ -113,7 +112,6 @@ class TileNode {
         clusterType = ClusterType.None
         
         sprite?.removeAllActions()
-        sprite?.removeAllChildren()
         sprite?.alpha = 1.0
         
         coverCount = 0
@@ -173,6 +171,8 @@ class TileNode {
     
     func SetTileImage(){
         
+        childSprite.alpha = 0.0
+
         //special tiles
         if !IsFruit() {
             switch(id){
@@ -235,30 +235,23 @@ class TileNode {
         case .None:
             break
         case .Row:
-            let arrowSprite = SKSpriteNode(texture: SKTexture(image: #imageLiteral(resourceName: "ArrowR")))
-            arrowSprite.position = CGPoint(x: 0, y: 0)
-            arrowSprite.zPosition = Constants.arrowZIndex
-            sprite?.addChild(arrowSprite)
+            childSprite.texture = SKTexture(image: #imageLiteral(resourceName: "ArrowR"))
+            childSprite.alpha = 1.0
             break
         case .Col:
-            let arrowSprite = SKSpriteNode(texture: SKTexture(image: #imageLiteral(resourceName: "ArrowC")))
-            arrowSprite.position = CGPoint(x: 0, y: 0)
-            arrowSprite.zPosition = Constants.arrowZIndex
-            sprite?.addChild(arrowSprite)
+            childSprite.texture = SKTexture(image: #imageLiteral(resourceName: "ArrowC"))
+            childSprite.alpha = 1.0
             break
         case .Four:
-            let arrowSprite = SKSpriteNode(texture: SKTexture(image: #imageLiteral(resourceName: "Arrow4")))
-            arrowSprite.position = CGPoint(x: 0, y: 0)
-            arrowSprite.zPosition = Constants.arrowZIndex
-            sprite?.addChild(arrowSprite)
+            childSprite.texture = SKTexture(image: #imageLiteral(resourceName: "Arrow4"))
+            childSprite.alpha = 1.0
             break
         default:
             break
         }
         
         if coverCount > 0 {
-            sprite?.removeAllChildren()
-            sprite?.addChild( createCoverSprite() )
+            SetCoverSprite()
         }
     }
     
