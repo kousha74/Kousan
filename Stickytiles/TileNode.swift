@@ -67,6 +67,7 @@ class TileNode {
         clusterType = ClusterType.None
         
         sprite?.removeAllActions()
+        sprite?.removeAllChildren()
         sprite?.alpha = 1.0
     }
     
@@ -128,163 +129,85 @@ class TileNode {
             switch(id){
             case TileNode.BUBBLE_ID:
                 sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "Balloon"))
-                return
+                break
             case TileNode.STAR5_ID:
                 sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "Star5"))
-                return
+                break
             case TileNode.STAR7_ID:
                 sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "Star7"))
-                return
+                break
             case TileNode.CHOLOLATE_ID:
                 sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "chocolate"))
-                return
+                break
             case TileNode.BLOCKER_ID:
                 sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "blocker"))
-                return
+                break
             case TileNode.BLOCKED_ID:
                 sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "Blocked"))
-                return
+                break
             case TileNode.QUESTION_ID:
                 sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "QuestionMark"))
-                return
+                break
             default:
                 sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "QuestionMark"))
-                return
+                break
                 
             }
         }
+        else{
         
+            switch(id){
+            case 1:
+                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "Apple"))
+                break
+            case 2:
+                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "Apricot"))
+                break
+            case 3:
+                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "Cherry"))
+                break
+            case 4:
+                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "Kiwi"))
+                break
+            case 5:
+                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "Lemon"))
+                break
+            case 6:
+                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "Orange"))
+                break
+            default:
+                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "Apple"))
+                break
+                
+            }
+        }
+                    
         switch clusterType {
         case .None:
-            switch(id){
-            case 1:
-                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "Apple"))
-                return
-            case 2:
-                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "Apricot"))
-                return
-            case 3:
-                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "Cherry"))
-                return
-            case 4:
-                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "Kiwi"))
-                return
-            case 5:
-                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "Lemon"))
-                return
-            case 6:
-                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "Orange"))
-                return
-            default:
-                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "Apple"))
-                return
-                
-            }
-            
+            break
         case .Row:
-            switch(id){
-            case 1:
-                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "AppleR"))
-                return
-            case 2:
-                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "ApricotR"))
-                return
-            case 3:
-                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "CherryR"))
-                return
-            case 4:
-                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "KiwiR"))
-                return
-            case 5:
-                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "LemonR"))
-                return
-            case 6:
-                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "OrangeR"))
-                return
-            default:
-                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "AppleR"))
-                return
-                
-            }
-            
+            let arrowSprite = SKSpriteNode(texture: SKTexture(image: #imageLiteral(resourceName: "ArrowR")))
+            arrowSprite.position = CGPoint(x: 0, y: 0)
+            arrowSprite.zPosition = Constants.arrowZIndex
+            sprite?.addChild(arrowSprite)
+            print("Marked as arrow")
+            break
         case .Col:
-            switch(id){
-            case 1:
-                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "AppleC"))
-                return
-            case 2:
-                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "ApricotC"))
-                return
-            case 3:
-                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "CherryC"))
-                return
-            case 4:
-                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "KiwiC"))
-                return
-            case 5:
-                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "LemonC"))
-                return
-            case 6:
-                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "OrangeC"))
-                return
-            default:
-                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "AppleC"))
-                return
-                
-            }
-            
+            let arrowSprite = SKSpriteNode(texture: SKTexture(image: #imageLiteral(resourceName: "ArrowC")))
+            arrowSprite.position = CGPoint(x: 0, y: 0)
+            arrowSprite.zPosition = Constants.arrowZIndex
+            sprite?.addChild(arrowSprite)
+            break
         case .Four:
-            switch(id){
-            case 1:
-                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "Apple4"))
-                return
-            case 2:
-                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "Apricot4"))
-                return
-            case 3:
-                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "Cherry4"))
-                return
-            case 4:
-                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "Kiwi4"))
-                return
-            case 5:
-                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "Lemon4"))
-                return
-            case 6:
-                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "Orange4"))
-                return
-            default:
-                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "Apple4"))
-                return
-                
-            }
-            
+            let arrowSprite = SKSpriteNode(texture: SKTexture(image: #imageLiteral(resourceName: "Arrow4")))
+            arrowSprite.position = CGPoint(x: 0, y: 0)
+            arrowSprite.zPosition = Constants.arrowZIndex
+            sprite?.addChild(arrowSprite)
+            break
         default:
-            switch(id){
-            case 1:
-                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "Apple"))
-                return
-            case 2:
-                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "Apricot"))
-                return
-            case 3:
-                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "Cherry"))
-                return
-            case 4:
-                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "Kiwi"))
-                return
-            case 5:
-                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "Lemon"))
-                return
-            case 6:
-                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "Orange"))
-                return
-            default:
-                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "Apple"))
-                return
-                
-            }
+            break
         }
+        
     }
     
     func Occupies( pos: CGPoint )->Bool

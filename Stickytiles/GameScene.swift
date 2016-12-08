@@ -152,7 +152,7 @@ class GameScene: SKScene,GameSceneProtocol {
     }
     
     func OnToast( msg:String){
-        let msgLabel = SKLabelNode(text: msg)
+      /*  let msgLabel = SKLabelNode(text: msg)
         msgLabel.position = CGPoint(x: size.width/2.0 + CGFloat(arc4random()%100) - 50.0, y: gameModel.GetViewOffset().y + CGFloat(arc4random()%100) )
         msgLabel.verticalAlignmentMode = SKLabelVerticalAlignmentMode.center
         msgLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.center
@@ -164,7 +164,7 @@ class GameScene: SKScene,GameSceneProtocol {
         
         let actionMove = SKAction.moveBy(x: 0.0, y: CGFloat(gameModel.boardSize*(gameModel.GetCellSize()-1)), duration: 1.5)
         
-        msgLabel.run(SKAction.sequence([actionMove,SKAction.removeFromParent()]))
+        msgLabel.run(SKAction.sequence([actionMove,SKAction.removeFromParent()]))*/
     }
     
     func ShowDemo()->Bool{

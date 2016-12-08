@@ -11,6 +11,7 @@ import SpriteKit
 
 class Constants{
     static let popupZIndex = CGFloat(3.0)
+    static let arrowZIndex = CGFloat(2.5)
     static let cellSize = CGFloat(50)
     static let fontSize = CGFloat(18.0)
     static let fontName = "Papyrus"
