@@ -246,6 +246,10 @@ class GameScene: SKScene,GameSceneProtocol {
         else if gameModel.targetStars != 0 {
             title1 = "Remove \(gameModel.targetStars) stars"
         }
+        else{
+            title1 = "Remove all covers"
+        }
+        
         
         if gameModel.maxMoves != 0 {
             title2 = "In \(gameModel.maxMoves) moves"
