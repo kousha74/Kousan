@@ -97,6 +97,7 @@ class GameModel {
     var firstLevelSpecial = -1
     var firstLevelStar = -1
     var firstLevelQuestion = -1
+    var firstCovered = -1
     
     func GetMoveCount()->Int{
         return moveCount
@@ -736,7 +737,16 @@ class GameModel {
                     }
                 }
             }
-
+            
+            if firstCovered < 0 {
+                for fruit in gameSample.fruits {
+                    if fruit.count > 3 && fruit[3] != 0 {
+                        firstCovered = i
+                        break
+                    }
+                }
+            }
+            
         }
     }
 

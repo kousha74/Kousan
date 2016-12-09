@@ -67,17 +67,22 @@ class TileNode {
             break
             
         case 1:
-            childSprite.alpha = 0.65
+            childSprite.alpha = Constants.cover1Alpha
             break
             
         case 2:
-            childSprite.alpha = 0.85
+            childSprite.alpha = Constants.cover2Alpha
             break
             
         default:
             childSprite.alpha = 0.0
             break
         }
+    }
+    
+    func SetCoverCount( cover:Int ){
+        coverCount = cover
+        SetTileImage()
     }
     
     func GetCoverCount()->Int{
