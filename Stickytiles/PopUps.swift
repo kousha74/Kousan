@@ -55,6 +55,7 @@ class Popups{
     private let smallPopupSize = CGSize(width: 300 - Constants.cellSize, height: 200)
     private let winSize: CGSize
     private var isDemo = false
+    private var coveredTiles = 0
     
     required init( bounds: CGRect, gameSceneProtocol: GameSceneProtocol ) {
         
@@ -185,7 +186,7 @@ class Popups{
             gameSceneProtocol.onAddChild(child: node)
         }
     }
-       
+    
     func GetPopupType()->PopupType{
         return popupType
     }
@@ -253,7 +254,21 @@ class Popups{
             break
             
         case .Lose:
-            title1Label.text = "You Lost!, Try again"
+            if coveredTiles > 0 {
+                if coveredTiles == 1 {
+                    title1Label.text = "\(coveredTiles) covered fruit left"
+                }
+                else{
+                    title1Label.text = "\(coveredTiles) covered fruits left"
+                }
+                title2Label.text = "You Lost!, Try again"
+                title2Label.isHidden = false
+                
+            }
+            else{
+                title1Label.text = "You Lost!, Try again"
+            }
+            
             winHomeButton.isHidden = false
             winLevelButton.isHidden = false
             winResetButton.isHidden = false
@@ -423,8 +438,10 @@ class Popups{
         }
     }
     
-    func OpenPopup( type: PopupType, isDemo:Bool ){
+    func OpenPopup( type: PopupType, isDemo:Bool, covered:Int = 0 ){
         if !isOpen {
+            
+            coveredTiles = covered
             
             self.isDemo = isDemo
             

@@ -99,6 +99,10 @@ class GameEngine {
     
     func IsWon()->Bool{
         
+        if gameModel.FindCoveredTile() != nil{
+            return false
+        }
+        
         //check chocolates
         if gameModel.targetChocolates != 0 {
             if gameModel.targetChocolates == gameModel.chRemoved {

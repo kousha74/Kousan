@@ -255,7 +255,7 @@ class GameScene: SKScene,GameSceneProtocol {
     
     func OnGameLost(){
         gameModel.SoundLose()
-        popups?.OpenPopup( type: Popups.PopupType.Lose, isDemo:false )
+        popups?.OpenPopup( type: Popups.PopupType.Lose, isDemo:false, covered: gameModel.GetCoveredTileCount() )
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

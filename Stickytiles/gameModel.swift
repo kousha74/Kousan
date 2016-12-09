@@ -337,6 +337,18 @@ class GameModel {
         return nil
     }
     
+    func GetCoveredTileCount()->Int{
+        var coveredTiles = 0
+        
+        for tile in gameTiles{
+            if tile.GetCoverCount() > 0{
+                coveredTiles += 1
+            }
+        }
+        
+        return coveredTiles
+    }
+    
     func AddChocolate()->TileNode?{
         
         if chAdded < targetChocolates {
@@ -554,6 +566,17 @@ class GameModel {
     func FindFlag( flag:Int, isSet:Bool)->TileNode?{
         for tile in gameTiles {
             if ( tile.GetFlag(flag: flag) == isSet ){
+                return tile
+            }
+        }
+        
+        return nil
+    }
+    
+    //finds a tile with given flag set or reset
+    func FindCoveredTile()->TileNode?{
+        for tile in gameTiles {
+            if ( tile.GetCoverCount() > 0 ){
                 return tile
             }
         }
@@ -1178,7 +1201,7 @@ class GameModel {
             [1,4,2,2],
             [1,4,4,2]
             ],
-                                        goals: [0,20,100,0,0,0,3,0]
+                                        goals: [0,20,5,0,0,0,3,0]
         ) )
         
         
