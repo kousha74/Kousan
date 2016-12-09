@@ -143,6 +143,17 @@ class TileNode {
     func SetID( Id:Int, covers:Int = 0){
         id = Id
         coverCount = covers
+        
+        //TBD bad design
+        if id == TileNode.STAR5_ID {
+            clusterType = .Five
+        }
+        
+        if id == TileNode.STAR7_ID {
+            clusterType = .Six
+        }
+        
+        
         SetTileImage()
     }
     

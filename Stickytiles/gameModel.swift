@@ -1167,6 +1167,20 @@ class GameModel {
         ) )
        
         
+        gameSamples.append( GameSample( fruits:[
+            [TileNode.STAR5_ID,0,0,0],
+            [TileNode.STAR5_ID,0,2,2],
+            [TileNode.STAR5_ID,0,4,2],
+            [TileNode.STAR5_ID,2,0,2],
+            [TileNode.STAR7_ID,2,2,2],
+            [1,2,4,2],
+            [1,4,0,2],
+            [1,4,2,2],
+            [1,4,4,2]
+            ],
+                                        goals: [0,20,100,0,0,0,3,0]
+        ) )
+        
         
         
         

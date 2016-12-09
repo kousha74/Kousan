@@ -317,38 +317,42 @@ class GameEngine {
                 
                 if gameModel.IsValidPosition(pos: touchedCell){
                     if let touchedTile = gameModel.GetTile(pos: touchedCell) {
-                        switch touchedTile.GetID() {
-                        case TileNode.STAR5_ID:
-                            touchedTile.SetFlag(flag: TileNode.TBP, isSet: true)
-                            isProcessing = true
-                            shouldAddTile = true
-                            MarkSpecialNodes(tile: touchedTile)
-                            Timer.scheduledTimer(timeInterval: TimeInterval( GameModel.delay ), target: self, selector:#selector(GameEngine.ProcessSpecialNodes), userInfo: nil, repeats: false)
-                            gameModel.ChangeMoveCount(delta: 1)
-                            break
-                            
-                        case TileNode.STAR7_ID:
-                            touchedTile.SetFlag(flag: TileNode.TBP, isSet: true)
-                            isProcessing = true
-                            shouldAddTile = true
-                            MarkSpecialNodes(tile: touchedTile)
-                            Timer.scheduledTimer(timeInterval: TimeInterval( GameModel.delay ), target: self, selector:#selector(GameEngine.ProcessSpecialNodes), userInfo: nil, repeats: false)
-                            gameModel.ChangeMoveCount(delta: 1)
-                            break
                         
-                        case TileNode.BLOCKER_ID: //touching a blocker removes it
-                            DeleteTile(tile: touchedTile)
-                            break
+                        //touching covered ones should do nothing
+                        if touchedTile.GetCoverCount() == 0 {
+                            switch touchedTile.GetID() {
+                            case TileNode.STAR5_ID:
+                                touchedTile.SetFlag(flag: TileNode.TBP, isSet: true)
+                                isProcessing = true
+                                shouldAddTile = true
+                                MarkSpecialNodes(tile: touchedTile)
+                                Timer.scheduledTimer(timeInterval: TimeInterval( GameModel.delay ), target: self, selector:#selector(GameEngine.ProcessSpecialNodes), userInfo: nil, repeats: false)
+                                gameModel.ChangeMoveCount(delta: 1)
+                                break
+                                
+                            case TileNode.STAR7_ID:
+                                touchedTile.SetFlag(flag: TileNode.TBP, isSet: true)
+                                isProcessing = true
+                                shouldAddTile = true
+                                MarkSpecialNodes(tile: touchedTile)
+                                Timer.scheduledTimer(timeInterval: TimeInterval( GameModel.delay ), target: self, selector:#selector(GameEngine.ProcessSpecialNodes), userInfo: nil, repeats: false)
+                                gameModel.ChangeMoveCount(delta: 1)
+                                break
                             
-                        case TileNode.BUBBLE_ID: //pop the balloon
-                            gameModel.SoundWave()
-                            DeleteTile(tile: touchedTile)
-                            //balloon is not a move
-                            //gameModel.ChangeMoveCount(delta: 1)
-                            break
-                            
-                        default:
-                            break
+                            case TileNode.BLOCKER_ID: //touching a blocker removes it
+                                DeleteTile(tile: touchedTile)
+                                break
+                                
+                            case TileNode.BUBBLE_ID: //pop the balloon
+                                gameModel.SoundWave()
+                                DeleteTile(tile: touchedTile)
+                                //balloon is not a move
+                                //gameModel.ChangeMoveCount(delta: 1)
+                                break
+                                
+                            default:
+                                break
+                            }
                         }
                     }
                     else{
@@ -614,14 +618,17 @@ class GameEngine {
         let id = tile.GetID()
         
         if id != TileNode.BLOCKED_ID && id != TileNode.BLOCKER_ID && id != TileNode.CHOLOLATE_ID {
-            if ( tile.GetClusterType() == TileNode.ClusterType.None ){
-                if  !tile.RemoveCoverB() {
+            if  !tile.RemoveCoverB() {
+                if ( tile.GetClusterType() == TileNode.ClusterType.None ){
                     //delete the tile
                     DeleteTile(tile: tile )
                 }
+                else{
+                    tile.SetFlag(flag: TileNode.TBP, isSet: true)
+                }
             }
             else{
-                tile.SetFlag(flag: TileNode.TBP, isSet: true)
+                gameModel.SoundGlass()
             }
         }
     }
