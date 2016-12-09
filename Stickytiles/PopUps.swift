@@ -16,7 +16,7 @@ class Popups{
     }
     
     enum PopupType:Int{
-        case Win, Lose, Match3, Match4, Match5, Match6, push, Row, Col, Four, Yellow, Green, Blocker, Blocked, Baloon, Question, Chocolate, Enjoy, Info, None
+        case Win, Lose, Match3, Match4, Match5, Match6, push, Row, Col, Four, Yellow, Green, Blocker, Blocked, Baloon, Question, Covered, Chocolate, Enjoy, Info, None
     }
     
     //For Win Dialog
@@ -382,6 +382,13 @@ class Popups{
             title3Label.text = "the fruit"
             title3Label.isHidden = false
             iconButton.texture = SKTexture(image: #imageLiteral(resourceName: "QuestionMark"))
+            break
+            
+        case .Covered:
+            title1Label.text = "Remove a neighboring"
+            title2Label.text = "fruit to remove cover"
+            title2Label.isHidden = false
+            iconButton.texture = SKTexture(image: #imageLiteral(resourceName: "blank"))
             break
             
         case .Chocolate:
