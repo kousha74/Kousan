@@ -133,9 +133,12 @@ class GameEngine {
                 return true
             }
         }
+        else {
+            //the only choice is covered ones which is already covered
+            return true
+        }
         
-        //the only choice is covered ones which is already covered
-        return true
+        return false
     }
     
     func IsLost()->Bool{
