@@ -85,7 +85,14 @@ class LevelSelectorViewController: UIViewController {
         buttons.append(btn24)
         buttons.append(btn25)
         
-        currentPage = GameModel.sharedInstance.getMaxLevelCompleted()/gamesPerPage
+        let maxCompleted = GameModel.sharedInstance.getMaxLevelCompleted()
+        
+        if maxCompleted < GameModel.maxLevel {
+            currentPage = ( GameModel.sharedInstance.getMaxLevelCompleted() + 1 )/gamesPerPage
+        }
+        else{
+            currentPage = ( GameModel.maxLevel )/gamesPerPage
+        }
         
         SetButtonLabels()
         

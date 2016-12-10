@@ -16,6 +16,7 @@ class Constants{
     static let fontSize = CGFloat(18.0)
     static let fontName = "Papyrus"
     static let fontColor = SKColor.blue
-    static let cover1Alpha = CGFloat(0.65)
+    static let cover1Alpha = CGFloat(0.55)
     static let cover2Alpha = CGFloat(0.90)
+    static let adFrequency = 22
 }

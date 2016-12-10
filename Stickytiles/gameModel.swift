@@ -789,7 +789,7 @@ class GameModel {
         maxLevelCompleted = userDefaults.integer(forKey: "maxLevelCompleted") - 1
         
         // For debugging only
-        maxLevelCompleted = 24
+        //maxLevelCompleted = 24
 
         
         let soundURL = Bundle.main.url(forResource: "bgMusic", withExtension: "wav")
@@ -1313,24 +1313,62 @@ class GameModel {
         ) )
         
         
-        
-        
-        
-        
-        
-        
+        //Level 26
         gameSamples.append( GameSample( fruits:[
-            [GameModel.STAR5_ID,0,0,0],
-            [GameModel.STAR5_ID,0,2,2],
-            [GameModel.STAR5_ID,0,4,2],
-            [GameModel.STAR5_ID,2,0,2],
-            [GameModel.STAR7_ID,2,2,2],
-            [1,2,4,2],
-            [1,4,0,2],
-            [1,4,2,2],
-            [1,4,4,2]
+            [GameModel.BLOCKED_ID,0,4],
+            [GameModel.BLOCKED_ID,1,4],
+            [GameModel.BLOCKED_ID,2,4],
+            [GameModel.BLOCKED_ID,3,4],
+            [GameModel.BLOCKED_ID,4,4],
+            [GameModel.CHOLOLATE_ID,0,5],
+            [1,1,5],
+            [2,2,5],
+            [3,3,5],
+            [3,4,5]
+            
             ],
-                                        goals: [0,20,5,0,0,0,3,0]
+                                        goals: [2,0,100,0,0,0,5,0]
+        ) )
+        
+        
+        //Level 27
+        gameSamples.append( GameSample( fruits:[
+            [1,0,5,1],
+            [GameModel.BLOCKED_ID,0,4],
+            [1,5,5,1],
+            [GameModel.BLOCKED_ID,5,4],
+            [GameModel.BLOCKED_ID,1,5],
+            [GameModel.BLOCKED_ID,4,5],
+            [1,0,0],
+            [2,1,0],
+            [GameModel.STAR5_ID,2,0],
+            [3,3,0],
+            [3,4,0],
+            [4,5,0],
+            [1,2,5],
+            [2,3,5],
+            [2,0,1],
+            [3,1,1],
+            [4,2,1],
+            [5,3,1],
+            [5,4,1]
+            ],
+                                        goals: [0,0,100,0,0,0,5,0]
+        ) )
+        
+        //level 28
+        gameSamples.append( GameSample( fruits:[
+            [1,0,0,1],
+            [2,0,2,2],
+            [3,0,4,1],
+            [4,2,0,2],
+            [5,2,2,1],
+            [1,2,4,2],
+            [1,4,0,1],
+            [1,4,2,2],
+            [1,4,4,1]
+            ],
+                                        goals: [0,0,100,0,0,0,5,0]
         ) )
         
         
