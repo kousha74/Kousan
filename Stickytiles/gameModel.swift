@@ -28,6 +28,16 @@ class GameSample{
 
 class GameModel {
     
+    // TBD duplicate
+    static let APPLE_ID = 1
+    static let BUBBLE_ID = 10
+    static let STAR5_ID = 11
+    static let STAR7_ID = 12
+    static let CHOLOLATE_ID = 13
+    static let BLOCKER_ID = 14
+    static let BLOCKED_ID = 15
+    static let QUESTION_ID = 16
+
     private var currentLevel:Int = 0
     
     private var maxLevelCompleted:Int = -1
@@ -325,7 +335,7 @@ class GameModel {
                 //the cover count is optional at index 3
                 tile.SetID(Id:gameItem[0], covers: ( gameItem.count > 3 ) ? gameItem[3] : 0 )
                 
-                if gameItem[0] == TileNode.CHOLOLATE_ID {
+                if gameItem[0] == GameModel.CHOLOLATE_ID {
                     chAdded += 1
                 }
                 
@@ -374,7 +384,7 @@ class GameModel {
         
         if chAdded < targetChocolates {
             // if there's no chocolate
-            if GetID(id: TileNode.CHOLOLATE_ID) == nil {
+            if GetID(id: GameModel.CHOLOLATE_ID) == nil {
                 
                 let fullRow = FindFullRow()
                 
@@ -384,7 +394,7 @@ class GameModel {
                     
                         if let emptyCell = FindEmptyCellForChocolate( minRow : fullRow + 1){
                             
-                            tile.SetID(Id: TileNode.CHOLOLATE_ID)
+                            tile.SetID(Id: GameModel.CHOLOLATE_ID)
                             tile.SetRowAndCol(row: Int(emptyCell.y), col: Int(emptyCell.x), cellSize: cellSize, viewOffset: viewOffset)
                             gameTiles.append(tile)
                             chAdded += 1
@@ -405,7 +415,7 @@ class GameModel {
         //Check if chocolate should be added
         if chAdded < targetChocolates {
             // if there's no chocolate
-            if GetID(id: TileNode.CHOLOLATE_ID) == nil {
+            if GetID(id: GameModel.CHOLOLATE_ID) == nil {
                 
                 var fullRow = FindFullRow()
                 
@@ -425,7 +435,7 @@ class GameModel {
                 
                 if let emptyCell = FindEmptyCellForChocolate( minRow : fullRow + 1){
                     
-                    if let tile = AddTile(id: TileNode.CHOLOLATE_ID, pos: emptyCell ) {
+                    if let tile = AddTile(id: GameModel.CHOLOLATE_ID, pos: emptyCell ) {
                         chAdded += 1
                         newTiles.append(tile)
                     }
@@ -451,7 +461,7 @@ class GameModel {
     func GetRandomTileID()->Int{
         
         if baloonFrequency != 0 && arc4random_uniform(UInt32(baloonFrequency)) == 0 {
-            return TileNode.BUBBLE_ID
+            return GameModel.BUBBLE_ID
         }
         else{
             return Int(arc4random_uniform(UInt32(colorCount))) + 1
@@ -649,20 +659,20 @@ class GameModel {
         for i in 0...gameTiles.count-1{
             if ( gameTiles[i] === tile ){
                 
-                if gameTiles[i].GetID() != TileNode.BLOCKER_ID && gameTiles[i].GetID() != TileNode.BUBBLE_ID{
+                if gameTiles[i].GetID() != GameModel.BLOCKER_ID && gameTiles[i].GetID() != GameModel.BUBBLE_ID{
                     ChangeScore(delta: 1)
                 }
                 
                 switch gameTiles[i].GetID() {
-                case TileNode.CHOLOLATE_ID:
+                case GameModel.CHOLOLATE_ID:
                     chRemoved += 1
                     break
                 
-                case TileNode.APPLE_ID:
+                case GameModel.APPLE_ID:
                     applesRemoved += 1
                     break
                     
-                case TileNode.STAR5_ID, TileNode.STAR7_ID:
+                case GameModel.STAR5_ID, GameModel.STAR7_ID:
                     starsRemoved += 1
                     break
                     
@@ -699,7 +709,7 @@ class GameModel {
         if IsFull() {
             for tile in gameTiles{
                 switch tile.GetID() {
-                case TileNode.BUBBLE_ID, TileNode.STAR5_ID, TileNode.STAR7_ID:
+                case GameModel.BUBBLE_ID, GameModel.STAR5_ID, GameModel.STAR7_ID:
                     return false
                     
                 default:
@@ -745,7 +755,7 @@ class GameModel {
             
             if firstLevelBlocked < 0 {
                 for fruit in gameSample.fruits {
-                    if fruit[0] == TileNode.BLOCKED_ID {
+                    if fruit[0] == GameModel.BLOCKED_ID {
                         firstLevelBlocked = i
                         break
                     }
@@ -754,7 +764,7 @@ class GameModel {
             
             if firstLevelQuestion < 0 {
                 for fruit in gameSample.fruits {
-                    if fruit[0] == TileNode.QUESTION_ID {
+                    if fruit[0] == GameModel.QUESTION_ID {
                         firstLevelQuestion = i
                         break
                     }
@@ -949,7 +959,7 @@ class GameModel {
             [4,3,1],
             [1,4,0],
             [2,5,1],
-            [TileNode.CHOLOLATE_ID,0,5]
+            [GameModel.CHOLOLATE_ID,0,5]
             ],
                                         goals: [3,0,0,0,0,0,4,0]
         ) )
@@ -963,24 +973,24 @@ class GameModel {
             [4,3,1],
             [1,4,0],
             [2,5,1],
-            [TileNode.CHOLOLATE_ID,0,5]
+            [GameModel.CHOLOLATE_ID,0,5]
             ],
                                         goals: [3,0,50,0,0,0,4,0]
         ) )
         
         //level 7 baloon
         gameSamples.append( GameSample( fruits:[
-            [TileNode.BUBBLE_ID,0,0],
+            [GameModel.BUBBLE_ID,0,0],
             [2,1,1],
             [3,2,0],
             [4,3,1],
-            [TileNode.BUBBLE_ID,4,0],
+            [GameModel.BUBBLE_ID,4,0],
             [6,5,1],
             [6,0,1],
             [5,1,0],
             [4,2,1],
             [3,3,0],
-            [TileNode.BUBBLE_ID,4,1],
+            [GameModel.BUBBLE_ID,4,1],
             [1,5,0]
             ],
                                         goals: [0,50,0,0,0,0,4,20]
@@ -1013,7 +1023,7 @@ class GameModel {
             [4,3,1],
             [1,4,0],
             [2,5,1],
-            [TileNode.CHOLOLATE_ID,0,5]
+            [GameModel.CHOLOLATE_ID,0,5]
             ],
                                         goals: [5,0,60,0,0,0,4,0]
         ) )
@@ -1040,32 +1050,32 @@ class GameModel {
         //goals [Chcolate, targetScore, maxMoves, targetApples, targetSpecial, targetStars, colorCount, baloon frequency]
         //level 11
         gameSamples.append( GameSample( fruits:[
-            [TileNode.BLOCKED_ID,0,2],
-            [TileNode.BLOCKED_ID,1,2],
-            [TileNode.BLOCKED_ID,4,2],
-            [TileNode.BLOCKED_ID,5,2]
+            [GameModel.BLOCKED_ID,0,2],
+            [GameModel.BLOCKED_ID,1,2],
+            [GameModel.BLOCKED_ID,4,2],
+            [GameModel.BLOCKED_ID,5,2]
             ],
                                         goals: [0,40,50,0,0,0,4,0]
         ) )
         
         //level 12
         gameSamples.append( GameSample( fruits:[
-            [TileNode.BLOCKED_ID,0,1],
-            [TileNode.BLOCKED_ID,1,2],
-            [TileNode.BLOCKED_ID,2,3],
-            [TileNode.BLOCKED_ID,3,4],
-            [TileNode.CHOLOLATE_ID,0,2]
+            [GameModel.BLOCKED_ID,0,1],
+            [GameModel.BLOCKED_ID,1,2],
+            [GameModel.BLOCKED_ID,2,3],
+            [GameModel.BLOCKED_ID,3,4],
+            [GameModel.CHOLOLATE_ID,0,2]
             ],
                                         goals: [2,0,50,0,0,0,4,0]
         ) )
         
         //level 13
         gameSamples.append( GameSample( fruits:[
-            [TileNode.BLOCKED_ID,0,1],
-            [TileNode.BLOCKED_ID,1,2],
-            [TileNode.BLOCKED_ID,2,3],
-            [TileNode.BLOCKED_ID,3,4],
-            [TileNode.CHOLOLATE_ID,0,2],
+            [GameModel.BLOCKED_ID,0,1],
+            [GameModel.BLOCKED_ID,1,2],
+            [GameModel.BLOCKED_ID,2,3],
+            [GameModel.BLOCKED_ID,3,4],
+            [GameModel.CHOLOLATE_ID,0,2],
             [1,0,3],
             [2,1,3],
             [1,0,4],
@@ -1077,11 +1087,11 @@ class GameModel {
         
         //level 14
         gameSamples.append( GameSample( fruits:[
-            [TileNode.BLOCKED_ID,0,1],
-            [TileNode.BLOCKED_ID,1,2],
-            [TileNode.BLOCKED_ID,2,3],
-            [TileNode.BLOCKED_ID,3,4],
-            [TileNode.CHOLOLATE_ID,0,2],
+            [GameModel.BLOCKED_ID,0,1],
+            [GameModel.BLOCKED_ID,1,2],
+            [GameModel.BLOCKED_ID,2,3],
+            [GameModel.BLOCKED_ID,3,4],
+            [GameModel.CHOLOLATE_ID,0,2],
             [1,0,3],
             [2,1,3],
             [1,0,4],
@@ -1097,12 +1107,12 @@ class GameModel {
         
         //level 15
         gameSamples.append( GameSample( fruits:[
-            [TileNode.BLOCKED_ID,0,1],
-            [TileNode.BLOCKED_ID,1,2],
-            [TileNode.BLOCKED_ID,2,3],
-            [TileNode.BLOCKED_ID,3,4],
-            [TileNode.BLOCKED_ID,4,4],
-            [TileNode.CHOLOLATE_ID,0,2],
+            [GameModel.BLOCKED_ID,0,1],
+            [GameModel.BLOCKED_ID,1,2],
+            [GameModel.BLOCKED_ID,2,3],
+            [GameModel.BLOCKED_ID,3,4],
+            [GameModel.BLOCKED_ID,4,4],
+            [GameModel.CHOLOLATE_ID,0,2],
             [1,0,3],
             [2,1,3],
             [1,0,4],
@@ -1137,10 +1147,10 @@ class GameModel {
         
         //level 17
         gameSamples.append( GameSample( fruits:[
-            [TileNode.BLOCKED_ID,0,2],
-            [TileNode.BLOCKED_ID,0,3],
-            [TileNode.BLOCKED_ID,5,2],
-            [TileNode.BLOCKED_ID,5,3]
+            [GameModel.BLOCKED_ID,0,2],
+            [GameModel.BLOCKED_ID,0,3],
+            [GameModel.BLOCKED_ID,5,2],
+            [GameModel.BLOCKED_ID,5,3]
             ],
                                         goals: [0,0,50,0,2,0,4,0]
         ) )
@@ -1169,13 +1179,13 @@ class GameModel {
             [1,1,1],
             [1,3,1],
             [1,2,2],
-            [TileNode.BUBBLE_ID,2,1],
+            [GameModel.BUBBLE_ID,2,1],
             
             [2,2,3],
             [2,1,4],
             [2,3,4],
             [2,2,5],
-            [TileNode.BUBBLE_ID,2,4],
+            [GameModel.BUBBLE_ID,2,4],
             
             [3,4,1],
             [3,5,2],
@@ -1192,13 +1202,13 @@ class GameModel {
             [1,3,1],
             [1,4,1],
             [1,2,2],
-            [TileNode.BUBBLE_ID,2,1],
+            [GameModel.BUBBLE_ID,2,1],
             
             [2,2,3],
             [2,1,4],
             [2,3,4],
             [2,2,5],
-            [TileNode.BUBBLE_ID,2,4],
+            [GameModel.BUBBLE_ID,2,4],
             
             [3,5,2],
             [3,4,3],
@@ -1226,7 +1236,7 @@ class GameModel {
         
         //Level 22
         gameSamples.append( GameSample( fruits:[
-            [TileNode.STAR5_ID,0,0,1],
+            [GameModel.STAR5_ID,0,0,1],
             [2,1,0,1],
             [3,2,0,1],
             [4,3,0,1],
@@ -1242,7 +1252,7 @@ class GameModel {
             [2,1,2,1],
             [3,4,2,1],
             [4,5,2,1],
-            [TileNode.STAR5_ID,0,3,1],
+            [GameModel.STAR5_ID,0,3,1],
             [2,5,3,1],
             [1,0,4],
             [1,0,5],
@@ -1286,9 +1296,9 @@ class GameModel {
         //Level 24
         gameSamples.append( GameSample( fruits:[
             [1,0,5,1],
-            [TileNode.BLOCKED_ID,0,4],
+            [GameModel.BLOCKED_ID,0,4],
             [1,5,5,1],
-            [TileNode.BLOCKED_ID,5,4]
+            [GameModel.BLOCKED_ID,5,4]
             ],
                                         goals: [0,0,100,0,0,0,5,0]
         ) )
@@ -1296,8 +1306,8 @@ class GameModel {
         //Level 25
         gameSamples.append( GameSample( fruits:[
             [1,1,5,1],
-            [TileNode.BLOCKED_ID,0,4],
-            [TileNode.CHOLOLATE_ID,0,5]
+            [GameModel.BLOCKED_ID,0,4],
+            [GameModel.CHOLOLATE_ID,0,5]
             ],
                                         goals: [2,0,100,0,0,0,5,0]
         ) )
@@ -1310,11 +1320,11 @@ class GameModel {
         
         
         gameSamples.append( GameSample( fruits:[
-            [TileNode.STAR5_ID,0,0,0],
-            [TileNode.STAR5_ID,0,2,2],
-            [TileNode.STAR5_ID,0,4,2],
-            [TileNode.STAR5_ID,2,0,2],
-            [TileNode.STAR7_ID,2,2,2],
+            [GameModel.STAR5_ID,0,0,0],
+            [GameModel.STAR5_ID,0,2,2],
+            [GameModel.STAR5_ID,0,4,2],
+            [GameModel.STAR5_ID,2,0,2],
+            [GameModel.STAR7_ID,2,2,2],
             [1,2,4,2],
             [1,4,0,2],
             [1,4,2,2],
@@ -1364,7 +1374,7 @@ class GameModel {
             [3,0,0],
             [3,1,1],
             [1,2,0],
-            [TileNode.BUBBLE_ID,3,2],
+            [GameModel.BUBBLE_ID,3,2],
             [1,4,0],
             [1,5,2],
             [4,0,1],
@@ -1382,7 +1392,7 @@ class GameModel {
             [3,0,0],
             [3,1,1],
             [1,2,0],
-            [TileNode.BLOCKED_ID,3,2],
+            [GameModel.BLOCKED_ID,3,2],
             [1,4,0],
             [1,5,2],
             [4,0,1],
@@ -1400,7 +1410,7 @@ class GameModel {
             [3,0,0],
             [3,1,1],
             [1,2,0],
-            [TileNode.QUESTION_ID,3,2],
+            [GameModel.QUESTION_ID,3,2],
             [1,4,0],
             [1,5,2],
             [4,0,1],
@@ -1414,22 +1424,22 @@ class GameModel {
         ) )
         
        gameSamples.append( GameSample( fruits:[
-            [TileNode.CHOLOLATE_ID,0,5]
-            ,[TileNode.BLOCKED_ID,3,3]
+            [GameModel.CHOLOLATE_ID,0,5]
+            ,[GameModel.BLOCKED_ID,3,3]
             ],
                                         goals: [3,0,50,0,0,0,4,10]
         ) )
         
         gameSamples.append( GameSample( fruits:[
             [1,0,5]
-            ,[TileNode.BLOCKED_ID,3,3]
+            ,[GameModel.BLOCKED_ID,3,3]
             ],
                                         goals: [0,0,50,10,0,0,4,10]
         ) )
         
         gameSamples.append( GameSample( fruits:[
             [1,0,5]
-            ,[TileNode.BLOCKED_ID,3,3]
+            ,[GameModel.BLOCKED_ID,3,3]
             ],
                                         goals: [0,0,50,0,3,0,4,10]
         ) )
