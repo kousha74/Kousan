@@ -513,8 +513,8 @@ class GameEngine {
         }
     }
     
-    func SameColor(tile1:TileNode, tile2:TileNode)->Bool{
-        return ( tile1.GetID() == tile2.GetID() ) && ( tile1.IsFruit() ) && tile1.GetCoverCount()==0 && tile2.GetCoverCount()==0
+    func SameFruit(tile1:TileNode, tile2:TileNode)->Bool{
+        return ( tile1.GetID() == tile2.GetID() ) && ( tile1.IsFruit() )
     }
     
     func DeleteTile(tile:TileNode){
@@ -660,7 +660,7 @@ class GameEngine {
                 for tile2 in gameModel.GetTiles(){
                     // Deleting all the tiles with the same color
                     // If the tile is LOCKED, do not remove it
-                    if SameColor(tile1: tile, tile2: tile2){
+                    if SameFruit(tile1: tile, tile2: tile2){
                         tile2.SetFlag(flag: TileNode.IS_VISITED, isSet: true )
                         
                         if !tile2.GetFlag(flag: TileNode.IS_LOCKED) {
@@ -722,7 +722,7 @@ class GameEngine {
             var tileFound = false
             for tile2 in gameModel.GetTiles(){
                 
-                if SameColor(tile1: tile, tile2: tile2 ){
+                if SameFruit(tile1: tile, tile2: tile2 ){
                     if ( tile2.GetClusterType() == TileNode.ClusterType.None ){
                         AddTempLine(row1: tile.GetRow(), col1: tile.GetCol(), row2: tile2.GetRow(), col2: tile2.GetCol() )
                         tileFound = true
@@ -878,7 +878,8 @@ class GameEngine {
         queue.append(tile)
         
         // special tiles don't form a cluster
-        if ( tile.GetID() < TileNode.BUBBLE_ID ){
+        // covered tiles don't form a cluster
+        if ( tile.GetID() < TileNode.BUBBLE_ID ) && (tile.GetCoverCount() == 0) {
             var newTilePos = CGPoint(x: 0, y: 0)
             
             while ( !queue.isEmpty )
@@ -892,8 +893,7 @@ class GameEngine {
                     newTilePos.y = currentTile.pos.y + pos.y
                 
                     if let newTile = gameModel.GetTile(pos: newTilePos){
-                        if ( !newTile.GetFlag(flag: TileNode.IS_VISITED ) ) && ( SameColor(tile1: tile, tile2: newTile) )
-                        {
+                        if ( !newTile.GetFlag(flag: TileNode.IS_VISITED ) ) && ( newTile.GetCoverCount() == 0 ) && ( SameFruit(tile1: tile, tile2: newTile) ){
                             newTile.SetFlag(flag: TileNode.IS_VISITED, isSet: true )
                             cluster.append(newTile)
                             queue.append(newTile)

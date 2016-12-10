@@ -756,7 +756,7 @@ class GameModel {
         maxLevelCompleted = userDefaults.integer(forKey: "maxLevelCompleted") - 1
         
         // For debugging only
-        //maxLevelCompleted = 22
+        maxLevelCompleted = 24
 
         
         let soundURL = Bundle.main.url(forResource: "bgMusic", withExtension: "wav")
@@ -1192,8 +1192,7 @@ class GameModel {
             [4,3,0,1],
             [1,4,0,1],
             [2,5,0,1],
-            [3,0,1],
-            [4,1,1],
+            [1,1,1],
             [1,2,1],
             [2,3,1],
             [3,4,1],
