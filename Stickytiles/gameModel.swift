@@ -402,16 +402,10 @@ class GameModel {
         
         var newTiles = [TileNode]()
         
-        var tilesToBeAdded = max( 1, MIN_TILES - gameTiles.count )
-    
-        var chocolateNeeded = false
-        
         //Check if chocolate should be added
         if chAdded < targetChocolates {
             // if there's no chocolate
             if GetID(id: TileNode.CHOLOLATE_ID) == nil {
-                
-                chocolateNeeded = true
                 
                 var fullRow = FindFullRow()
                 
@@ -428,35 +422,23 @@ class GameModel {
                     fullRow = 0
                 }
                 
-                //First find an empty tile
-                if let tile = GetEmptyTile() {
+                
+                if let emptyCell = FindEmptyCellForChocolate( minRow : fullRow + 1){
                     
-                    if let emptyCell = FindEmptyCellForChocolate( minRow : fullRow + 1){
-                        
-                        tile.SetID(Id: TileNode.CHOLOLATE_ID)
-                        tile.SetRowAndCol(row: Int(emptyCell.y), col: Int(emptyCell.x), cellSize: cellSize, viewOffset: viewOffset)
-                        gameTiles.append(tile)
+                    if let tile = AddTile(id: TileNode.CHOLOLATE_ID, pos: emptyCell ) {
                         chAdded += 1
                         newTiles.append(tile)
-                        tilesToBeAdded -= 1
-                        chocolateNeeded = false //we've added the chocolate
                     }
                 }
             }
         }
         
-        tilesToBeAdded = max( 1, MIN_TILES - gameTiles.count )
+        let tilesToBeAdded = max( 1, MIN_TILES - gameTiles.count )
         
         if tilesToBeAdded > 0 {
             for _ in 1...tilesToBeAdded{
-                //First find an empty tile
-                if let tile = GetEmptyTile() {
-                    if let emptyCell = FindEmptyCell( preferFirstRow: chocolateNeeded ){
-                        
-                        tile.SetID(Id: GetRandomTileID() )
-                        
-                        tile.SetRowAndCol(row: Int(emptyCell.y), col: Int(emptyCell.x), cellSize: cellSize, viewOffset: viewOffset)
-                        gameTiles.append(tile)
+                if let emptyCell = FindEmptyCell(){
+                    if let tile = AddTile(id: GetRandomTileID(), pos: emptyCell ) {
                         newTiles.append(tile)
                     }
                 }
@@ -465,19 +447,7 @@ class GameModel {
         
         return newTiles
     }
-    
- /*   func AddTile( Id:Int, row:Int, col:Int)->TileNode?{
         
-        if let tile = GetEmptyTile() {
-            tile.SetID(Id: Id )
-            tile.SetRowAndCol(row: row, col: col, cellSize: cellSize, viewOffset: viewOffset)
-            gameTiles.append(tile)
-            return tile
-        }
-        
-        return nil
-    }*/
-    
     func GetRandomTileID()->Int{
         
         if baloonFrequency != 0 && arc4random_uniform(UInt32(baloonFrequency)) == 0 {
@@ -501,7 +471,7 @@ class GameModel {
     }
 
     
-    func FindEmptyCell( preferFirstRow:Bool = false )->CGPoint?{
+    func FindEmptyCell()->CGPoint?{
         var selectedEmptyCell = CGPoint(x: -1, y: -1)
         var emptyCell = CGPoint(x: -1, y: -1)
         var candidates : UInt32 = 0
@@ -511,11 +481,6 @@ class GameModel {
                 emptyCell.x = CGFloat(col)
                 emptyCell.y = CGFloat(row)
                 if GetTile(pos: emptyCell) == nil {
-                    
-                    if row == 0 && preferFirstRow {
-                        return emptyCell
-                    }
-                    
                     candidates += 1
                     if ( arc4random_uniform(candidates) == 0 ){
                         selectedEmptyCell = emptyCell
