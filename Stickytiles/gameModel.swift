@@ -403,19 +403,55 @@ class GameModel {
         var newTiles = [TileNode]()
         
         var tilesToBeAdded = max( 1, MIN_TILES - gameTiles.count )
-            
+    
+        var chocolateNeeded = false
+        
         //Check if chocolate should be added
-        if let chTile = AddChocolate() {
-            newTiles.append(chTile)
-            tilesToBeAdded -= 1
+        if chAdded < targetChocolates {
+            // if there's no chocolate
+            if GetID(id: TileNode.CHOLOLATE_ID) == nil {
+                
+                chocolateNeeded = true
+                
+                var fullRow = FindFullRow()
+                
+                // we don't have a full row, so we build it
+                if fullRow < 0 || fullRow >= boardSize-1 {
+                    //we need to fill up the first row
+                    for col in 0...boardSize-1{
+                        if GetTile(row: 0, col: col) == nil {
+                            if let tile = AddTile(id: GetRandomTileID(), pos: CGPoint(x: col, y: 0)) {
+                                newTiles.append( tile )
+                            }
+                        }
+                    }
+                    fullRow = 0
+                }
+                
+                //First find an empty tile
+                if let tile = GetEmptyTile() {
+                    
+                    if let emptyCell = FindEmptyCellForChocolate( minRow : fullRow + 1){
+                        
+                        tile.SetID(Id: TileNode.CHOLOLATE_ID)
+                        tile.SetRowAndCol(row: Int(emptyCell.y), col: Int(emptyCell.x), cellSize: cellSize, viewOffset: viewOffset)
+                        gameTiles.append(tile)
+                        chAdded += 1
+                        newTiles.append(tile)
+                        tilesToBeAdded -= 1
+                        chocolateNeeded = false //we've added the chocolate
+                    }
+                }
+            }
         }
         
+        tilesToBeAdded = max( 1, MIN_TILES - gameTiles.count )
         
         if tilesToBeAdded > 0 {
             for _ in 1...tilesToBeAdded{
                 //First find an empty tile
                 if let tile = GetEmptyTile() {
-                    if let emptyCell = FindEmptyCell(){
+                    if let emptyCell = FindEmptyCell( preferFirstRow: chocolateNeeded ){
                         
                         tile.SetID(Id: GetRandomTileID() )
                         
@@ -465,7 +501,7 @@ class GameModel {
     }
 
     
-    func FindEmptyCell()->CGPoint?{
+    func FindEmptyCell( preferFirstRow:Bool = false )->CGPoint?{
         var selectedEmptyCell = CGPoint(x: -1, y: -1)
         var emptyCell = CGPoint(x: -1, y: -1)
         var candidates : UInt32 = 0
@@ -475,6 +511,11 @@ class GameModel {
                 emptyCell.x = CGFloat(col)
                 emptyCell.y = CGFloat(row)
                 if GetTile(pos: emptyCell) == nil {
+                    
+                    if row == 0 && preferFirstRow {
+                        return emptyCell
+                    }
+                    
                     candidates += 1
                     if ( arc4random_uniform(candidates) == 0 ){
                         selectedEmptyCell = emptyCell
@@ -1291,7 +1332,7 @@ class GameModel {
         gameSamples.append( GameSample( fruits:[
             [1,1,5,1],
             [TileNode.BLOCKED_ID,0,4],
-            [TileNode.CHOLOLATE_ID,0,5,1]
+            [TileNode.CHOLOLATE_ID,0,5]
             ],
                                         goals: [2,0,100,0,0,0,5,0]
         ) )
