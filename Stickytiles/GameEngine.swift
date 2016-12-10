@@ -79,7 +79,7 @@ class GameEngine {
         
         if gameModel.GetTileCount() < gameModel.MIN_TILES {
             //Adding random tiles to make sure there are enough tiles
-            //AddTiles()
+            AddTiles()
         }
         
         m_GameSceneProtocol?.UpdateLabels()
