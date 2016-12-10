@@ -273,6 +273,26 @@ class GameModel {
         gameTiles.removeAll()        
     }
     
+    //finds the first row that's full
+    func FindFullRow()->Int{
+        
+        for row in (0...boardSize-1).reversed(){
+            var isFull = true
+            for col in 0...boardSize-1{
+                if GetTile(row: row, col: col) == nil {
+                    isFull = false
+                    break
+                }
+            }
+            
+            if isFull {
+                return row
+            }
+        }
+        
+        return -1
+    }
+    
     func loadGame( level:Int)
     {
         RemoveTiles()
@@ -353,18 +373,23 @@ class GameModel {
     func AddChocolate()->TileNode?{
         
         if chAdded < targetChocolates {
+            // if there's no chocolate
             if GetID(id: TileNode.CHOLOLATE_ID) == nil {
                 
-                //First find an empty tile
-                if let tile = GetEmptyTile() {
+                let fullRow = FindFullRow()
                 
-                    if let emptyCell = FindEmptyCellForChocolate(){
-                        
-                        tile.SetID(Id: TileNode.CHOLOLATE_ID)
-                        tile.SetRowAndCol(row: Int(emptyCell.y), col: Int(emptyCell.x), cellSize: cellSize, viewOffset: viewOffset)
-                        gameTiles.append(tile)
-                        chAdded += 1
-                        return tile
+                if fullRow >= 0 && fullRow < boardSize-1 {
+                    //First find an empty tile
+                    if let tile = GetEmptyTile() {
+                    
+                        if let emptyCell = FindEmptyCellForChocolate( minRow : fullRow + 1){
+                            
+                            tile.SetID(Id: TileNode.CHOLOLATE_ID)
+                            tile.SetRowAndCol(row: Int(emptyCell.y), col: Int(emptyCell.x), cellSize: cellSize, viewOffset: viewOffset)
+                            gameTiles.append(tile)
+                            chAdded += 1
+                            return tile
+                        }
                     }
                 }
             }
@@ -462,29 +487,21 @@ class GameModel {
         return ( candidates>0 ) ? selectedEmptyCell :  nil
     }
     
-    func FindEmptyCellForChocolate()->CGPoint?{
+    func FindEmptyCellForChocolate(minRow:Int)->CGPoint?{
         var selectedEmptyCell = CGPoint(x: -1, y: -1)
         var emptyCell = CGPoint(x: -1, y: -1)
         var candidates : UInt32 = 0
-        var tileFound = false
         
         for col in 0...boardSize-1{
-            tileFound = false
-            for row in 0...boardSize-1{
+            for row in minRow...boardSize-1{
                 emptyCell.x = CGFloat(col)
                 emptyCell.y = CGFloat(row)
                 
                 if GetTile(pos: emptyCell) == nil {
-                    if tileFound {
                         candidates += 1
                         if ( arc4random_uniform(candidates) == 0 ){
                             selectedEmptyCell = emptyCell
                         }
-                    }
-                    
-                }
-                else{
-                    tileFound = true
                 }
             }
         }
