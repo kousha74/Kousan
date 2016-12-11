@@ -303,6 +303,19 @@ class GameModel {
         return -1
     }
     
+    func IsRowFull( row:Int )->Bool{
+        var isFull = true
+        
+        for col in 0...boardSize-1{
+            if GetTile(row: row, col: col) == nil {
+                isFull = false
+                break
+            }
+        }
+            
+        return isFull
+    }
+        
     func loadGame( level:Int)
     {
         RemoveTiles()
@@ -378,34 +391,6 @@ class GameModel {
         }
         
         return coveredTiles
-    }
-    
-    func AddChocolate()->TileNode?{
-        
-        if chAdded < targetChocolates {
-            // if there's no chocolate
-            if GetID(id: GameModel.CHOLOLATE_ID) == nil {
-                
-                let fullRow = FindFullRow()
-                
-                if fullRow >= 0 && fullRow < boardSize-1 {
-                    //First find an empty tile
-                    if let tile = GetEmptyTile() {
-                    
-                        if let emptyCell = FindEmptyCellForChocolate( minRow : fullRow + 1){
-                            
-                            tile.SetID(Id: GameModel.CHOLOLATE_ID)
-                            tile.SetRowAndCol(row: Int(emptyCell.y), col: Int(emptyCell.x), cellSize: cellSize, viewOffset: viewOffset)
-                            gameTiles.append(tile)
-                            chAdded += 1
-                            return tile
-                        }
-                    }
-                }
-            }
-        }
-        
-        return nil
     }
     
     func AddTiles()->[TileNode]{
@@ -504,25 +489,25 @@ class GameModel {
     }
     
     func FindEmptyCellForChocolate(minRow:Int)->CGPoint?{
-        var selectedEmptyCell = CGPoint(x: -1, y: -1)
         var emptyCell = CGPoint(x: -1, y: -1)
-        var candidates : UInt32 = 0
+        var emptyCellFound = false
         
-        for col in 0...boardSize-1{
-            for row in minRow...boardSize-1{
-                emptyCell.x = CGFloat(col)
+        for row in (minRow...boardSize-1).reversed() {
+            
+            if !IsRowFull(row: row) {
                 emptyCell.y = CGFloat(row)
-                
-                if GetTile(pos: emptyCell) == nil {
-                        candidates += 1
-                        if ( arc4random_uniform(candidates) == 0 ){
-                            selectedEmptyCell = emptyCell
-                        }
+                while (!emptyCellFound){
+                    emptyCell.x = CGFloat(arc4random_uniform(UInt32(boardSize)))
+                    if GetTile(pos: emptyCell) == nil {
+                        emptyCellFound = true
+                    }
                 }
+                
+                return emptyCell
             }
         }
         
-        return ( candidates>0 ) ? selectedEmptyCell :  nil
+        return nil
     }
     
     func GetEmptyTile()->TileNode?{
@@ -1217,7 +1202,7 @@ class GameModel {
                                         goals: [0,0,50,0,0,1,6,10]
         ) )
         
-        
+        //level 21
         gameSamples.append( GameSample( fruits:[
             [1,0,0,1],
             [2,1,0,1],
@@ -1509,6 +1494,316 @@ class GameModel {
             ],
                                         goals: [2,0,100,0,0,0,5,0]
         ) )
+        
+        
+        //level 34
+        gameSamples.append( GameSample( fruits:[
+            [1,0,0,1],
+            [2,1,0,1],
+            [3,2,0,1],
+            [4,3,0,1],
+            [1,4,0,1],
+            [2,5,0,1],
+            [1,1,1],
+            [1,2,1],
+            [2,3,1],
+            [3,4,1],
+            [4,5,1]
+            ],
+                                        goals: [0,0,100,0,0,0,6,0]
+        ) )
+        
+        //Level 35
+        gameSamples.append( GameSample( fruits:[
+            [GameModel.STAR5_ID,0,0,1],
+            [2,1,0,1],
+            [3,2,0,1],
+            [4,3,0,1],
+            [1,4,0,1],
+            [2,5,0,1],
+            [3,0,1,1],
+            [4,1,1,1],
+            [1,2,1,1],
+            [2,3,1,1],
+            [3,4,1,1],
+            [4,5,1,1],
+            [1,0,2,1],
+            [2,1,2,1],
+            [3,4,2,1],
+            [4,5,2,1],
+            [2,5,3,1],
+            [1,0,4],
+            [1,0,5],
+            [1,5,5],
+            [2,1,3],
+            [2,2,3]
+            ],
+                                        goals: [0,0,100,0,0,0,6,0]
+        ) )
+        
+        //Level 36
+        gameSamples.append( GameSample( fruits:[
+            [1,0,0,1],
+            [2,1,0,1],
+            [3,2,0,1],
+            [4,3,0,1],
+            [1,4,0,1],
+            [2,5,0,1],
+            [3,0,1,1],
+            [4,1,1,1],
+            [1,2,1,1],
+            [2,3,1,1],
+            [3,4,1,1],
+            [4,5,1,1],
+            [1,0,2,1],
+            [2,1,2,1],
+            [3,4,2,1],
+            [4,5,2,1],
+            [1,0,3,1],
+            [2,5,3,1],
+            [1,0,4],
+            [1,0,5],
+            [1,5,5],
+            [2,1,3,1],
+            [2,2,3,1],
+            [2,3,3,1],
+            [2,4,3,1],
+            [1,2,2,1],
+            [1,3,2,1]
+            ],
+                                        goals: [0,0,100,0,0,0,5,0]
+            
+        ) )
+        
+        //Level 37
+        gameSamples.append( GameSample( fruits:[
+            [1,0,5,1],
+            [GameModel.BLOCKED_ID,0,4],
+            [1,5,5,1],
+            [GameModel.BLOCKED_ID,5,4]
+            ],
+                                        goals: [0,0,100,0,0,0,6,0]
+        ) )
+        
+        //Level 38
+        gameSamples.append( GameSample( fruits:[
+            [1,1,5,1],
+            [GameModel.BLOCKED_ID,0,4],
+            [GameModel.CHOLOLATE_ID,0,5],
+            [GameModel.BLOCKED_ID,1,4],
+            [1,2,5,1],
+            [2,3,5,1],
+            [2,2,4,1]
+            ],
+                                        goals: [2,0,100,0,0,0,6,0]
+        ) )
+        
+        
+        //Level 39
+        gameSamples.append( GameSample( fruits:[
+            [GameModel.BLOCKED_ID,0,4],
+            [GameModel.BLOCKED_ID,1,4],
+            [GameModel.BLOCKED_ID,2,4],
+            [GameModel.BLOCKED_ID,3,4],
+            [GameModel.BLOCKED_ID,4,4],
+            [GameModel.CHOLOLATE_ID,0,5],
+            [1,1,5],
+            [2,2,5],
+            [3,3,5],
+            [3,4,5]
+            
+            ],
+                                        goals: [2,0,100,0,0,0,6,0]
+        ) )
+        
+        
+        //Level 40
+        gameSamples.append( GameSample( fruits:[
+            [1,0,5,1],
+            [GameModel.BLOCKED_ID,0,4],
+            [1,5,5,1],
+            [GameModel.BLOCKED_ID,5,4],
+            [GameModel.BLOCKED_ID,1,5],
+            [GameModel.BLOCKED_ID,4,5],
+            [1,0,0],
+            [2,1,0],
+            [GameModel.STAR5_ID,2,0],
+            [3,3,0],
+            [3,4,0],
+            [4,5,0],
+            [1,2,5],
+            [2,3,5],
+            [2,0,1],
+            [3,1,1],
+            [4,2,1],
+            [5,3,1],
+            [5,4,1]
+            ],
+                                        goals: [0,0,100,0,0,0,6,0]
+        ) )
+        
+        //level 41
+        gameSamples.append( GameSample( fruits:[
+            [1,0,0,1],
+            [2,0,2,2],
+            [3,0,4,1],
+            [4,2,0,2],
+            [5,2,2,1],
+            [1,2,4,2],
+            [1,4,0,1],
+            [1,4,2,2],
+            [1,4,4,1]
+            ],
+                                        goals: [0,0,100,0,0,0,6,0]
+        ) )
+        
+        
+        //Level 42
+        gameSamples.append( GameSample( fruits:[
+            [1,0,5,1],
+            [GameModel.BLOCKED_ID,0,4],
+            [1,5,5,1],
+            [GameModel.BLOCKED_ID,5,4],
+            [GameModel.BLOCKED_ID,1,5],
+            [GameModel.BLOCKED_ID,4,5],
+            [1,0,0],
+            [2,1,0],
+            [GameModel.STAR5_ID,2,0],
+            [3,3,0],
+            [3,4,0],
+            [4,5,0],
+            [1,2,5,1],
+            [2,3,5,1],
+            [2,0,1],
+            [3,1,1],
+            [4,2,1],
+            [5,3,1],
+            [5,4,1]
+            ],
+                                        goals: [0,0,100,0,0,0,6,0]
+        ) )
+        
+        //Level 43
+        gameSamples.append( GameSample( fruits:[
+            [1,0,5,1],
+            [GameModel.BLOCKED_ID,0,4],
+            [1,5,5,1],
+            [GameModel.BLOCKED_ID,5,4],
+            [GameModel.BLOCKED_ID,1,5],
+            [GameModel.BLOCKED_ID,4,5],
+            [1,0,0],
+            [2,1,0],
+            [GameModel.STAR5_ID,2,0],
+            [3,3,0],
+            [3,4,0],
+            [4,5,0],
+            [1,2,5,1],
+            [2,3,5,1],
+            [2,2,4,1],
+            [3,3,4,1],
+            [4,2,1],
+            [5,3,1],
+            [5,4,1]
+            ],
+                                        goals: [0,0,100,0,0,0,6,0]
+        ) )
+        
+        
+        //Level 44
+        gameSamples.append( GameSample( fruits:[
+            [1,0,5,1],
+            [GameModel.BLOCKED_ID,0,4],
+            [1,5,5,1],
+            [GameModel.BLOCKED_ID,5,4],
+            [GameModel.BLOCKED_ID,1,5],
+            [GameModel.BLOCKED_ID,4,5],
+            
+            [GameModel.BLOCKED_ID,0,1],
+            [2,0,0,1],
+            [GameModel.BLOCKED_ID,1,0],
+            [GameModel.BLOCKED_ID,5,1],
+            [3,5,0,1],
+            [GameModel.BLOCKED_ID,4,0],
+            
+            [GameModel.STAR5_ID,2,2],
+            [GameModel.STAR5_ID,3,2],
+            
+            [1,2,0],
+            [1,3,0],
+            [2,2,5],
+            [2,3,5],
+            
+            
+            [3,0,2],
+            [3,0,3],
+            [4,5,2],
+            [4,5,3]
+            ],
+                                        goals: [0,0,100,0,0,0,6,0]
+        ) )
+        
+        //Level 45
+        gameSamples.append( GameSample( fruits:[
+            [GameModel.BLOCKED_ID,0,4],
+            [GameModel.BLOCKED_ID,1,4],
+            [GameModel.BLOCKED_ID,2,4],
+            [GameModel.BLOCKED_ID,3,4],
+            [GameModel.BLOCKED_ID,4,4],
+            [GameModel.CHOLOLATE_ID,0,5],
+            [1,1,5,1],
+            [2,2,5,1],
+            [3,3,5,1],
+            [3,4,5,1],
+            [GameModel.STAR5_ID,0,0],
+            [1,1,0],
+            [2,2,0],
+            [3,0,1],
+            [4,1,1],
+            [5,0,2]
+            
+            ],
+                                        goals: [2,0,100,0,0,0,6,0]
+        ) )
+        
+        
+        //Level 46
+        gameSamples.append( GameSample( fruits:[
+            [GameModel.CHOLOLATE_ID,0,5],
+            [1,1,5,1],
+            [1,2,5,1],
+            [2,3,5,1],
+            [2,4,5,1],
+            [3,5,5,1],
+            
+            [4,0,4,1],
+            [4,1,4,1],
+            [5,2,4,1],
+            [5,3,4,1],
+            [1,4,4,1],
+            
+            [1,0,3,1],
+            [1,1,3,1],
+            [5,2,3,1],
+            [5,3,3,1],
+            
+            [1,1,0],
+            [2,2,0],
+            [2,0,1],
+            [4,1,1],
+            [1,0,2]
+            
+            ],
+                                        goals: [2,0,100,0,0,0,6,0]
+        ) )
+        
+        
+
+        
+        
+        
+        
+        
+        
         
         
         
