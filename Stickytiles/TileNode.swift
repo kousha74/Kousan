@@ -73,7 +73,7 @@ class TileNode {
             
         case 2:
             childSprite.texture = SKTexture(image: #imageLiteral(resourceName: "blank2"))
-            childSprite.alpha = Constants.coverAlpha
+            childSprite.alpha = CGFloat(0.9)
             break
             
         default:
