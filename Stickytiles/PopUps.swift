@@ -292,21 +292,21 @@ class Popups{
             break
             
         case .Match4:
-            title1Label.text = "Match 4 fruits"
+            title1Label.text = "Match 4 fruits to"
             title2Label.text = "create a special fruit"
             title2Label.isHidden = false
             match4Image.isHidden = false
             break
             
         case .Match5:
-            title1Label.text = "Match 5 fruits"
+            title1Label.text = "Match 5 fruits to"
             title2Label.text = "create a yellow star"
             title2Label.isHidden = false
             match5Image.isHidden = false
             break
             
         case .Match6:
-            title1Label.text = "Match 6 fruits"
+            title1Label.text = "Match 6 fruits to"
             title2Label.text = "create a green star"
             title2Label.isHidden = false
             match6Image.isHidden = false

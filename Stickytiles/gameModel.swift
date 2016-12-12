@@ -915,7 +915,7 @@ class GameModel {
             [2,4,1],
             [1,5,0]
             ],
-                                        goals: [0,50,50,0,0,0,4,0]
+                                        goals: [0,100,100,0,0,0,6,0]
         ) )
         
         //Level 4
@@ -936,21 +936,8 @@ class GameModel {
                                         goals: [0,0,50,10,0,0,4,0]
         ) )
         
+        
         //Level 5
-        gameSamples.append( GameSample( fruits:[
-            [1,0,0],
-            [2,1,1],
-            [3,2,0],
-            [4,3,1],
-            [1,4,0],
-            [2,5,1],
-            [GameModel.CHOLOLATE_ID,0,5]
-            ],
-                                        goals: [3,0,0,0,0,0,4,0]
-        ) )
-        
-        
-        //Level 6
         gameSamples.append( GameSample( fruits:[
             [1,0,0],
             [2,1,1],
@@ -963,25 +950,7 @@ class GameModel {
                                         goals: [3,0,50,0,0,0,4,0]
         ) )
         
-        //level 7 baloon
-        gameSamples.append( GameSample( fruits:[
-            [GameModel.BUBBLE_ID,0,0],
-            [2,1,1],
-            [3,2,0],
-            [4,3,1],
-            [GameModel.BUBBLE_ID,4,0],
-            [6,5,1],
-            [6,0,1],
-            [5,1,0],
-            [4,2,1],
-            [3,3,0],
-            [GameModel.BUBBLE_ID,4,1],
-            [1,5,0]
-            ],
-                                        goals: [0,50,0,0,0,0,4,20]
-        ) )
-        
-        //Level 8
+        //Level 6
         gameSamples.append( GameSample( fruits:[
             [1,0,0],
             [2,1,1],
@@ -1000,7 +969,7 @@ class GameModel {
         ) )
         
         
-        //Level 9
+        //Level 7
         gameSamples.append( GameSample( fruits:[
             [1,0,0],
             [2,1,1],
@@ -1014,7 +983,7 @@ class GameModel {
         ) )
         
         
-        //level 10
+        //level 8
         gameSamples.append( GameSample( fruits:[
             [1,0,0],
             [2,1,1],
@@ -1033,7 +1002,7 @@ class GameModel {
         ) )
         
         //goals [Chcolate, targetScore, maxMoves, targetApples, targetSpecial, targetStars, colorCount, baloon frequency]
-        //level 11
+        //level 9
         gameSamples.append( GameSample( fruits:[
             [GameModel.BLOCKED_ID,0,2],
             [GameModel.BLOCKED_ID,1,2],
@@ -1043,7 +1012,7 @@ class GameModel {
                                         goals: [0,40,50,0,0,0,4,0]
         ) )
         
-        //level 12
+        //level 10
         gameSamples.append( GameSample( fruits:[
             [GameModel.BLOCKED_ID,0,1],
             [GameModel.BLOCKED_ID,1,2],
@@ -1053,6 +1022,20 @@ class GameModel {
             ],
                                         goals: [2,0,50,0,0,0,4,0]
         ) )
+        
+        //level 11
+        gameSamples.append( GameSample( fruits:[
+            [1,0,0],
+            [2,1,1]
+            ],
+                                        goals: [0,0,50,0,2,0,4,0]
+        ) )
+        
+        
+        
+        
+        
+        
         
         //level 13
         gameSamples.append( GameSample( fruits:[
@@ -1112,24 +1095,6 @@ class GameModel {
         ) )
         
         //goals [Chcolate, targetScore, maxMoves, targetApples, targetSpecial, targetStars, colorCount, baloon frequency]
-        //level 16
-        gameSamples.append( GameSample( fruits:[
-            [1,0,0],
-            [2,1,1],
-            [3,2,0],
-            [4,3,1],
-            [1,4,0],
-            [2,5,1],
-            [3,0,1],
-            [4,1,0],
-            [4,2,1],
-            [3,3,0],
-            [2,4,1],
-            [1,5,0]
-            ],
-                                        goals: [0,0,50,0,2,0,4,0]
-        ) )
-        
         //level 17
         gameSamples.append( GameSample( fruits:[
             [GameModel.BLOCKED_ID,0,2],
