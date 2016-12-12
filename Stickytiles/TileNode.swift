@@ -67,11 +67,13 @@ class TileNode {
             break
             
         case 1:
-            childSprite.alpha = Constants.cover1Alpha
+            childSprite.texture = SKTexture(image: #imageLiteral(resourceName: "blank"))
+            childSprite.alpha = Constants.coverAlpha
             break
             
         case 2:
-            childSprite.alpha = Constants.cover2Alpha
+            childSprite.texture = SKTexture(image: #imageLiteral(resourceName: "blank2"))
+            childSprite.alpha = Constants.coverAlpha
             break
             
         default:
