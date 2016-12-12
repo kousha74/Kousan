@@ -774,7 +774,7 @@ class GameModel {
         maxLevelCompleted = userDefaults.integer(forKey: "maxLevelCompleted") - 1
         
         // For debugging only
-        //maxLevelCompleted = 24
+        maxLevelCompleted = 49
 
         
         let soundURL = Bundle.main.url(forResource: "bgMusic", withExtension: "wav")
@@ -1290,18 +1290,7 @@ class GameModel {
                                         goals: [0,0,100,0,0,0,6,0]
         ) )
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        //Level 30
+        //Level 26
         gameSamples.append( GameSample( fruits:[
             [1,0,5,1],
             [GameModel.BLOCKED_ID,0,4],
@@ -1327,7 +1316,7 @@ class GameModel {
         ) )
         
        
-        //Level 31
+        //Level 27
         gameSamples.append( GameSample( fruits:[
             [1,0,5,1],
             [GameModel.BLOCKED_ID,0,4],
@@ -1360,7 +1349,7 @@ class GameModel {
                                         goals: [0,0,100,0,0,0,5,0]
         ) )
         
-        //Level 32
+        //Level 28
         gameSamples.append( GameSample( fruits:[
             [GameModel.BLOCKED_ID,0,4],
             [GameModel.BLOCKED_ID,1,4],
@@ -1384,7 +1373,7 @@ class GameModel {
         ) )
         
         
-        //Level 33
+        //Level 29
         gameSamples.append( GameSample( fruits:[
             [GameModel.CHOLOLATE_ID,0,5],
             [1,1,5,1],
@@ -1414,25 +1403,7 @@ class GameModel {
                                         goals: [2,0,100,0,0,0,5,0]
         ) )
         
-        
-        //level 34
-        gameSamples.append( GameSample( fruits:[
-            [1,0,0,1],
-            [2,1,0,1],
-            [3,2,0,1],
-            [4,3,0,1],
-            [1,4,0,1],
-            [2,5,0,1],
-            [1,1,1],
-            [1,2,1],
-            [2,3,1],
-            [3,4,1],
-            [4,5,1]
-            ],
-                                        goals: [0,0,100,0,0,0,6,0]
-        ) )
-        
-        //Level 35
+        //Level 30
         gameSamples.append( GameSample( fruits:[
             [GameModel.STAR5_ID,0,0,1],
             [2,1,0,1],
@@ -1460,7 +1431,7 @@ class GameModel {
                                         goals: [0,0,100,0,0,0,6,0]
         ) )
         
-        //Level 36
+        //Level 31
         gameSamples.append( GameSample( fruits:[
             [1,0,0,1],
             [2,1,0,1],
@@ -1494,17 +1465,21 @@ class GameModel {
             
         ) )
         
-        //Level 37
+        //Level 32
         gameSamples.append( GameSample( fruits:[
             [1,0,5,1],
             [GameModel.BLOCKED_ID,0,4],
+            [1,1,5,1],
+            [GameModel.BLOCKED_ID,1,4],
             [1,5,5,1],
-            [GameModel.BLOCKED_ID,5,4]
+            [GameModel.BLOCKED_ID,5,4],
+            [1,4,5,1],
+            [GameModel.BLOCKED_ID,4,4]
             ],
                                         goals: [0,0,100,0,0,0,6,0]
         ) )
         
-        //Level 38
+        //Level 33
         gameSamples.append( GameSample( fruits:[
             [1,1,5,1],
             [GameModel.BLOCKED_ID,0,4],
@@ -1518,7 +1493,7 @@ class GameModel {
         ) )
         
         
-        //Level 39
+        //Level 34
         gameSamples.append( GameSample( fruits:[
             [GameModel.BLOCKED_ID,0,4],
             [GameModel.BLOCKED_ID,1,4],
@@ -1539,14 +1514,16 @@ class GameModel {
         ) )
         
         
-        //Level 40
+        //Level 35
         gameSamples.append( GameSample( fruits:[
             [1,0,5,1],
             [GameModel.BLOCKED_ID,0,4],
             [1,5,5,1],
             [GameModel.BLOCKED_ID,5,4],
-            [GameModel.BLOCKED_ID,1,5],
-            [GameModel.BLOCKED_ID,4,5],
+            [GameModel.BLOCKED_ID,1,4],
+            [GameModel.BLOCKED_ID,4,4],
+            [2,1,5,1],
+            [2,4,5,1],
             [1,0,0],
             [2,1,0],
             [GameModel.STAR5_ID,2,0],
@@ -1563,7 +1540,34 @@ class GameModel {
             ],
                                         goals: [0,0,100,0,0,0,6,0]
         ) )
+
         
+        //Level 36
+        gameSamples.append( GameSample( fruits:[
+            [1,0,5,1],
+            [GameModel.BLOCKED_ID,0,4],
+            [1,5,5,1],
+            [GameModel.BLOCKED_ID,5,4],
+            [GameModel.BLOCKED_ID,1,5],
+            [GameModel.BLOCKED_ID,4,5],
+            [1,0,0],
+            [2,1,0],
+            [GameModel.STAR5_ID,2,0],
+            [3,3,0],
+            [3,4,0],
+            [4,5,0],
+            [1,2,5,1],
+            [2,3,5,1],
+            [2,2,4,1],
+            [3,3,4,1],
+            [4,2,1],
+            [5,3,1],
+            [5,4,1]
+            ],
+                                        goals: [0,0,100,0,0,0,6,0]
+        ) )
+        
+
         //level 41
         gameSamples.append( GameSample( fruits:[
             [1,0,0,1],
@@ -1598,31 +1602,6 @@ class GameModel {
             [2,3,5,1],
             [2,0,1],
             [3,1,1],
-            [4,2,1],
-            [5,3,1],
-            [5,4,1]
-            ],
-                                        goals: [0,0,100,0,0,0,6,0]
-        ) )
-        
-        //Level 43
-        gameSamples.append( GameSample( fruits:[
-            [1,0,5,1],
-            [GameModel.BLOCKED_ID,0,4],
-            [1,5,5,1],
-            [GameModel.BLOCKED_ID,5,4],
-            [GameModel.BLOCKED_ID,1,5],
-            [GameModel.BLOCKED_ID,4,5],
-            [1,0,0],
-            [2,1,0],
-            [GameModel.STAR5_ID,2,0],
-            [3,3,0],
-            [3,4,0],
-            [4,5,0],
-            [1,2,5,1],
-            [2,3,5,1],
-            [2,2,4,1],
-            [3,3,4,1],
             [4,2,1],
             [5,3,1],
             [5,4,1]
