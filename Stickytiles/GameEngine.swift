@@ -81,6 +81,12 @@ class GameEngine {
             m_GameSceneProtocol?.onAddChild(child: edge.sprite)
         }
         
+        //TBD
+        if let tile = AddTile2(id: 1, pos: CGPoint(x: 0, y: 5)) {
+            tile.SetClusterType(type: .Four)
+        }
+        
+    
         if gameModel.GetTileCount() < gameModel.MIN_TILES {
             //Adding random tiles to make sure there are enough tiles
             AddTiles()
@@ -648,17 +654,19 @@ class GameEngine {
         let id = tile.GetID()
         
         if id != TileNode.BLOCKED_ID && id != TileNode.BLOCKER_ID && id != TileNode.CHOLOLATE_ID {
-            if  !tile.RemoveCoverB() {
-                if ( tile.GetClusterType() == TileNode.ClusterType.None ){
-                    //delete the tile
-                    DeleteTile(tile: tile )
+            if !tile.GetFlag(flag: TileNode.IS_LOCKED) {
+                if  !tile.RemoveCoverB() {
+                    if ( tile.GetClusterType() == TileNode.ClusterType.None ){
+                        //delete the tile
+                        DeleteTile(tile: tile )
+                    }
+                    else{
+                        tile.SetFlag(flag: TileNode.TBP, isSet: true)
+                    }
                 }
                 else{
-                    tile.SetFlag(flag: TileNode.TBP, isSet: true)
+                    gameModel.SoundGlass()
                 }
-            }
-            else{
-                gameModel.SoundGlass()
             }
         }
     }
@@ -683,17 +691,10 @@ class GameEngine {
                     // Deleting all the tiles with the same color
                     // If the tile is LOCKED, do not remove it
                     if SameFruit(tile1: tile, tile2: tile2){
+                        
                         tile2.SetFlag(flag: TileNode.IS_VISITED, isSet: true )
                         
-                        if !tile2.GetFlag(flag: TileNode.IS_LOCKED) {
-                            if ( tile2.GetClusterType() == TileNode.ClusterType.None ){
-                                //delete the tile
-                                DeleteTile(tile: tile2 )///
-                            }
-                            else{
-                                tile2.SetFlag(flag: TileNode.TBP, isSet: true)
-                            }
-                        }
+                        TryToDelete(tile: tile2)
                     }
                 }
                 break
