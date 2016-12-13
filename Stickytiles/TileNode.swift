@@ -9,6 +9,27 @@
 import UIKit
 import SpriteKit
 
+class EdgeNode{
+    var pos:CGPoint
+    var sprite : SKSpriteNode
+    var isHorizontal = false
+    
+    init(isHorizontal:Bool) {
+        pos = CGPoint(x: 0, y: 0)
+        self.isHorizontal = isHorizontal
+        
+        if isHorizontal {
+            sprite = SKSpriteNode(texture: SKTexture(image: #imageLiteral(resourceName: "edgeH")))
+        }
+        else {
+            sprite = SKSpriteNode(texture: SKTexture(image: #imageLiteral(resourceName: "edgeV")))
+        }
+
+        sprite.position.x = 0.0
+        sprite.position.y = 0.0
+    }
+}
+
 class TileNode {
     
     // MARK : constants

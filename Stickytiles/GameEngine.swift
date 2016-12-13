@@ -77,6 +77,10 @@ class GameEngine {
             m_GameSceneProtocol?.onAddChild(child: tile.sprite!)
         }
         
+        for edge in gameModel.GetEdges(){
+            m_GameSceneProtocol?.onAddChild(child: edge.sprite)
+        }
+        
         if gameModel.GetTileCount() < gameModel.MIN_TILES {
             //Adding random tiles to make sure there are enough tiles
             AddTiles()
@@ -173,6 +177,10 @@ class GameEngine {
                     pos.x = CGFloat(col)
                     pos.y = CGFloat(row)
                     
+                    if gameModel.FindEdge(pos: pos, isHorizontal: false){
+                        targetCol = col
+                    }
+
                     if let touchedTile = gameModel.GetTile(pos: pos) {
                         if !touchedTile.CanMove(){
                             targetCol = touchedTile.GetCol() - 1
@@ -212,6 +220,11 @@ class GameEngine {
                             targetCol += 1
                         }
                     }
+                    
+                    if gameModel.FindEdge(pos: pos, isHorizontal: false){
+                        targetCol = col + 1
+                    }
+
                 }
             }
             break
@@ -224,6 +237,10 @@ class GameEngine {
                 {
                     pos.x = CGFloat(col)
                     pos.y = CGFloat(row)
+                    
+                    if gameModel.FindEdge(pos: pos, isHorizontal: true){
+                        targetRow = row
+                    }
                     
                     if let touchedTile = gameModel.GetTile(pos: pos){
                         if !touchedTile.CanMove(){
@@ -266,6 +283,11 @@ class GameEngine {
                             targetRow += 1
                         }
                     }
+                    
+                    if gameModel.FindEdge(pos: pos, isHorizontal: true){
+                        targetRow = row + 1
+                    }
+
                 }
             }
             break

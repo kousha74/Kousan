@@ -37,6 +37,7 @@ class GameModel {
     static let BLOCKER_ID = 14
     static let BLOCKED_ID = 15
     static let QUESTION_ID = 16
+    static let EDGE_ID = 100
 
     private var currentLevel:Int = 0
     
@@ -57,6 +58,9 @@ class GameModel {
     private var allTiles : [TileNode]
     
     private var gameTiles : [TileNode]
+    
+    private var allEdges : [EdgeNode]
+    private var gameEdges : [EdgeNode]
     
     private var userDefaults = UserDefaults()
     
@@ -280,7 +284,23 @@ class GameModel {
             allTiles.append(tile)
         }
         
-        gameTiles.removeAll()        
+        gameTiles.removeAll()
+        
+        for edge in gameEdges{
+            edge.sprite.removeFromParent()
+            allEdges.append(edge)
+        }
+        
+        gameEdges.removeAll()
+    }
+    
+    func FindEdge( pos:CGPoint, isHorizontal:Bool )->Bool{
+        for edge in gameEdges{
+            if edge.pos.x == pos.x && edge.pos.y == pos.y && edge.isHorizontal == isHorizontal {
+                return true
+            }
+        }
+        return false
     }
     
     //finds the first row that's full
@@ -341,10 +361,25 @@ class GameModel {
         
         for index in 0...(gameSample.fruits.count-1){
             
-            if let tile = GetEmptyTile() {
+            let gameItem = gameSample.fruits[ index ]
             
-                let gameItem = gameSample.fruits[ index ]
-                
+            if gameItem[0] == GameModel.EDGE_ID {
+                if let edge = GetEmptyEdge( isHorizontal: gameItem[3] == 0 ) {
+                    edge.pos.x = CGFloat(gameItem[1])
+                    edge.pos.y = CGFloat(gameItem[2])
+                    
+                    if edge.isHorizontal {
+                        edge.sprite.position.x = viewOffset.x + (edge.pos.x+CGFloat(0.5))*CGFloat(cellSize)
+                        edge.sprite.position.y = viewOffset.y + (edge.pos.y + 1.0)*CGFloat(cellSize)
+                    }
+                    else {
+                        edge.sprite.position.x = viewOffset.x + (edge.pos.x + 1.0)*CGFloat(cellSize)
+                        edge.sprite.position.y = viewOffset.y + (edge.pos.y+CGFloat(0.5))*CGFloat(cellSize)
+                    }
+                    gameEdges.append(edge)
+                }
+            }
+            else if let tile = GetEmptyTile() {
                 //the cover count is optional at index 3
                 if ( level >= 45 ) && ( level<=64) {
                     //for these levels cover is always 2 TBD big time
@@ -522,6 +557,26 @@ class GameModel {
         return nil
     }
     
+    func GetEmptyEdge( isHorizontal:Bool )->EdgeNode?{
+        if allEdges.count > 0 {
+            
+            for i in 0...allEdges.count-1 {
+                
+                let edge = allEdges[i]
+                
+                if edge.isHorizontal == isHorizontal {
+            
+                    allEdges.remove(at: i)
+            
+                    return edge
+                }
+            }
+            
+        }
+        
+        return nil
+    }
+    
     func GetEmptyTile()->TileNode?{
         if allTiles.count > 0 {
             
@@ -570,6 +625,10 @@ class GameModel {
     
     func GetTiles()->[TileNode]{
         return gameTiles
+    }
+    
+    func GetEdges()->[EdgeNode]{
+        return gameEdges
     }
     
     //TBD: get row and col
@@ -770,7 +829,7 @@ class GameModel {
             
             if firstCovered < 0 {
                 for fruit in gameSample.fruits {
-                    if fruit.count > 3 && fruit[3] != 0 {
+                    if fruit.count > 3 && fruit[3] != 0 && (fruit[0] != GameModel.EDGE_ID) {
                         firstCovered = i
                         break
                     }
@@ -861,15 +920,24 @@ class GameModel {
         
         
         allTiles = [TileNode]()
+        allEdges = [EdgeNode]()
         
         for _ in 1...boardSize*boardSize{
 
             let Tile = TileNode()
             
             allTiles.append( Tile )
+            
+            let Edge1 = EdgeNode(isHorizontal: true)
+            allEdges.append(Edge1)
+            
+            let Edge2 = EdgeNode(isHorizontal: false)
+            allEdges.append(Edge2)
+            
         }
         
         gameTiles = [TileNode]()
+        gameEdges = [EdgeNode]()
         
         gameSamples = [GameSample]()
         
@@ -1016,20 +1084,26 @@ class GameModel {
         //goals [Chcolate, targetScore, maxMoves, targetApples, targetSpecial, targetStars, colorCount, baloon frequency]
         //level 9
         gameSamples.append( GameSample( fruits:[
-            [GameModel.BLOCKED_ID,0,2],
-            [GameModel.BLOCKED_ID,1,2],
-            [GameModel.BLOCKED_ID,4,2],
-            [GameModel.BLOCKED_ID,5,2]
+            [GameModel.EDGE_ID,0,2,0],
+            [GameModel.EDGE_ID,1,2,0],
+            [GameModel.EDGE_ID,4,2,0],
+            [GameModel.EDGE_ID,5,2,0]
             ],
                                         goals: [0,40,50,0,0,0,4,0]
         ) )
         
+        
+        
         //level 10
         gameSamples.append( GameSample( fruits:[
-            [GameModel.BLOCKED_ID,0,1],
-            [GameModel.BLOCKED_ID,1,2],
-            [GameModel.BLOCKED_ID,2,3],
-            [GameModel.BLOCKED_ID,3,4],
+            [GameModel.EDGE_ID,0,1,0],
+            [GameModel.EDGE_ID,1,2,0],
+            [GameModel.EDGE_ID,2,3,0],
+            [GameModel.EDGE_ID,3,4,0],
+            
+            [GameModel.EDGE_ID,0,2,1],
+            [GameModel.EDGE_ID,1,3,1],
+            [GameModel.EDGE_ID,2,4,1],
             [GameModel.CHOLOLATE_ID,0,2]
             ],
                                         goals: [2,0,50,0,0,0,4,0]
