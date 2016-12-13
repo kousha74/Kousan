@@ -80,12 +80,6 @@ class GameEngine {
         for edge in gameModel.GetEdges(){
             m_GameSceneProtocol?.onAddChild(child: edge.sprite)
         }
-        
-        //TBD
-        if let tile = AddTile2(id: 1, pos: CGPoint(x: 0, y: 5)) {
-            tile.SetClusterType(type: .Four)
-        }
-        
     
         if gameModel.GetTileCount() < gameModel.MIN_TILES {
             //Adding random tiles to make sure there are enough tiles
