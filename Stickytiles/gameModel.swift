@@ -43,7 +43,7 @@ class GameModel {
     
     private var maxLevelCompleted:Int = -1
     
-    static let maxLevel:Int = 64 //tbd
+    static let maxLevel:Int = 99 //tbd
     
     static let delay = 0.25
     
@@ -845,7 +845,7 @@ class GameModel {
         maxLevelCompleted = userDefaults.integer(forKey: "maxLevelCompleted") - 1
         
         // For debugging only
-        maxLevelCompleted = 49
+        maxLevelCompleted = 99
 
         
         let soundURL = Bundle.main.url(forResource: "bgMusic", withExtension: "wav")
