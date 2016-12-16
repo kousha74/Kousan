@@ -2799,6 +2799,184 @@ class GameModel {
                                         goals: [0,0,0,0,0,0,6,0]
         ) )
         
+        //Level 83
+        gameSamples.append( GameSample( fruits:[
+            [GameModel.EDGE_ID,0,4,0],
+            [GameModel.EDGE_ID,1,4,0],
+            [GameModel.EDGE_ID,2,4,0],
+            [GameModel.EDGE_ID,3,4,0],
+            [GameModel.EDGE_ID,4,4,0],
+            [GameModel.EDGE_ID,5,3,0],
+            [GameModel.EDGE_ID,4,3,0],
+            [GameModel.EDGE_ID,3,3,0],
+            [GameModel.EDGE_ID,2,3,0],
+            [GameModel.EDGE_ID,1,3,0],
+            [GameModel.CHOLOLATE_ID,0,5],
+            [GameModel.CHOLOLATE_ID,1,5],
+            [GameModel.CHOLOLATE_ID,2,5],
+            [GameModel.CHOLOLATE_ID,3,5],
+            [GameModel.CHOLOLATE_ID,4,5],
+            [GameModel.CHOLOLATE_ID,5,5]
+            
+            ],
+                                        goals: [6,0,0,0,0,0,6,0]
+        ) )
+        
+        //Level 84
+        gameSamples.append( GameSample( fruits:[
+            [GameModel.EDGE_ID,0,4,0],
+            [GameModel.EDGE_ID,1,4,0],
+            [GameModel.EDGE_ID,2,4,0],
+            [GameModel.EDGE_ID,3,4,0],
+            [GameModel.EDGE_ID,4,4,0],
+            [GameModel.EDGE_ID,5,3,0],
+            [GameModel.EDGE_ID,4,3,0],
+            [GameModel.EDGE_ID,3,3,0],
+            [GameModel.EDGE_ID,2,3,0],
+            [GameModel.EDGE_ID,1,3,0],
+            [GameModel.CHOLOLATE_ID,0,5],
+            [GameModel.CHOLOLATE_ID,1,5],
+            [GameModel.CHOLOLATE_ID,2,5],
+            [GameModel.CHOLOLATE_ID,3,5],
+            [GameModel.CHOLOLATE_ID,4,5],
+            [GameModel.CHOLOLATE_ID,5,5],
+            [1,0,4],
+            [2,1,4],
+            [2,2,4],
+            [4,3,4],
+            [5,4,4],
+            [5,5,4],
+            [1,0,0]
+            
+            
+            ],
+                                        goals: [6,0,0,0,0,0,6,0]
+        ) )
+        
+        //Level 85
+        gameSamples.append( GameSample( fruits:[
+            [GameModel.EDGE_ID,0,4,0],
+            [GameModel.EDGE_ID,1,4,0],
+            [GameModel.EDGE_ID,2,4,0],
+            [GameModel.EDGE_ID,3,4,0],
+            [GameModel.EDGE_ID,4,4,0],
+            [GameModel.EDGE_ID,5,3,0],
+            [GameModel.EDGE_ID,4,3,0],
+            [GameModel.EDGE_ID,3,3,0],
+            [GameModel.EDGE_ID,2,3,0],
+            [GameModel.EDGE_ID,1,3,0],
+            [GameModel.CHOLOLATE_ID,0,5],
+            [GameModel.CHOLOLATE_ID,1,5],
+            [GameModel.CHOLOLATE_ID,2,5],
+            [GameModel.CHOLOLATE_ID,3,5],
+            [GameModel.CHOLOLATE_ID,4,5],
+            [GameModel.CHOLOLATE_ID,5,5],
+            [1,0,4,1],
+            [2,1,4,1],
+            [2,2,4,1],
+            [4,3,4,1],
+            [5,4,4,1],
+            [5,5,4,1],
+            [1,0,0]
+            
+            
+            ],
+                                        goals: [6,0,0,0,0,0,6,0]
+        ) )
+        
+        //Level 86
+        gameSamples.append( GameSample( fruits:[
+            [GameModel.EDGE_ID,0,4,0],
+            [GameModel.EDGE_ID,1,4,0],
+            [GameModel.EDGE_ID,2,4,0],
+            [GameModel.EDGE_ID,3,4,0],
+            [GameModel.EDGE_ID,4,4,0],
+            [GameModel.EDGE_ID,5,3,0],
+            [GameModel.EDGE_ID,4,3,0],
+            [GameModel.EDGE_ID,3,3,0],
+            [GameModel.EDGE_ID,2,3,0],
+            [GameModel.EDGE_ID,1,3,0],
+            [GameModel.CHOLOLATE_ID,0,5],
+            [GameModel.CHOLOLATE_ID,1,5],
+            [GameModel.CHOLOLATE_ID,2,5],
+            [GameModel.CHOLOLATE_ID,3,5],
+            [GameModel.CHOLOLATE_ID,4,5],
+            [GameModel.CHOLOLATE_ID,5,5],
+            [1,0,4,2],
+            [2,1,4,2],
+            [2,2,4,2],
+            [4,3,4,2],
+            [5,4,4,2],
+            [5,5,4,2],
+            [1,0,0]
+            
+            
+            ],
+                                        goals: [6,0,0,0,0,0,6,0]
+        ) )
+        
+        //Level 87
+        gameSamples.append( GameSample( fruits:[
+            [GameModel.EDGE_ID,0,4,0],
+            [GameModel.EDGE_ID,1,4,0],
+            [GameModel.EDGE_ID,2,4,0],
+            [GameModel.EDGE_ID,3,4,0],
+            [GameModel.EDGE_ID,4,4,0],
+            [GameModel.EDGE_ID,5,3,0],
+            [GameModel.EDGE_ID,4,3,0],
+            [GameModel.EDGE_ID,3,3,0],
+            [GameModel.EDGE_ID,2,3,0],
+            [GameModel.EDGE_ID,1,3,0],
+            [GameModel.CHOLOLATE_ID,0,5,1],
+            [GameModel.CHOLOLATE_ID,1,5,1],
+            [GameModel.CHOLOLATE_ID,2,5,1],
+            [GameModel.CHOLOLATE_ID,3,5,1],
+            [GameModel.CHOLOLATE_ID,4,5,1],
+            [GameModel.CHOLOLATE_ID,5,5,1],
+            [1,0,4,1],
+            [2,1,4,1],
+            [2,2,4,1],
+            [4,3,4,1],
+            [5,4,4,1],
+            [5,5,4,1],
+            [1,0,0]
+            
+            
+            ],
+                                        goals: [6,0,0,0,0,0,6,0]
+        ) )
+        
+        //Level 88
+        gameSamples.append( GameSample( fruits:[
+            [GameModel.EDGE_ID,0,4,0],
+            [GameModel.EDGE_ID,1,4,0],
+            [GameModel.EDGE_ID,2,4,0],
+            [GameModel.EDGE_ID,3,4,0],
+            [GameModel.EDGE_ID,4,4,0],
+            [GameModel.EDGE_ID,5,3,0],
+            [GameModel.EDGE_ID,4,3,0],
+            [GameModel.EDGE_ID,3,3,0],
+            [GameModel.EDGE_ID,2,3,0],
+            [GameModel.EDGE_ID,1,3,0],
+            [GameModel.CHOLOLATE_ID,0,5,2],
+            [GameModel.CHOLOLATE_ID,1,5,2],
+            [GameModel.CHOLOLATE_ID,2,5,2],
+            [GameModel.CHOLOLATE_ID,3,5,2],
+            [GameModel.CHOLOLATE_ID,4,5,2],
+            [GameModel.CHOLOLATE_ID,5,5,2],
+            [1,0,4,2],
+            [2,1,4,2],
+            [2,2,4,2],
+            [4,3,4,2],
+            [5,4,4,2],
+            [5,5,4,2],
+            [1,0,0]
+            
+            
+            ],
+                                        goals: [6,0,0,0,0,0,6,0]
+        ) )
+        
         
         
         
