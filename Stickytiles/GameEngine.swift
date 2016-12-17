@@ -370,6 +370,7 @@ class GameEngine {
                                 break
                             
                             case TileNode.BLOCKER_ID: //touching a blocker removes it
+                                GameModel.blokerUsed = true
                                 DeleteTile(tile: touchedTile)
                                 break
                                 

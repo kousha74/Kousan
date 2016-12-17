@@ -221,7 +221,7 @@ class GameScene: SKScene,GameSceneProtocol {
             demoState = .Covered
             popups?.OpenPopup(type: demoState, isDemo:true)
         }
-        else if  arc4random()%4 == 0 {
+        else if  arc4random()%4 == 0 && !GameModel.blokerUsed {
             GameEngine.sharedInstance.isDemo = true
             gameModel.RemoveTiles()
             demoState = .Blocker

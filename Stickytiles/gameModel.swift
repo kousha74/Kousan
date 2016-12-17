@@ -43,7 +43,7 @@ class GameModel {
     
     private var maxLevelCompleted:Int = -1
     
-    static let maxLevel:Int = 100 //tbd
+    static let maxLevel:Int = 99 //tbd
     
     static let delay = 0.25
     
@@ -72,6 +72,8 @@ class GameModel {
     private var audioPlayerChime : AVAudioPlayer?
     private var audioPlayerLose : AVAudioPlayer?
     private var audioPlayerGlass : AVAudioPlayer?
+    
+    static var blokerUsed = false
     
     // the minimum number of tiles on the board
     let MIN_TILES = 12
@@ -357,7 +359,7 @@ class GameModel {
         
         colorCount = 0
 
-        let gameSample = gameSamples[min(level, GameModel.maxLevel - 1)]
+        let gameSample = gameSamples[min(level, GameModel.maxLevel)]
         
         for index in 0...(gameSample.fruits.count-1){
             
