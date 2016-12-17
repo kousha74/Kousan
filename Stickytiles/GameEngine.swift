@@ -370,7 +370,6 @@ class GameEngine {
                                 break
                             
                             case TileNode.BLOCKER_ID: //touching a blocker removes it
-                                GameModel.blokerUsed = true
                                 DeleteTile(tile: touchedTile)
                                 break
                                 
@@ -387,6 +386,7 @@ class GameEngine {
                         }
                     }
                     else{
+                        GameModel.blokerUsed = true
                         RemoveBlockers() //At most one blocker is allowed
                         AddTile(id: TileNode.BLOCKER_ID, pos: touchedCell)
                         //gameModel.ChangeMoveCount(delta: 1)
