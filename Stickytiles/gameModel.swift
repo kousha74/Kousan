@@ -3340,41 +3340,6 @@ class GameModel {
         //Level 100
         gameSamples.append( GameSample( fruits:[
             [GameModel.CHOLOLATE_ID,0,5,2],
-            [GameModel.CHOLOLATE_ID,5,5,2],
-            [GameModel.EDGE_ID,0,1,1],
-            [GameModel.EDGE_ID,0,2,1],
-            [GameModel.EDGE_ID,0,3,1],
-            [GameModel.EDGE_ID,0,4,1],
-            [GameModel.EDGE_ID,0,5,1],
-            [GameModel.EDGE_ID,4,1,1],
-            [GameModel.EDGE_ID,4,2,1],
-            [GameModel.EDGE_ID,4,3,1],
-            [GameModel.EDGE_ID,4,4,1],
-            [GameModel.EDGE_ID,4,5,1],
-            [1,0,0,2],
-            [5,0,1,2],
-            [2,0,2,2],
-            [3,0,3,2],
-            [4,0,4,2],
-            [1,5,0,2],
-            [5,5,1,2],
-            [2,5,2,2],
-            [3,5,3,2],
-            [4,5,4,2],
-            [1,1,5,2],
-            [2,2,5,2],
-            [3,3,5,2],
-            [4,4,5,2],
-            [GameModel.STAR5_ID,2,2],
-            [GameModel.STAR5_ID,2,3]
-            
-            ],
-                                        goals: [2,0,0,0,0,0,6,0]
-        ) )
-        
-        //Level 101
-        gameSamples.append( GameSample( fruits:[
-            [GameModel.CHOLOLATE_ID,0,5,2],
             [GameModel.EDGE_ID,0,5,1],
             [GameModel.EDGE_ID,0,3,0],
             [GameModel.EDGE_ID,1,3,0],
@@ -3407,6 +3372,41 @@ class GameModel {
             
             ],
                                         goals: [1,0,0,0,0,0,6,0]
+        ) )
+        
+        //Level 101
+        gameSamples.append( GameSample( fruits:[
+            [GameModel.CHOLOLATE_ID,0,5,2],
+            [GameModel.CHOLOLATE_ID,5,5,2],
+            [GameModel.EDGE_ID,0,1,1],
+            [GameModel.EDGE_ID,0,2,1],
+            [GameModel.EDGE_ID,0,3,1],
+            [GameModel.EDGE_ID,0,4,1],
+            [GameModel.EDGE_ID,0,5,1],
+            [GameModel.EDGE_ID,4,1,1],
+            [GameModel.EDGE_ID,4,2,1],
+            [GameModel.EDGE_ID,4,3,1],
+            [GameModel.EDGE_ID,4,4,1],
+            [GameModel.EDGE_ID,4,5,1],
+            [1,0,0,2],
+            [5,0,1,2],
+            [2,0,2,2],
+            [3,0,3,2],
+            [4,0,4,2],
+            [1,5,0,2],
+            [5,5,1,2],
+            [2,5,2,2],
+            [3,5,3,2],
+            [4,5,4,2],
+            [1,1,5,2],
+            [2,2,5,2],
+            [3,3,5,2],
+            [4,4,5,2],
+            [GameModel.STAR5_ID,2,2],
+            [GameModel.STAR5_ID,2,3]
+            
+            ],
+                                        goals: [2,0,0,0,0,0,6,0]
         ) )
         
         
