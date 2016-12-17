@@ -16,7 +16,7 @@ class Popups{
     }
     
     enum PopupType:Int{
-        case Win, Lose, Match3, Match4, Match5, Match6, push, Row, Col, Four, Yellow, Green, Blocker, Blocked, Baloon, Question, Covered, Chocolate, Enjoy, Info, None
+        case Win, Lose, Match3, Match4, Match5, Match6, push, Row, Col, Four, Yellow, Green, Blocker, Blocked, Covered, Chocolate, Enjoy, Info, Baloon, Question,None
     }
     
     //For Win Dialog
