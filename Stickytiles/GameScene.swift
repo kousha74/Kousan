@@ -426,7 +426,15 @@ class GameScene: SKScene,GameSceneProtocol {
             goalLabel.text = "Target Score: \(gameModel.targetScore)"
         }
         else{
-            goalLabel.text = ""
+            let coverCount = gameModel.GetCoveredTileCount()
+            
+            if coverCount > 0 {
+                goalLabel.text = "Covers Left: \(coverCount)"
+            }
+            else{
+                goalLabel.text = ""
+            }
+            
         }
     }
     

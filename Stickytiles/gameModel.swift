@@ -768,7 +768,9 @@ class GameModel {
             for tile in gameTiles{
                 switch tile.GetID() {
                 case GameModel.BUBBLE_ID, GameModel.STAR5_ID, GameModel.STAR7_ID:
-                    return false
+                    if tile.GetCoverCount() == 0 {
+                        return false
+                    }
                     
                 default:
                     break
