@@ -19,24 +19,25 @@ protocol GameManager{
 
 class GameViewController: UIViewController,GameManager  {
 
-    
+    private var scene : GameScene?
     override func viewDidLoad() {
         super.viewDidLoad()
                
         GameModel.sharedInstance.SetCellSize(deviceSize: view.bounds.size )
         
         print(".. \(view.bounds.size.height) .... \(view.bounds.size.width)")
-        let scene = GameScene(size: view.bounds.size)
-        scene.gameManager = self
+        scene = GameScene(size: view.bounds.size)
+        scene?.gameManager = self
         let skView = view as! SKView
         skView.showsFPS = false
         skView.showsNodeCount = false
         skView.ignoresSiblingOrder = true
-        scene.scaleMode = .resizeFill
+        scene?.scaleMode = .resizeFill
         skView.presentScene(scene)
     }
 
     override func viewDidDisappear(_ animated: Bool) {
+        scene?.gameManager = nil
         let skView = view as! SKView
         skView.presentScene(nil)
     }
