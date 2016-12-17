@@ -2119,20 +2119,34 @@ class GameModel {
                                         goals: [0,0,100,0,0,0,5,0]
             
         ) )
-        
+
         //Level 55
         gameSamples.append( GameSample( fruits:[
             [1,0,5,1],
             [GameModel.BLOCKED_ID,0,4],
-            [1,1,5,1],
-            [GameModel.BLOCKED_ID,1,4],
             [1,5,5,1],
             [GameModel.BLOCKED_ID,5,4],
-            [1,4,5,1],
-            [GameModel.BLOCKED_ID,4,4]
+            [GameModel.BLOCKED_ID,1,4],
+            [GameModel.BLOCKED_ID,4,4],
+            [2,1,5,1],
+            [2,4,5,1],
+            [1,0,0],
+            [2,1,0],
+            [GameModel.STAR5_ID,2,0],
+            [GameModel.STAR5_ID,3,0],
+            [3,4,0],
+            [4,5,0],
+            [1,2,5],
+            [2,3,5],
+            [2,0,1],
+            [3,1,1],
+            [4,2,1],
+            [5,3,1],
+            [5,4,1]
             ],
                                         goals: [0,0,100,0,0,0,6,0]
         ) )
+        
         
         //Level 56
         gameSamples.append( GameSample( fruits:[
@@ -2173,25 +2187,12 @@ class GameModel {
         gameSamples.append( GameSample( fruits:[
             [1,0,5,1],
             [GameModel.BLOCKED_ID,0,4],
+            [1,1,5,1],
+            [GameModel.BLOCKED_ID,1,4],
             [1,5,5,1],
             [GameModel.BLOCKED_ID,5,4],
-            [GameModel.BLOCKED_ID,1,4],
-            [GameModel.BLOCKED_ID,4,4],
-            [2,1,5,1],
-            [2,4,5,1],
-            [1,0,0],
-            [2,1,0],
-            [GameModel.STAR5_ID,2,0],
-            [GameModel.STAR5_ID,3,0],
-            [3,4,0],
-            [4,5,0],
-            [1,2,5],
-            [2,3,5],
-            [2,0,1],
-            [3,1,1],
-            [4,2,1],
-            [5,3,1],
-            [5,4,1]
+            [1,4,5,1],
+            [GameModel.BLOCKED_ID,4,4]
             ],
                                         goals: [0,0,100,0,0,0,6,0]
         ) )
@@ -2602,24 +2603,20 @@ class GameModel {
             [GameModel.EDGE_ID,1,3,1],
             [GameModel.EDGE_ID,2,4,1],
             [GameModel.CHOLOLATE_ID,0,2],
-            [1,0,3,2],
-            [2,1,3,2],
-            [1,0,4,2],
-            [4,1,4,2],
-            [3,2,4,2],
-            [3,0,5,2],
-            [2,1,5,2],
-            [1,2,5,2],
-            [4,3,5,2]
+            [1,0,3,1],
+            [2,1,3,1],
+            [1,0,4,1],
+            [4,1,4,1],
+            [3,2,4,1],
+            [3,0,5,1],
+            [2,1,5,1],
+            [1,2,5,1],
+            [4,3,5,1]
             ],
                                         goals: [2,0,0,0,0,0,6,0]
         ) )
         
         
-        
-        
-        
-        //Kooosha
         //Level 76
         gameSamples.append( GameSample( fruits:[
             [GameModel.EDGE_ID,0,4,0],
@@ -2895,19 +2892,21 @@ class GameModel {
             [GameModel.EDGE_ID,1,3,1],
             [GameModel.EDGE_ID,2,4,1],
             [GameModel.CHOLOLATE_ID,0,2],
-            [1,0,3,1],
-            [2,1,3,1],
-            [1,0,4,1],
-            [4,1,4,1],
-            [3,2,4,1],
-            [3,0,5,1],
-            [2,1,5,1],
-            [1,2,5,1],
-            [4,3,5,1]
+            [1,0,3,2],
+            [2,1,3,2],
+            [1,0,4,2],
+            [4,1,4,2],
+            [3,2,4,2],
+            [3,0,5,2],
+            [2,1,5,2],
+            [1,2,5,2],
+            [4,3,5,2]
             ],
                                         goals: [2,0,0,0,0,0,6,0]
         ) )
         
+        
+
         //level 87
         gameSamples.append( GameSample( fruits:[
             [GameModel.EDGE_ID,0,3,0],
