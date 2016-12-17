@@ -94,6 +94,11 @@ class LevelSelectorViewController: UIViewController {
             currentPage = ( GameModel.maxLevel )/gamesPerPage
         }
         
+        for button in buttons
+        {
+            button.titleLabel!.font =  UIFont(name: Constants.fontName, size: 20)
+        }
+        
         SetButtonLabels()
         
     }
