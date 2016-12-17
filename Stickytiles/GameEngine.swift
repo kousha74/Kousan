@@ -936,7 +936,7 @@ class GameEngine {
         shape.path = path
         shape.strokeColor = UIColor.darkGray
         shape.lineWidth = 5
-        shape.zPosition = 2.0
+        shape.zPosition = Constants.popupZIndex
         m_GameSceneProtocol?.onAddChild(child: shape)
         
         let fadeoutAction = SKAction.fadeOut(withDuration: GameModel.delay )
