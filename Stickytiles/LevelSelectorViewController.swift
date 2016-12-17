@@ -97,6 +97,7 @@ class LevelSelectorViewController: UIViewController {
         for button in buttons
         {
             button.titleLabel!.font =  UIFont(name: Constants.fontName, size: 20)
+            button.contentVerticalAlignment = .bottom;
         }
         
         SetButtonLabels()

@@ -14,7 +14,7 @@ class Constants{
     static let arrowZIndex = CGFloat(2.5)
     static let cellSize = CGFloat(50)
     static let fontSize = CGFloat(18.0)
-    static let fontName = "Papyrus"
+    static let fontName = "Noteworthy-Bold"
     static let fontColor = SKColor.blue
     static let coverAlpha = CGFloat(0.55)
     static let adFrequency = 22

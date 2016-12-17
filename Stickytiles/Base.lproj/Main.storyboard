@@ -22,37 +22,37 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="gd1-52-5Cv">
-                                <rect key="frame" x="80" y="164" width="215" height="339"/>
+                                <rect key="frame" x="80" y="163" width="215" height="341"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kousan" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XBV-Cp-i0w">
-                                        <rect key="frame" x="0.0" y="0.0" width="215" height="56"/>
-                                        <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="36"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="215" height="58"/>
+                                        <fontDescription key="fontDescription" name="Noteworthy-Light" family="Noteworthy" pointSize="36"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jtr-tg-LgZ">
-                                        <rect key="frame" x="0.0" y="76" width="215" height="51"/>
+                                        <rect key="frame" x="0.0" y="78" width="215" height="51"/>
                                         <state key="normal" image="Play"/>
                                         <connections>
                                             <segue destination="1cM-Vp-O44" kind="presentation" id="w15-ui-JHT"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kSt-rt-X7f">
-                                        <rect key="frame" x="0.0" y="147" width="215" height="51"/>
+                                        <rect key="frame" x="0.0" y="149" width="215" height="51"/>
                                         <state key="normal" image="RemoveAds"/>
                                         <connections>
                                             <action selector="OnRemoveAdsPressed:" destination="5Ie-E2-vTb" eventType="touchUpInside" id="z7M-dv-JJS"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JAF-nd-yEB">
-                                        <rect key="frame" x="0.0" y="218" width="215" height="51"/>
+                                        <rect key="frame" x="0.0" y="220" width="215" height="51"/>
                                         <state key="normal" image="RestorePurchase"/>
                                         <connections>
                                             <action selector="OnRestorePurchasePressed:" destination="5Ie-E2-vTb" eventType="touchUpInside" id="BK4-pt-Zld"/>
                                         </connections>
                                     </button>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="ig4-HE-ZVb">
-                                        <rect key="frame" x="0.0" y="289" width="215" height="50"/>
+                                        <rect key="frame" x="0.0" y="291" width="215" height="50"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LPX-RV-emZ">
                                                 <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
@@ -536,7 +536,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="51" id="DUM-m2-jA1"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="26"/>
+                                <fontDescription key="fontDescription" name="Noteworthy-Light" family="Noteworthy" pointSize="26"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -563,7 +563,7 @@
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Level 75 - 100" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9cL-pY-9oL">
                                 <rect key="frame" x="117.5" y="145.5" width="140" height="50"/>
-                                <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="17"/>
+                                <fontDescription key="fontDescription" name="Noteworthy-Light" family="Noteworthy" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -669,6 +669,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="sc2-Uc-Emz"/>
-        <segue reference="w15-ui-JHT"/>
+        <segue reference="pB8-kn-G9r"/>
     </inferredMetricsTieBreakers>
 </document>
