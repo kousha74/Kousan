@@ -327,10 +327,10 @@ class Popups{
             break
             
         case .Four:
-            title1Label.text = "Remove power fruit"
-            title2Label.text = "to remove all fruits"
+            title1Label.text = "Remove X fruit"
+            title2Label.text = "to remove neighbors"
             title2Label.isHidden = false
-            title3Label.text = "of the same type"
+            title3Label.text = "across corner"
             title3Label.isHidden = false
             iconButton.texture = SKTexture(image: #imageLiteral(resourceName: "Apple4"))
             break

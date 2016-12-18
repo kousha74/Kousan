@@ -685,10 +685,17 @@ class GameEngine {
                 for tile2 in gameModel.GetTiles(){
                     // Deleting all the tiles with the same color
                     // If the tile is LOCKED, do not remove it
-                    if SameFruit(tile1: tile, tile2: tile2){
+                    /*if SameFruit(tile1: tile, tile2: tile2){
                         
                         tile2.SetFlag(flag: TileNode.IS_VISITED, isSet: true )
                         
+                        TryToDelete(tile: tile2)
+                    }*/
+                    let rowDiff = abs( tile.GetRow() - tile2.GetRow() )
+                    let colDiff = abs( tile.GetCol() - tile2.GetCol() )
+                    
+                    if rowDiff == 1 && colDiff == 1 {
+                        tile2.SetFlag(flag: TileNode.IS_VISITED, isSet: true )
                         TryToDelete(tile: tile2)
                     }
                 }
@@ -737,7 +744,7 @@ class GameEngine {
             break
             
         case .Four:
-            var tileFound = false
+            /*var tileFound = false
             for tile2 in gameModel.GetTiles(){
                 
                 if SameFruit(tile1: tile, tile2: tile2 ){
@@ -750,7 +757,19 @@ class GameEngine {
             
             if tileFound{
                 gameModel.SoundLaser()
-            }
+            }*/
+            let row1 = tile.GetRow() + 1
+            var col1 = tile.GetCol() - 1
+            let row2 = tile.GetRow() - 1
+            var col2 = tile.GetCol() + 1
+            AddTempLine(row1: row1, col1: col1, row2: row2, col2: col2 )
+            
+            col2 = tile.GetCol() - 1
+            col1 = tile.GetCol() + 1
+            AddTempLine(row1: row1, col1: col1, row2: row2, col2: col2 )
+            
+            gameModel.SoundLaser()
+            
             break
             
         case .Five:

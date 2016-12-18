@@ -70,7 +70,7 @@ class GameViewController: UIViewController,GameManager  {
             GoToHomePage()
         }
         else {
-            let alertController = UIAlertController(title: "Your game progress will be lost", message: "Do you want to continue?", preferredStyle: .alert)
+            let alertController = UIAlertController(title: "Your game progress for this level will be lost", message: "Do you want to continue?", preferredStyle: .alert)
 
             let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action:UIAlertAction!) in
                 print("you have pressed the Cancel button");
@@ -108,7 +108,7 @@ class GameViewController: UIViewController,GameManager  {
             GoToLevelSelectorPage()
         }
         else {
-            let alertController = UIAlertController(title: "Your game progress will be lost", message: "Do you want to continue?", preferredStyle: .alert)
+            let alertController = UIAlertController(title: "Your game progress for this level will be lost", message: "Do you want to continue?", preferredStyle: .alert)
             
             let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action:UIAlertAction!) in
                 print("you have pressed the Cancel button");
@@ -130,7 +130,7 @@ class GameViewController: UIViewController,GameManager  {
         if ( moveCount == 0 ){
         }
         else{
-            let alertController = UIAlertController(title: "Your game progress will be lost", message: "Do you want to continue?", preferredStyle: .alert)
+            let alertController = UIAlertController(title: "Your game progress for this level will be lost", message: "Do you want to continue?", preferredStyle: .alert)
             
             let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action:UIAlertAction!) in
                 print("you have pressed the Cancel button");
