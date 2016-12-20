@@ -258,10 +258,10 @@ class TileNode {
                 sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "Kiwi"))
                 break
             case 5:
-                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "Lemon"))
+                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "coconut"))
                 break
             case 6:
-                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "Orange"))
+                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "Mango"))
                 break
             default:
                 sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "Apple"))

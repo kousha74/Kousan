@@ -240,7 +240,7 @@ class GameScene: SKScene,GameSceneProtocol {
         
         //check chocolates
         if gameModel.targetChocolates != 0 {
-            title1 = "Remove \(gameModel.targetChocolates) chocolates"
+            title1 = "Remove \(gameModel.targetChocolates) ice creams"
         }
         else if gameModel.targetScore != 0 {
             title1 = "Remove \(gameModel.targetScore) fruits"

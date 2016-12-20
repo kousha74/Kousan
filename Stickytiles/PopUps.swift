@@ -392,7 +392,7 @@ class Popups{
             break
             
         case .Chocolate:
-            title1Label.text = "Bring chocolate down"
+            title1Label.text = "Bring ice cream down"
             title2Label.text = "to remove it"
             title2Label.isHidden = false
             iconButton.texture = SKTexture(image: #imageLiteral(resourceName: "chocolate"))
