@@ -41,6 +41,8 @@ class TileNode {
     static let BLOCKER_ID = 14
     static let BLOCKED_ID = 15
     static let QUESTION_ID = 16
+    static let FRUIT_BASKET_ID = 17
+    static let HAND_SAW_ID = 18
     
     static let IS_MOVING:Int = 0
     static let IS_VISITED:Int = 1
@@ -235,6 +237,12 @@ class TileNode {
                 break
             case TileNode.QUESTION_ID:
                 sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "QuestionMark"))
+                break
+            case TileNode.FRUIT_BASKET_ID:
+                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "FruitBasket"))
+                break
+            case TileNode.HAND_SAW_ID:
+                sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "handsaw"))
                 break
             default:
                 sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "QuestionMark"))

@@ -37,6 +37,8 @@ class GameModel {
     static let BLOCKER_ID = 14
     static let BLOCKED_ID = 15
     static let QUESTION_ID = 16
+    static let FRUIT_BASKET_ID = 17
+    static let HAND_SAW_ID = 18
     static let EDGE_ID = 100
 
     private var currentLevel:Int = 0
