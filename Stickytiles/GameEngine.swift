@@ -350,38 +350,45 @@ class GameEngine {
                         
                         //touching covered ones should do nothing
                         if touchedTile.GetCoverCount() == 0 {
-                            switch touchedTile.GetID() {
-                            case TileNode.STAR5_ID:
-                                touchedTile.SetFlag(flag: TileNode.TBP, isSet: true)
-                                isProcessing = true
-                                shouldAddTile = true
-                                MarkSpecialNodes(tile: touchedTile)
-                                Timer.scheduledTimer(timeInterval: TimeInterval( GameModel.delay ), target: self, selector:#selector(GameEngine.ProcessSpecialNodes), userInfo: nil, repeats: false)
-                                gameModel.ChangeMoveCount(delta: 1)
-                                break
-                                
-                            case TileNode.STAR7_ID:
-                                touchedTile.SetFlag(flag: TileNode.TBP, isSet: true)
-                                isProcessing = true
-                                shouldAddTile = true
-                                MarkSpecialNodes(tile: touchedTile)
-                                Timer.scheduledTimer(timeInterval: TimeInterval( GameModel.delay ), target: self, selector:#selector(GameEngine.ProcessSpecialNodes), userInfo: nil, repeats: false)
-                                gameModel.ChangeMoveCount(delta: 1)
-                                break
                             
-                            case TileNode.BLOCKER_ID: //touching a blocker removes it
-                                DeleteTile(tile: touchedTile)
-                                break
+                            if !CheckForFruitBasket(tile: touchedTile) {
+                                switch touchedTile.GetID() {
+                                case TileNode.STAR5_ID:
+                                    touchedTile.SetFlag(flag: TileNode.TBP, isSet: true)
+                                    isProcessing = true
+                                    shouldAddTile = true
+                                    MarkSpecialNodes(tile: touchedTile)
+                                    Timer.scheduledTimer(timeInterval: TimeInterval( GameModel.delay ), target: self, selector:#selector(GameEngine.ProcessSpecialNodes), userInfo: nil, repeats: false)
+                                    gameModel.ChangeMoveCount(delta: 1)
+                                    break
+                                    
+                                case TileNode.STAR7_ID:
+                                    touchedTile.SetFlag(flag: TileNode.TBP, isSet: true)
+                                    isProcessing = true
+                                    shouldAddTile = true
+                                    MarkSpecialNodes(tile: touchedTile)
+                                    Timer.scheduledTimer(timeInterval: TimeInterval( GameModel.delay ), target: self, selector:#selector(GameEngine.ProcessSpecialNodes), userInfo: nil, repeats: false)
+                                    gameModel.ChangeMoveCount(delta: 1)
+                                    break
                                 
-                            case TileNode.BUBBLE_ID: //pop the balloon
-                                gameModel.SoundWave()
-                                DeleteTile(tile: touchedTile)
-                                //balloon is not a move
-                                //gameModel.ChangeMoveCount(delta: 1)
-                                break
-                                
-                            default:
-                                break
+                                case TileNode.BLOCKER_ID: //touching a blocker removes it
+                                    DeleteTile(tile: touchedTile)
+                                    break
+                                    
+                                case TileNode.BUBBLE_ID: //pop the balloon
+                                    gameModel.SoundWave()
+                                    DeleteTile(tile: touchedTile)
+                                    //balloon is not a move
+                                    //gameModel.ChangeMoveCount(delta: 1)
+                                    break
+                                    
+                                case TileNode.FRUIT_BASKET_ID:
+                                    OnFruitBasketTouched( tile: touchedTile)
+                                    break;
+                                    
+                                default:
+                                    break
+                                }
                             }
                         }
                     }
@@ -962,6 +969,36 @@ class GameEngine {
         let fadeoutAction = SKAction.fadeOut(withDuration: GameModel.delay )
         let removeAction = SKAction.removeFromParent()
         shape.run(SKAction.sequence([ fadeoutAction, removeAction]))
+    }
+    
+    func OnFruitBasketTouched( tile : TileNode ){
+        
+        if let selectedTile = gameModel.FindFlag(flag: TileNode.IS_SELECTED, isSet: true) {
+            //we have found one
+            selectedTile.SetFlag(flag: TileNode.IS_SELECTED, isSet: false)
+            selectedTile.sprite?.removeAllActions()
+        }
+        else {
+            tile.SetFlag(flag: TileNode.IS_SELECTED, isSet: true)
+            let scaleUp = SKAction.scale(to: 1.15, duration: GameModel.delay)
+            let scaleDown = SKAction.scale(to: 1.0, duration: GameModel.delay)
+            tile.sprite?.run(SKAction.repeatForever(SKAction.sequence([scaleUp,scaleDown])))
+        }
+    }
+    
+    //gets called on tap
+    //return true if fruit basket change has been made
+    //input: touched tile
+    func CheckForFruitBasket( tile: TileNode )->Bool{
+        if tile.IsFruit(){
+            if let touchedBasket = gameModel.FindFlag(flag: TileNode.IS_SELECTED, isSet: true){
+                touchedBasket.Reset()
+                touchedBasket.SetID(Id: tile.GetID())
+                return true
+            }
+        }
+        
+        return false
     }
 }
 
