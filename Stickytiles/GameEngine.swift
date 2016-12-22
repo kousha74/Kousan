@@ -384,8 +384,16 @@ class GameEngine {
                                     
                                 case TileNode.FRUIT_BASKET_ID:
                                     OnFruitBasketTouched( tile: touchedTile)
-                                    break;
+                                    break
+                                
+                                case TileNode.BOMB_ID:
+                                    gameModel.SoundExplosion()
+                                    break
                                     
+                                case TileNode.HAND_SAW_ID:
+                                    gameModel.SoundWoodCut()
+                                    break
+
                                 default:
                                     break
                                 }

@@ -39,6 +39,7 @@ class GameModel {
     static let QUESTION_ID = 16
     static let FRUIT_BASKET_ID = 17
     static let HAND_SAW_ID = 18
+    static let BOMB_ID = 19
     static let EDGE_ID = 100
 
     private var currentLevel:Int = 0
@@ -74,6 +75,8 @@ class GameModel {
     private var audioPlayerChime : AVAudioPlayer?
     private var audioPlayerLose : AVAudioPlayer?
     private var audioPlayerGlass : AVAudioPlayer?
+    private var audioPlayerWoodCut : AVAudioPlayer?
+    private var audioPlayerExplosion : AVAudioPlayer?
     
     static var blokerUsed = false
     
@@ -198,6 +201,18 @@ class GameModel {
     func SoundWin(){
         if ( IsAudioOn() ){
             audioPlayerWin?.play()
+        }
+    }
+    
+    func SoundWoodCut(){
+        if ( IsAudioOn() ){
+            audioPlayerWoodCut?.play()
+        }
+    }
+    
+    func SoundExplosion(){
+        if ( IsAudioOn() ){
+            audioPlayerExplosion?.play()
         }
     }
     
@@ -854,7 +869,7 @@ class GameModel {
         //maxLevelCompleted = 99
 
         
-        let soundURL = Bundle.main.url(forResource: "bgMusic", withExtension: "wav")
+        var soundURL = Bundle.main.url(forResource: "bgMusic", withExtension: "wav")
         do {
             try audioPlayer = AVAudioPlayer(contentsOf: soundURL!)
             audioPlayer?.numberOfLoops = -1
@@ -867,59 +882,75 @@ class GameModel {
             print("NO AUDIO PLAYER")
         }
         
-        let soundURL2 = Bundle.main.url(forResource: "tick", withExtension: "wav")
+        soundURL = Bundle.main.url(forResource: "tick", withExtension: "wav")
         do {
-            try audioPlayer2 = AVAudioPlayer(contentsOf: soundURL2!)
+            try audioPlayer2 = AVAudioPlayer(contentsOf: soundURL!)
             audioPlayer2?.numberOfLoops = 0
         } catch {
             print("NO AUDIO PLAYER")
         }
         
-        let soundURL3 = Bundle.main.url(forResource: "win", withExtension: "wav")
+        soundURL = Bundle.main.url(forResource: "win", withExtension: "wav")
         do {
-            try audioPlayerWin = AVAudioPlayer(contentsOf: soundURL3!)
+            try audioPlayerWin = AVAudioPlayer(contentsOf: soundURL!)
             audioPlayerWin?.numberOfLoops = 0
         } catch {
             print("NO AUDIO PLAYER")
         }
         
-        let soundURL4 = Bundle.main.url(forResource: "spinsinewave", withExtension: "wav")
+        soundURL = Bundle.main.url(forResource: "spinsinewave", withExtension: "wav")
         do {
-            try audioPlayerWave = AVAudioPlayer(contentsOf: soundURL4!)
+            try audioPlayerWave = AVAudioPlayer(contentsOf: soundURL!)
             audioPlayerWave?.numberOfLoops = 0
         } catch {
             print("NO AUDIO PLAYER")
         }
         
-        let soundURL5 = Bundle.main.url(forResource: "laser", withExtension: "wav")
+        soundURL = Bundle.main.url(forResource: "laser", withExtension: "wav")
         do {
-            try audioPlayerLaser = AVAudioPlayer(contentsOf: soundURL5!)
+            try audioPlayerLaser = AVAudioPlayer(contentsOf: soundURL!)
             audioPlayerLaser?.numberOfLoops = 0
         } catch {
             print("NO AUDIO PLAYER")
         }
         
-        let soundURL6 = Bundle.main.url(forResource: "chime", withExtension: "mp3")
+        soundURL = Bundle.main.url(forResource: "chime", withExtension: "mp3")
         do {
-            try audioPlayerChime = AVAudioPlayer(contentsOf: soundURL6!)
+            try audioPlayerChime = AVAudioPlayer(contentsOf: soundURL!)
             audioPlayerChime?.numberOfLoops = 0
         } catch {
             print("NO AUDIO PLAYER")
 
         }
         
-        let soundURL7 = Bundle.main.url(forResource: "lose", withExtension: "wav")
+        soundURL = Bundle.main.url(forResource: "lose", withExtension: "wav")
         do {
-            try audioPlayerLose = AVAudioPlayer(contentsOf: soundURL7!)
+            try audioPlayerLose = AVAudioPlayer(contentsOf: soundURL!)
             audioPlayerLose?.numberOfLoops = 0
         } catch {
             print("NO AUDIO PLAYER")
         }
         
-        let soundURL8 = Bundle.main.url(forResource: "breaking-glass", withExtension: "wav")
+        soundURL = Bundle.main.url(forResource: "breaking-glass", withExtension: "wav")
         do {
-            try audioPlayerGlass = AVAudioPlayer(contentsOf: soundURL8!)
+            try audioPlayerGlass = AVAudioPlayer(contentsOf: soundURL!)
             audioPlayerGlass?.numberOfLoops = 0
+        } catch {
+            print("NO AUDIO PLAYER")
+        }
+        
+        soundURL = Bundle.main.url(forResource: "WoodCut", withExtension: "wav")
+        do {
+            try audioPlayerWoodCut = AVAudioPlayer(contentsOf: soundURL!)
+            audioPlayerWoodCut?.numberOfLoops = 0
+        } catch {
+            print("NO AUDIO PLAYER")
+        }
+        
+        soundURL = Bundle.main.url(forResource: "Explosion", withExtension: "wav")
+        do {
+            try audioPlayerExplosion = AVAudioPlayer(contentsOf: soundURL!)
+            audioPlayerExplosion?.numberOfLoops = 0
         } catch {
             print("NO AUDIO PLAYER")
         }
