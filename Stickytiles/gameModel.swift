@@ -981,9 +981,7 @@ class GameModel {
             [2,2,1],
             [2,3,0],
             [2,4,1],
-            [2,5,0],
-            [GameModel.FRUIT_BASKET_ID,0,5],
-            [GameModel.FRUIT_BASKET_ID,1,5]
+            [2,5,0]
             ],
                                         goals: [0,50,50,0,0,0,4,0]
         ) )
