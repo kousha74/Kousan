@@ -53,7 +53,7 @@ class TileNode {
     var flags = [false,false,false,false,false]
     
     enum ClusterType {
-        case None, Row, Col, Four, Five, Six
+        case None, Row, Col, Four, Five, Six, Bomb
     }
 
     // MARK : member variables
@@ -168,23 +168,37 @@ class TileNode {
     }
     
     func GetClusterType()->ClusterType{
-        return clusterType
+        
+        var type = ClusterType.None
+        
+        if IsFruit(){
+            type = clusterType
+        }
+        else{
+            switch id {
+            case TileNode.STAR5_ID:
+                type = .Five
+                break
+                
+            case TileNode.STAR7_ID:
+                type = .Six
+                break
+                
+            case TileNode.BOMB_ID:
+                type = .Bomb
+                break
+            
+            default:
+                break
+            }
+        }
+        
+        return type
     }
     
     func SetID( Id:Int, covers:Int = 0){
         id = Id
         coverCount = covers
-        
-        //TBD bad design
-        if id == TileNode.STAR5_ID {
-            clusterType = .Five
-        }
-        
-        if id == TileNode.STAR7_ID {
-            clusterType = .Six
-        }
-        
-        
         SetTileImage()
     }
     

@@ -782,13 +782,15 @@ class GameModel {
     }
     
     func RemoveBamboo( row:Int, col:Int, isHorizontal:Bool){
-        for i in 0...gameEdges.count-1{
-            let bamboo = gameEdges[i]
-            if Int(bamboo.pos.x) == col && Int(bamboo.pos.y) == row && bamboo.isHorizontal == isHorizontal {
-                gameEdges.remove(at: i)
-                allEdges.append(bamboo)
-                bamboo.sprite.removeFromParent()
-                break
+        if gameEdges.count > 0 {
+            for i in 0...gameEdges.count-1{
+                let bamboo = gameEdges[i]
+                if Int(bamboo.pos.x) == col && Int(bamboo.pos.y) == row && bamboo.isHorizontal == isHorizontal {
+                    gameEdges.remove(at: i)
+                    allEdges.append(bamboo)
+                    bamboo.sprite.removeFromParent()
+                    break
+                }
             }
         }
     }
@@ -1365,6 +1367,7 @@ class GameModel {
             [4,2,1],
             [5,3,1],
             [5,4,1]
+            ,[GameModel.BOMB_ID,2,2] //TBD
             ],
                                         goals: [0,0,100,0,0,0,5,0]
         ) )

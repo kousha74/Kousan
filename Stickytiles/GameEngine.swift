@@ -396,8 +396,11 @@ class GameEngine {
                                     break
                                 
                                 case TileNode.BOMB_ID:
-                                    gameModel.SoundExplosion()
-                                    OnBombTouched(bombTile: touchedTile)
+                                    touchedTile.SetFlag(flag: TileNode.TBP, isSet: true)
+                                    isProcessing = true
+                                    shouldAddTile = true
+                                    Timer.scheduledTimer(timeInterval: TimeInterval( 0.0 ), target: self, selector:#selector(GameEngine.ProcessSpecialNodes), userInfo: nil, repeats: false)
+                                    gameModel.ChangeMoveCount(delta: 1)
                                     break
                                     
                                 case TileNode.HAND_SAW_ID:
@@ -737,6 +740,11 @@ class GameEngine {
                 DeleteDiagonally(tile: tile)
                 break;
                 
+            case .Bomb:
+                gameModel.SoundExplosion()
+                OnBombTouched(bombTile: tile)
+                break
+                
             default:
                 break
             }
@@ -744,11 +752,14 @@ class GameEngine {
             tile.SetFlag(flag: TileNode.TBP, isSet: false)
             DeleteTile(tile: tile )
             
-            if m_direction == .None {
-                m_direction = .Down
-            }
+            if tile.GetClusterType() != .Bomb {
+
+                if m_direction == .None {
+                    m_direction = .Down
+                }
             
-            Timer.scheduledTimer(timeInterval: TimeInterval( GameModel.delay ), target: self, selector:#selector(GameEngine.PushAgainstTheWall), userInfo: nil, repeats: false)
+                Timer.scheduledTimer(timeInterval: TimeInterval( GameModel.delay ), target: self, selector:#selector(GameEngine.PushAgainstTheWall), userInfo: nil, repeats: false)
+            }
                 
         }
     }
@@ -1031,7 +1042,10 @@ class GameEngine {
         let scaleAction = SKAction.scale(by: 0.75, duration: 0.0)
         let explosionAction = SKAction.animate(with: explosions, timePerFrame: 0.25 )
         let remove = SKAction.removeFromParent()
-        explosionNode.run(SKAction.sequence([scaleAction,explosionAction,remove]))
+        let doneAction = SKAction.run {
+            self.PushAgainstTheWall()
+        }
+        explosionNode.run(SKAction.sequence([scaleAction,explosionAction,remove,doneAction]))
         
         //Deleting Fruits
         for row in -1...1{
