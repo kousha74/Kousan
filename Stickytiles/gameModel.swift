@@ -14,7 +14,7 @@ import StoreKit
 class GameSample{
     
     enum Goals:Int {
-        case  chocolates, targetScore, maxMoves, targetApples, targetSpecials, targetStars, colorCount, bombFrequency
+        case  chocolates, targetScore, maxMoves, targetApples, targetSpecials, targetStars, colorCount, BasketFrequency
     }
 
     var fruits = [[Int]]()
@@ -107,8 +107,7 @@ class GameModel {
     var starsRemoved = 0
     
     var colorCount = 0
-    
-    var bombFrequency = 0
+    var fruitBasketFrequency = 0
     
     
     //First levels with special target
@@ -119,6 +118,7 @@ class GameModel {
     var firstLevelStar = -1
     var firstLevelQuestion = -1
     var firstCovered = -1
+    var firstLevelBasket = maxLevel + 1
     
     func GetMoveCount()->Int{
         return moveCount
@@ -435,7 +435,7 @@ class GameModel {
         targetSpecials = gameSample.goals[ GameSample.Goals.targetSpecials.rawValue ]
         targetStars = gameSample.goals[ GameSample.Goals.targetStars.rawValue ]
         colorCount = gameSample.goals[ GameSample.Goals.colorCount.rawValue ]
-        bombFrequency = gameSample.goals[ GameSample.Goals.bombFrequency.rawValue ]
+        fruitBasketFrequency = gameSample.goals[ GameSample.Goals.BasketFrequency.rawValue ]
     }
     
     //find the first tile with the given ID
@@ -513,7 +513,7 @@ class GameModel {
         
     func GetRandomTileID()->Int{
         
-        if bombFrequency != 0 && arc4random_uniform(UInt32(bombFrequency)) == 0 {
+        if fruitBasketFrequency != 0 && arc4random_uniform(UInt32(fruitBasketFrequency)) == 0 {
             return GameModel.FRUIT_BASKET_ID
         }
         else{
@@ -850,9 +850,10 @@ class GameModel {
                 
             }
             
-            if firstLevelBomb < 0 {
-                if gameSample.goals[ GameSample.Goals.bombFrequency.rawValue ] > 0 {
-                    firstLevelBomb = i
+            
+            if gameSample.goals[ GameSample.Goals.BasketFrequency.rawValue ] > 0 {
+                if i < firstLevelBasket {
+                    firstLevelBasket = i
                 }
             }
             
@@ -862,9 +863,14 @@ class GameModel {
                         firstLevelBlocked = i
                     }
                 }
-                if fruit[0] == GameModel.BOMB_ID {
+                else if fruit[0] == GameModel.BOMB_ID {
                     if i < firstLevelBomb {
                         firstLevelBomb = i
+                    }
+                }
+                else if fruit[0] == GameModel.FRUIT_BASKET_ID {
+                    if i < firstLevelBasket {
+                        firstLevelBasket = i
                     }
                 }
             }
@@ -1373,7 +1379,6 @@ class GameModel {
             [4,2,1],
             [5,3,1],
             [5,4,1]
-            ,[GameModel.BOMB_ID,2,2] //TBD
             ],
                                         goals: [0,0,100,0,0,0,5,0]
         ) )
@@ -2121,7 +2126,7 @@ class GameModel {
             [1,0,2]
             
             ],
-                                        goals: [2,0,100,0,0,0,5,5]
+                                        goals: [2,0,100,0,0,0,5,0]
         ) )
         
         //Level 53
@@ -2678,8 +2683,6 @@ class GameModel {
             [2,1,5,1],
             [1,2,5,1],
             [4,3,5,1]
-            //TBD
-            ,[GameModel.BOMB_ID,1,3]
             ],
                                         goals: [2,0,0,0,0,0,6,0]
         ) )
