@@ -25,6 +25,12 @@ class GameEngine {
     
     private init() {
         m_move_direction = MOVE_DIRECTION_NONE
+        explosions.append(SKTexture(imageNamed: "6.png"))
+        explosions.append(SKTexture(imageNamed: "7.png"))
+        explosions.append(SKTexture(imageNamed: "8.png"))
+        explosions.append(SKTexture(imageNamed: "9.png"))
+        explosions.append(SKTexture(imageNamed: "10.png"))
+        explosions.append(SKTexture(imageNamed: "11.png"))
     }
     
     var m_direction: Direction = .None
@@ -62,6 +68,7 @@ class GameEngine {
     var direction_vector = [ CGPoint(x: 0, y: 1), CGPoint(x: 0, y: -1), CGPoint(x: -1, y: 0), CGPoint(x: 1, y: 0)];
     let isStickyOn = true
     
+    var explosions = [SKTexture]()
     
     func SetParent( parent: GameSceneProtocol )
     {
@@ -71,6 +78,7 @@ class GameEngine {
     func LoadGame( level:Int ){
         m_move_direction = MOVE_DIRECTION_NONE
         dragging = false
+        isProcessing = false
         gameModel.loadGame(level: level)
         
         for tile in gameModel.GetTiles(){
@@ -388,6 +396,7 @@ class GameEngine {
                                 
                                 case TileNode.BOMB_ID:
                                     gameModel.SoundExplosion()
+                                    OnBombTouched(bombTile: touchedTile)
                                     break
                                     
                                 case TileNode.HAND_SAW_ID:
@@ -1007,6 +1016,36 @@ class GameEngine {
         }
         
         return false
+    }
+    
+    func OnBombTouched( bombTile: TileNode){
+        //add explosion
+        let explosionNode = SKSpriteNode(texture: explosions[0])
+        explosionNode.zPosition = 1
+        explosionNode.position.x = Constants.cellSize*CGFloat(bombTile.GetCol()) + gameModel.GetViewOffset().x + Constants.cellSize/2
+        explosionNode.position.y = Constants.cellSize*CGFloat(bombTile.GetRow()) + gameModel.GetViewOffset().y + Constants.cellSize/2
+        
+        m_GameSceneProtocol?.onAddChild(child: explosionNode)
+        
+        let scaleAction = SKAction.scale(by: 0.75, duration: 0.0)
+        let explosionAction = SKAction.animate(with: explosions, timePerFrame: 0.25 )
+        let remove = SKAction.removeFromParent()
+        explosionNode.run(SKAction.sequence([scaleAction,explosionAction,remove]))
+        
+        //Deleting
+        for row in -1...1{
+            for col in -1...1{
+                if let tile = gameModel.GetTile(row: bombTile.GetRow() + row, col: bombTile.GetCol() + col){
+                    if ( tile.GetClusterType() == TileNode.ClusterType.None ){
+                        //delete the tile
+                        DeleteTile(tile: tile )
+                    }
+                    else{
+                        tile.SetFlag(flag: TileNode.TBP, isSet: true)
+                    }
+                }
+            }
+        }
     }
 }
 

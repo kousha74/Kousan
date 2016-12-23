@@ -976,6 +976,4 @@ class GameScene: SKScene,GameSceneProtocol {
         
         handIcon.run( SKAction.sequence([actionTick,actionMove1,actionTick,actionPush1,actionWait,actionRepeat2,actionWait,actionWait,actionDone]))
     }
-
-
 }
