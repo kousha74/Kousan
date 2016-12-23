@@ -210,6 +210,13 @@ class GameScene: SKScene,GameSceneProtocol {
             popups?.OpenPopup(type: demoState, isDemo:true)
             
         }
+        else if gameModel.getCurrentLevel() == gameModel.firstLevelSaw {
+            GameEngine.sharedInstance.isDemo = true
+            gameModel.RemoveTiles()
+            demoState = .Saw
+            popups?.OpenPopup(type: demoState, isDemo:true)
+            
+        }
         else if gameModel.getCurrentLevel() == gameModel.firstLevelBlocked {
             GameEngine.sharedInstance.isDemo = true
             gameModel.RemoveTiles()

@@ -119,6 +119,7 @@ class GameModel {
     var firstLevelQuestion = -1
     var firstCovered = -1
     var firstLevelBasket = maxLevel + 1
+    var firstLevelSaw = maxLevel + 1
     
     func GetMoveCount()->Int{
         return moveCount
@@ -881,6 +882,11 @@ class GameModel {
                 else if fruit[0] == GameModel.FRUIT_BASKET_ID {
                     if i < firstLevelBasket {
                         firstLevelBasket = i
+                    }
+                }
+                else if fruit[0] == GameModel.HAND_SAW_ID {
+                    if i < firstLevelSaw {
+                        firstLevelSaw = i
                     }
                 }
             }
@@ -2697,27 +2703,6 @@ class GameModel {
                                         goals: [2,0,0,0,0,0,6,0]
         ) )
         
-        
-         //TBD 
-        //level 75
-        gameSamples.append( GameSample( fruits:[
-            [GameModel.EDGE_ID,0,1,0],
-            [GameModel.EDGE_ID,1,2,0],
-            [GameModel.EDGE_ID,2,3,0],
-            [GameModel.EDGE_ID,3,4,0],
-            [GameModel.EDGE_ID,4,4,0],
-            [GameModel.EDGE_ID,0,2,1],
-            [GameModel.EDGE_ID,1,3,1],
-            [GameModel.EDGE_ID,2,4,1],
-            [GameModel.CHOLOLATE_ID,0,2]
-            //tbd
-            ,[GameModel.HAND_SAW_ID,1,3]
-            ,[GameModel.HAND_SAW_ID,5,4]
-            ],
-                                        goals: [2,0,0,0,0,0,6,0]
-        ) )
-        
-
         //Level 76
         gameSamples.append( GameSample( fruits:[
             [GameModel.EDGE_ID,0,4,0],
