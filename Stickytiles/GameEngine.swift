@@ -352,6 +352,7 @@ class GameEngine {
             else{
                 //It's a tap
                 dragging = false
+                m_direction = .None
                 touchedCell.x = floor(( touchPos.x - gameModel.GetViewOffset().x )/CGFloat(gameModel.GetCellSize()) )
                 touchedCell.y = floor(( touchPos.y - gameModel.GetViewOffset().y )/CGFloat(gameModel.GetCellSize()) )
                 
@@ -1027,6 +1028,7 @@ class GameEngine {
             if let touchedBasket = gameModel.FindFlag(flag: TileNode.IS_SELECTED, isSet: true){
                 touchedBasket.Reset()
                 touchedBasket.SetID(Id: tile.GetID())
+                Timer.scheduledTimer(timeInterval: TimeInterval( GameModel.delay ), target: self, selector:#selector(GameEngine.PushAgainstTheWall), userInfo: nil, repeats: false)
                 return true
             }
         }

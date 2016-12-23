@@ -519,7 +519,8 @@ class GameModel {
         
     func GetRandomTileID()->Int{
         
-        if fruitBasketFrequency != 0 && arc4random_uniform(UInt32(fruitBasketFrequency)) == 0 {
+        //per 5 moves, the frequency decreases
+        if fruitBasketFrequency != 0 && arc4random_uniform(UInt32(fruitBasketFrequency+moveCount/5)) == 0 {
             return GameModel.FRUIT_BASKET_ID
         }
         else{
@@ -3538,7 +3539,7 @@ class GameModel {
             [1,0,5]
             ,[GameModel.FRUIT_BASKET_ID,0,0]
             ],
-                                        goals: [0,0,100,0,0,5,6,6]
+                                        goals: [0,0,0,0,0,5,6,6]
         ) )
         
         
@@ -3562,7 +3563,7 @@ class GameModel {
             [5,0,2]
             
             ],
-                                        goals: [2,0,100,0,0,0,5,6]
+                                        goals: [2,0,0,0,0,0,5,6]
         ) )
         
         //Level 105
@@ -3589,7 +3590,7 @@ class GameModel {
             [5,3,1],
             [5,4,1]
             ],
-                                        goals: [0,0,100,0,0,0,6,6]
+                                        goals: [0,0,0,0,0,0,6,6]
         ) )
         
         //Level 106
@@ -3614,7 +3615,7 @@ class GameModel {
             [5,3,1],
             [5,4,1]
             ],
-                                        goals: [0,0,100,0,0,0,6,6]
+                                        goals: [0,0,0,0,0,0,6,6]
         ) )
         
         //Level 107
@@ -3633,7 +3634,7 @@ class GameModel {
             [4,3,5,1],
             [GameModel.FRUIT_BASKET_ID,2,0]
             ],
-                                        goals: [0,0,100,0,0,0,6,6]
+                                        goals: [0,0,0,0,0,0,6,6]
         ) )
         
         
@@ -3667,7 +3668,7 @@ class GameModel {
             [4,5,2,1],
             [4,5,3,1]
             ],
-                                        goals: [0,0,100,0,0,0,6,6]
+                                        goals: [0,0,0,0,0,0,6,6]
         ) )
         
         //Level 109
@@ -3689,7 +3690,7 @@ class GameModel {
             [5,0,2]
             
             ],
-                                        goals: [2,0,100,0,0,0,6,6]
+                                        goals: [2,0,0,0,0,0,6,6]
         ) )
         
         
@@ -3725,7 +3726,7 @@ class GameModel {
             [GameModel.FRUIT_BASKET_ID,3,2]
             
             ],
-                                        goals: [2,0,100,0,0,0,6,6]
+                                        goals: [2,0,0,0,0,0,6,6]
         ) )
         
         
@@ -3748,7 +3749,7 @@ class GameModel {
             [GameModel.FRUIT_BASKET_ID,2,1],
             [GameModel.FRUIT_BASKET_ID,3,1]
             ],
-                                        goals: [0,0,100,0,0,0,6,6]
+                                        goals: [0,0,0,0,0,0,6,6]
         ) )
         
         
@@ -3772,7 +3773,7 @@ class GameModel {
             [5,0,2]
             
             ],
-                                        goals: [2,0,100,0,0,0,6,6]
+                                        goals: [2,0,0,0,0,0,6,6]
         ) )
         
         //Level 113
@@ -3799,7 +3800,7 @@ class GameModel {
             [5,3,1],
             [5,4,1]
             ],
-                                        goals: [0,0,100,0,0,0,6,6]
+                                        goals: [0,0,0,0,0,0,6,6]
         ) )
 
         //Level 114
@@ -3819,7 +3820,7 @@ class GameModel {
             [GameModel.FRUIT_BASKET_ID,2,0],
             [GameModel.FRUIT_BASKET_ID,0,0]
             ],
-                                        goals: [0,0,100,0,0,0,6,6]
+                                        goals: [0,0,0,0,0,0,6,6]
         ) )
         
         
@@ -3856,7 +3857,7 @@ class GameModel {
             [GameModel.FRUIT_BASKET_ID,4,2]
             
             ],
-                                        goals: [2,0,100,0,0,0,6,6]
+                                        goals: [2,0,0,0,0,0,6,6]
         ) )
         
         
@@ -3889,7 +3890,7 @@ class GameModel {
             [3,2,2],
             [GameModel.FRUIT_BASKET_ID,3,3]
             ],
-                                        goals: [0,0,100,0,0,0,6,6]
+                                        goals: [0,0,0,0,0,0,6,6]
         ) )
         
         //Level 117
@@ -3915,7 +3916,7 @@ class GameModel {
             
             
             ],
-                                        goals: [0,0,100,0,0,0,6,6]
+                                        goals: [0,0,0,0,0,0,6,6]
         ) )
         
         //Level 118
