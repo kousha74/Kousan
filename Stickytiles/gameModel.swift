@@ -665,6 +665,16 @@ class GameModel {
         return GetTile(pos: CGPoint(x:col, y:row))
     }
     
+    func GetBamboo( row:Int, col:Int, isHorizontal:Bool)->EdgeNode?{
+        for bamboo in gameEdges{
+            if Int(bamboo.pos.x) == col && Int(bamboo.pos.y) == row && bamboo.isHorizontal == isHorizontal {
+                return bamboo
+            }
+        }
+        
+        return nil
+    }
+    
     func SetFlag( flag: Int, isSet:Bool){
         for tile in gameTiles {
             tile.SetFlag(flag: flag, isSet: isSet)
@@ -766,6 +776,18 @@ class GameModel {
                 
                 gameTiles.remove(at: i)
                 allTiles.append(tile)
+                break
+            }
+        }
+    }
+    
+    func RemoveBamboo( row:Int, col:Int, isHorizontal:Bool){
+        for i in 0...gameEdges.count-1{
+            let bamboo = gameEdges[i]
+            if Int(bamboo.pos.x) == col && Int(bamboo.pos.y) == row && bamboo.isHorizontal == isHorizontal {
+                gameEdges.remove(at: i)
+                allEdges.append(bamboo)
+                bamboo.sprite.removeFromParent()
                 break
             }
         }
@@ -2536,9 +2558,7 @@ class GameModel {
             [2,2,5,1],
             [3,3,5,1],
             [3,4,5,1],
-            [4,5,5,1],
-            //TBD
-            [GameModel.BOMB_ID,0,4]
+            [4,5,5,1]
             
             ],
                                         goals: [2,0,0,0,0,0,6,0]
@@ -2641,7 +2661,7 @@ class GameModel {
             [GameModel.EDGE_ID,2,4,1],
             [GameModel.CHOLOLATE_ID,0,2],
             [1,0,3,1],
-            [2,1,3,1],
+            //[2,1,3,1],
             [1,0,4,1],
             [4,1,4,1],
             [3,2,4,1],
@@ -2649,6 +2669,8 @@ class GameModel {
             [2,1,5,1],
             [1,2,5,1],
             [4,3,5,1]
+            //TBD
+            ,[GameModel.BOMB_ID,1,3]
             ],
                                         goals: [2,0,0,0,0,0,6,0]
         ) )

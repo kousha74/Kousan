@@ -350,6 +350,7 @@ class GameEngine {
             }
             else{
                 //It's a tap
+                dragging = false
                 touchedCell.x = floor(( touchPos.x - gameModel.GetViewOffset().x )/CGFloat(gameModel.GetCellSize()) )
                 touchedCell.y = floor(( touchPos.y - gameModel.GetViewOffset().y )/CGFloat(gameModel.GetCellSize()) )
                 
@@ -1032,7 +1033,7 @@ class GameEngine {
         let remove = SKAction.removeFromParent()
         explosionNode.run(SKAction.sequence([scaleAction,explosionAction,remove]))
         
-        //Deleting
+        //Deleting Fruits
         for row in -1...1{
             for col in -1...1{
                 if let tile = gameModel.GetTile(row: bombTile.GetRow() + row, col: bombTile.GetCol() + col){
@@ -1044,6 +1045,20 @@ class GameEngine {
                         tile.SetFlag(flag: TileNode.TBP, isSet: true)
                     }
                 }
+            }
+        }
+        
+        //Deleting Bamboo Horizontal
+        for row in -1...0{
+            for col in -1...1{
+                gameModel.RemoveBamboo(row:bombTile.GetRow() + row, col: bombTile.GetCol() + col, isHorizontal: true)
+            }
+        }
+        
+        //Deleting Bamboo Vertical
+        for row in -1...1{
+            for col in -1...0{
+                gameModel.RemoveBamboo(row:bombTile.GetRow() + row, col: bombTile.GetCol() + col, isHorizontal: false)
             }
         }
     }
