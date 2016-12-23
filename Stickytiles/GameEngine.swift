@@ -166,6 +166,7 @@ class GameEngine {
     
     @objc func PushAgainstTheWall()
     {
+        print("Pushing aganist the wall")
         let boardSize = gameModel.boardSize
         
         var targetRow:Int = 0
@@ -404,7 +405,7 @@ class GameEngine {
                                     break
                                     
                                 case TileNode.HAND_SAW_ID:
-                                    gameModel.SoundWoodCut()
+                                    //gameModel.SoundWoodCut()
                                     break
 
                                 default:
@@ -526,6 +527,9 @@ class GameEngine {
             else{
                 Timer.scheduledTimer(timeInterval: TimeInterval( GameModel.delay ), target: self, selector:#selector(GameEngine.PushAgainstTheWall), userInfo: nil, repeats: false)
             }
+        }
+        else if ApplySaw(){
+            //do nothing
         }
         else if shouldAddTile {
             shouldAddTile = false
@@ -1075,6 +1079,101 @@ class GameEngine {
                 gameModel.RemoveBamboo(row:bombTile.GetRow() + row, col: bombTile.GetCol() + col, isHorizontal: false)
             }
         }
+    }
+    
+    func ApplySaw()->Bool{
+        var sawApplied = false
+        
+        for tile in gameModel.GetTiles() {
+            
+            if tile.GetID() == TileNode.HAND_SAW_ID {
+                
+                if FindAndRemoveBambooNextToTile(tile: tile, direction: m_direction, sawApplied: sawApplied) != nil{
+                   
+                    sawApplied = true
+                }
+            }
+        
+        }
+        
+        return sawApplied
+    }
+    
+    func FindAndRemoveBambooNextToTile( tile:TileNode,  direction:Direction, sawApplied:Bool )->EdgeNode?
+    {
+        let halfCellSize = Constants.cellSize/2.0
+        
+        let actionMoveLeft = SKAction.moveBy(x: -halfCellSize, y: 0.0, duration: Constants.cutDuration)
+        let actionMoveRight = SKAction.moveBy(x: halfCellSize, y: 0.0, duration: Constants.cutDuration)
+        let actionMoveUp = SKAction.moveBy(x: 0.0, y: halfCellSize, duration: Constants.cutDuration)
+        let actionMoveDown = SKAction.moveBy(x: 0.0, y: -halfCellSize, duration: Constants.cutDuration)
+        
+        var action1 = actionMoveLeft
+        var action2 = actionMoveRight
+        
+        var bamboo: EdgeNode? = nil
+        
+        switch direction {
+        case .Up:
+            if let temp = gameModel.GetBamboo(row: tile.GetRow(), col: tile.GetCol(), isHorizontal: true) {
+                bamboo = temp
+                action1 = actionMoveUp
+                action2 = actionMoveDown
+                tile.sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "handsawU"))
+            }
+            break
+            
+        case .Down:
+            if let temp = gameModel.GetBamboo(row: tile.GetRow()-1, col: tile.GetCol(), isHorizontal: true) {
+                bamboo = temp
+                action1 = actionMoveDown
+                action2 = actionMoveUp
+                tile.sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "handsawD"))
+            }
+            break
+            
+        case .Left:
+            if let temp = gameModel.GetBamboo(row: tile.GetRow(), col: tile.GetCol()-1, isHorizontal: false) {
+                bamboo = temp
+                action1 = actionMoveLeft
+                action2 = actionMoveRight
+                tile.sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "handsawL"))
+            }
+            break
+            
+        case .Right:
+            if let temp = gameModel.GetBamboo(row: tile.GetRow(), col: tile.GetCol(), isHorizontal: false) {
+                bamboo = temp
+                action1 = actionMoveRight
+                action2 = actionMoveLeft
+                tile.sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "handsawR"))
+            }
+            break
+            
+        default:
+            break
+        }
+        
+        if bamboo != nil {
+            m_direction = .None
+            let storedZIndex = tile.sprite?.zPosition
+            tile.sprite?.zPosition = Constants.popupZIndex
+            gameModel.SoundWoodCut(play: true)
+            let actionRepeat = SKAction.repeat(SKAction.sequence([action1,action2]), count: 2)
+            let actionDone = SKAction.run {
+                tile.sprite?.zPosition = storedZIndex!
+                //tile.sprite?.texture = SKTexture(image: #imageLiteral(resourceName: "handsaw"))
+                self.gameModel.RemoveBamboo(bamboo: bamboo!)
+                if !sawApplied {
+                    self.PushAgainstTheWall()
+                    self.gameModel.SoundWoodCut(play: false)
+                }
+            }
+            tile.sprite?.run(SKAction.sequence([actionRepeat, actionDone]))
+
+        }
+        
+        return bamboo
     }
 }
 

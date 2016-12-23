@@ -18,4 +18,5 @@ class Constants{
     static let fontColor = SKColor.blue
     static let coverAlpha = CGFloat(0.55)
     static let adFrequency = 22
+    static let cutDuration = 0.50
 }

@@ -28,6 +28,14 @@ class EdgeNode{
         sprite.position.x = 0.0
         sprite.position.y = 0.0
     }
+    
+    func GetRow()->Int{
+        return Int(pos.y)
+    }
+    
+    func GetCol()->Int{
+        return Int(pos.x)
+    }
 }
 
 class TileNode {

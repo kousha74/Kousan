@@ -67,7 +67,7 @@ class GameModel {
     
     private var userDefaults = UserDefaults()
     
-    private var audioPlayer : AVAudioPlayer?
+    private var musicPlayer : AVAudioPlayer?
     private var audioPlayer2 : AVAudioPlayer?
     private var audioPlayerWin : AVAudioPlayer?
     private var audioPlayerWave : AVAudioPlayer?
@@ -177,11 +177,11 @@ class GameModel {
     func SetMusicOn( isSet:Bool ){
         if ( isSet ){
             userDefaults.set( 0, forKey: "musicOn")
-            audioPlayer?.play()
+            musicPlayer?.play()
         }
         else {
             userDefaults.set( 1, forKey: "musicOn")
-            audioPlayer?.stop()
+            musicPlayer?.stop()
         }
     }
     
@@ -204,9 +204,14 @@ class GameModel {
         }
     }
     
-    func SoundWoodCut(){
-        if ( IsAudioOn() ){
-            audioPlayerWoodCut?.play()
+    func SoundWoodCut( play: Bool){
+        if play {
+            if ( IsAudioOn() ){
+                audioPlayerWoodCut?.play()
+            }
+        }
+        else{
+            audioPlayerWoodCut?.stop()
         }
     }
     
@@ -791,10 +796,15 @@ class GameModel {
                     gameEdges.remove(at: i)
                     allEdges.append(bamboo)
                     bamboo.sprite.removeFromParent()
+                    print("Bamboo removed .......")
                     break
                 }
             }
         }
+    }
+    
+    func RemoveBamboo( bamboo:EdgeNode ){
+        RemoveBamboo(row: bamboo.GetRow(), col: bamboo.GetCol(), isHorizontal: bamboo.isHorizontal)
     }
     
     func IsFull()->Bool{
@@ -907,11 +917,11 @@ class GameModel {
         
         var soundURL = Bundle.main.url(forResource: "bgMusic", withExtension: "wav")
         do {
-            try audioPlayer = AVAudioPlayer(contentsOf: soundURL!)
-            audioPlayer?.numberOfLoops = -1
+            try musicPlayer = AVAudioPlayer(contentsOf: soundURL!)
+            musicPlayer?.numberOfLoops = -1
 
             if ( userDefaults.integer(forKey: "musicOn") == 0 ) {
-                audioPlayer?.play()
+                musicPlayer?.play()
             }
 
         } catch {
@@ -978,7 +988,7 @@ class GameModel {
         soundURL = Bundle.main.url(forResource: "WoodCut", withExtension: "wav")
         do {
             try audioPlayerWoodCut = AVAudioPlayer(contentsOf: soundURL!)
-            audioPlayerWoodCut?.numberOfLoops = 0
+            audioPlayerWoodCut?.numberOfLoops = -1
         } catch {
             print("NO AUDIO PLAYER")
         }
@@ -2675,7 +2685,7 @@ class GameModel {
             [GameModel.EDGE_ID,2,4,1],
             [GameModel.CHOLOLATE_ID,0,2],
             [1,0,3,1],
-            //[2,1,3,1],
+            [2,1,3,1],
             [1,0,4,1],
             [4,1,4,1],
             [3,2,4,1],
@@ -2688,6 +2698,26 @@ class GameModel {
         ) )
         
         
+         //TBD 
+        //level 75
+        gameSamples.append( GameSample( fruits:[
+            [GameModel.EDGE_ID,0,1,0],
+            [GameModel.EDGE_ID,1,2,0],
+            [GameModel.EDGE_ID,2,3,0],
+            [GameModel.EDGE_ID,3,4,0],
+            [GameModel.EDGE_ID,4,4,0],
+            [GameModel.EDGE_ID,0,2,1],
+            [GameModel.EDGE_ID,1,3,1],
+            [GameModel.EDGE_ID,2,4,1],
+            [GameModel.CHOLOLATE_ID,0,2]
+            //tbd
+            ,[GameModel.HAND_SAW_ID,1,3]
+            ,[GameModel.HAND_SAW_ID,5,4]
+            ],
+                                        goals: [2,0,0,0,0,0,6,0]
+        ) )
+        
+
         //Level 76
         gameSamples.append( GameSample( fruits:[
             [GameModel.EDGE_ID,0,4,0],
