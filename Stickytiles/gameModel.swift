@@ -46,7 +46,7 @@ class GameModel {
     
     private var maxLevelCompleted:Int = -1
     
-    static let maxLevel:Int = 99 //tbd
+    static let maxLevel:Int = 149 //tbd
     
     static let delay = 0.25
     
@@ -918,7 +918,7 @@ class GameModel {
         maxLevelCompleted = userDefaults.integer(forKey: "maxLevelCompleted") - 1
         
         // For debugging only
-        maxLevelCompleted = 99
+        maxLevelCompleted = 149
 
         
         var soundURL = Bundle.main.url(forResource: "bgMusic", withExtension: "wav")
@@ -1084,7 +1084,7 @@ class GameModel {
             [2,4,1],
             [1,5,0]
             ],
-                                        goals: [0,75,100,0,0,0,6,0]
+                                        goals: [0,50,100,0,0,0,6,0]
         ) )
         
         //Level 4
@@ -1803,7 +1803,6 @@ class GameModel {
             [3,4,5,1],
             [GameModel.STAR5_ID,0,0],
             [1,5,5,1],
-            [1,5,4,1],
             [3,0,1],
             [4,1,1],
             [5,0,2]
@@ -3459,6 +3458,8 @@ class GameModel {
                                         goals: [2,0,0,0,0,0,6,0]
         ) )
         
+        
+        //First level basket
         //Level 101
         gameSamples.append( GameSample( fruits:[
             [GameModel.CHOLOLATE_ID,0,5,2],
@@ -3487,19 +3488,68 @@ class GameModel {
             [2,2,5,2],
             [3,3,5,2],
             [4,4,5,2],
-            [GameModel.STAR5_ID,2,2],
-            [GameModel.STAR5_ID,2,3]
+            [GameModel.FRUIT_BASKET_ID,2,2],
+            [GameModel.FRUIT_BASKET_ID,2,3],
+            [4,1,3]
             
             ],
-                                        goals: [2,0,0,0,0,0,6,0]
+                                        goals: [2,0,0,0,0,0,6,5]
         ) )
         
+        //Level 102
+        gameSamples.append( GameSample( fruits:[
+            [GameModel.CHOLOLATE_ID,0,5],
+            [GameModel.CHOLOLATE_ID,2,5],
+            [GameModel.CHOLOLATE_ID,4,5],
+            [GameModel.EDGE_ID,1,1,1],
+            [GameModel.EDGE_ID,1,2,1],
+            [GameModel.EDGE_ID,1,3,1],
+            [GameModel.EDGE_ID,1,4,1],
+            [GameModel.EDGE_ID,1,5,1],
+            [GameModel.EDGE_ID,3,1,1],
+            [GameModel.EDGE_ID,3,2,1],
+            [GameModel.EDGE_ID,3,3,1],
+            [GameModel.EDGE_ID,3,4,1],
+            [GameModel.EDGE_ID,3,5,1],
+            [5,0,3,2],
+            [2,0,4,2],
+            [2,1,3,2],
+            [5,1,4,2],
+            [3,2,3,2],
+            [2,2,4,2],
+            [5,3,3,2],
+            [5,3,4,2],
+            [3,4,3,2],
+            [2,4,4,2],
+            [5,5,3,2],
+            [2,5,4,2],
+            [GameModel.FRUIT_BASKET_ID,2,1],
+            [GameModel.FRUIT_BASKET_ID,2,0],
+            [4,0,0]
+            
+            ],
+                                        goals: [3,0,0,0,0,0,6,7]
+        ) )
         
+
+        //goals [Chcolate, targetScore, maxMoves, targetApples, targetSpecial, targetStars, colorCount, baloon frequency]
+        //Level 103
         gameSamples.append( GameSample( fruits:[
             [1,0,5]
+            ,[GameModel.FRUIT_BASKET_ID,0,0]
             ],
-                                        goals: [0,0,50,10,0,0,4,0]
+                                        goals: [0,0,100,0,0,5,6,6]
         ) )
+        
+        //TBD
+        
+        
+        
+        
+        
+        
+        
+        
         
         gameSamples.append( GameSample( fruits:[
             [1,0,5]

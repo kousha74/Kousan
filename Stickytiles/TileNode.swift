@@ -152,6 +152,7 @@ class TileNode {
         
         sprite?.removeAllActions()
         sprite?.alpha = 1.0
+        sprite?.run(SKAction.scale(to: 1.0, duration: 0.0))
         
         coverCount = 0
     }

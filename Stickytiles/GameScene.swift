@@ -421,7 +421,7 @@ class GameScene: SKScene,GameSceneProtocol {
         //goal label
         //check chocolates
         if gameModel.targetChocolates != 0 {
-            goalLabel.text = "Chololates: \(gameModel.chRemoved) / \(gameModel.targetChocolates)"
+            goalLabel.text = "Ice Creams: \(gameModel.chRemoved) / \(gameModel.targetChocolates)"
         }
         //check target apples
         else if gameModel.targetApples != 0 {
