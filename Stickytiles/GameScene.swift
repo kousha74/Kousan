@@ -196,10 +196,10 @@ class GameScene: SKScene,GameSceneProtocol {
             popups?.OpenPopup(type: demoState, isDemo:true)
             
         }
-        else if gameModel.getCurrentLevel() == gameModel.firstLevelBaloon {
+        else if gameModel.getCurrentLevel() == gameModel.firstLevelBomb {
             GameEngine.sharedInstance.isDemo = true
             gameModel.RemoveTiles()
-            demoState = .Baloon
+            demoState = .Bomb
             popups?.OpenPopup(type: demoState, isDemo:true)
             
         }

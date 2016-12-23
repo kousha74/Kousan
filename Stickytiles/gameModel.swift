@@ -14,7 +14,7 @@ import StoreKit
 class GameSample{
     
     enum Goals:Int {
-        case  chocolates, targetScore, maxMoves, targetApples, targetSpecials, targetStars, colorCount, baloonFrequency
+        case  chocolates, targetScore, maxMoves, targetApples, targetSpecials, targetStars, colorCount, bombFrequency
     }
 
     var fruits = [[Int]]()
@@ -108,13 +108,13 @@ class GameModel {
     
     var colorCount = 0
     
-    var baloonFrequency = 0
+    var bombFrequency = 0
     
     
     //First levels with special target
     var firstLevelChocolate = -1
-    var firstLevelBaloon = -1
-    var firstLevelBlocked = -1
+    var firstLevelBomb = maxLevel + 1
+    var firstLevelBlocked = maxLevel + 1
     var firstLevelSpecial = -1
     var firstLevelStar = -1
     var firstLevelQuestion = -1
@@ -212,6 +212,8 @@ class GameModel {
     
     func SoundExplosion(){
         if ( IsAudioOn() ){
+            audioPlayerExplosion?.stop()
+            audioPlayerExplosion?.currentTime = 0.0
             audioPlayerExplosion?.play()
         }
     }
@@ -433,7 +435,7 @@ class GameModel {
         targetSpecials = gameSample.goals[ GameSample.Goals.targetSpecials.rawValue ]
         targetStars = gameSample.goals[ GameSample.Goals.targetStars.rawValue ]
         colorCount = gameSample.goals[ GameSample.Goals.colorCount.rawValue ]
-        baloonFrequency = gameSample.goals[ GameSample.Goals.baloonFrequency.rawValue ]
+        bombFrequency = gameSample.goals[ GameSample.Goals.bombFrequency.rawValue ]
     }
     
     //find the first tile with the given ID
@@ -511,8 +513,8 @@ class GameModel {
         
     func GetRandomTileID()->Int{
         
-        if baloonFrequency != 0 && arc4random_uniform(UInt32(baloonFrequency)) == 0 {
-            return GameModel.BUBBLE_ID
+        if bombFrequency != 0 && arc4random_uniform(UInt32(bombFrequency)) == 0 {
+            return GameModel.FRUIT_BASKET_ID
         }
         else{
             return Int(arc4random_uniform(UInt32(colorCount))) + 1
@@ -808,7 +810,7 @@ class GameModel {
         if IsFull() {
             for tile in gameTiles{
                 switch tile.GetID() {
-                case GameModel.BUBBLE_ID, GameModel.STAR5_ID, GameModel.STAR7_ID:
+                case GameModel.BUBBLE_ID, GameModel.STAR5_ID, GameModel.STAR7_ID, GameModel.FRUIT_BASKET_ID,GameModel.BOMB_ID:
                     if tile.GetCoverCount() == 0 {
                         return false
                     }
@@ -848,17 +850,21 @@ class GameModel {
                 
             }
             
-            if firstLevelBaloon < 0 {
-                if gameSample.goals[ GameSample.Goals.baloonFrequency.rawValue ] > 0 {
-                    firstLevelBaloon = i
+            if firstLevelBomb < 0 {
+                if gameSample.goals[ GameSample.Goals.bombFrequency.rawValue ] > 0 {
+                    firstLevelBomb = i
                 }
             }
             
-            if firstLevelBlocked < 0 {
-                for fruit in gameSample.fruits {
-                    if fruit[0] == GameModel.BLOCKED_ID {
+            for fruit in gameSample.fruits {
+                if fruit[0] == GameModel.BLOCKED_ID {
+                    if i < firstLevelBlocked {
                         firstLevelBlocked = i
-                        break
+                    }
+                }
+                if fruit[0] == GameModel.BOMB_ID {
+                    if i < firstLevelBomb {
+                        firstLevelBomb = i
                     }
                 }
             }
@@ -2115,7 +2121,7 @@ class GameModel {
             [1,0,2]
             
             ],
-                                        goals: [2,0,100,0,0,0,5,0]
+                                        goals: [2,0,100,0,0,0,5,5]
         ) )
         
         //Level 53
