@@ -15,6 +15,7 @@ class Constants{
     static let cellSize = CGFloat(50)
     static let fontSize = CGFloat(18.0)
     static let fontName = "Noteworthy-Bold"
+    static let fontSizeLevels = CGFloat(16)
     static let fontColor = SKColor.blue
     static let coverAlpha = CGFloat(0.55)
     static let adFrequency = 22
