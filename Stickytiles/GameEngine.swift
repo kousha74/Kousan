@@ -1086,7 +1086,7 @@ class GameEngine {
         
         for tile in gameModel.GetTiles() {
             
-            if tile.GetID() == TileNode.HAND_SAW_ID {
+            if tile.GetID() == TileNode.HAND_SAW_ID && tile.GetCoverCount() == 0{
                 
                 if FindAndRemoveBambooNextToTile(tile: tile, direction: m_direction, sawApplied: sawApplied) != nil{
                    
