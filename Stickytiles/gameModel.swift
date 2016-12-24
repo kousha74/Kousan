@@ -4182,6 +4182,28 @@ class GameModel {
                                         goals: [6,0,0,0,0,0,6,0]
         ) )
         
+        //Level 127
+        gameSamples.append( GameSample( fruits:[
+            [GameModel.CHOLOLATE_ID,0,5],
+            [GameModel.CHOLOLATE_ID,5,5],
+            [GameModel.EDGE_ID,1,1,1],
+            [GameModel.EDGE_ID,1,2,1],
+            [GameModel.EDGE_ID,1,3,1],
+            [GameModel.EDGE_ID,1,4,1],
+            [GameModel.EDGE_ID,3,1,1],
+            [GameModel.EDGE_ID,3,2,1],
+            [GameModel.EDGE_ID,3,3,1],
+            [GameModel.EDGE_ID,3,4,1],
+            
+            [GameModel.EDGE_ID,0,4,0],
+            [GameModel.EDGE_ID,1,4,0],
+            [GameModel.EDGE_ID,4,4,0],
+            [GameModel.EDGE_ID,5,4,0]
+            ],
+                                        goals: [2,0,0,0,0,0,6,0]
+        ) )
+        
+        
         
         
         
@@ -4577,6 +4599,58 @@ class GameModel {
             ],
                                         goals: [6,0,0,0,0,0,6,0]
         ) )
+        
+        gameSamples.append( GameSample( fruits:[
+            [GameModel.CHOLOLATE_ID,0,5,1],
+            [GameModel.CHOLOLATE_ID,5,5,1],
+            [GameModel.EDGE_ID,1,1,1],
+            [GameModel.EDGE_ID,1,2,1],
+            [GameModel.EDGE_ID,1,3,1],
+            [GameModel.EDGE_ID,1,4,1],
+            [GameModel.EDGE_ID,3,1,1],
+            [GameModel.EDGE_ID,3,2,1],
+            [GameModel.EDGE_ID,3,3,1],
+            [GameModel.EDGE_ID,3,4,1],
+            
+            [GameModel.EDGE_ID,0,4,0],
+            [GameModel.EDGE_ID,1,4,0],
+            [GameModel.EDGE_ID,4,4,0],
+            [GameModel.EDGE_ID,5,4,0],
+            
+            [2,1,5,1],
+            [6,2,5,1],
+            [4,3,5,1],
+            [5,4,5,1]
+            ],
+                                        goals: [2,0,0,0,0,0,6,0]
+        ) )
+        
+        gameSamples.append( GameSample( fruits:[
+            [GameModel.CHOLOLATE_ID,0,5,2],
+            [GameModel.CHOLOLATE_ID,5,5,2],
+            [GameModel.EDGE_ID,1,1,1],
+            [GameModel.EDGE_ID,1,2,1],
+            [GameModel.EDGE_ID,1,3,1],
+            [GameModel.EDGE_ID,1,4,1],
+            [GameModel.EDGE_ID,3,1,1],
+            [GameModel.EDGE_ID,3,2,1],
+            [GameModel.EDGE_ID,3,3,1],
+            [GameModel.EDGE_ID,3,4,1],
+            
+            [GameModel.EDGE_ID,0,4,0],
+            [GameModel.EDGE_ID,1,4,0],
+            [GameModel.EDGE_ID,4,4,0],
+            [GameModel.EDGE_ID,5,4,0],
+            
+            [2,1,5,2],
+            [6,2,5,2],
+            [4,3,5,2],
+            [5,4,5,2]
+            ],
+                                        goals: [2,0,0,0,0,0,6,0]
+        ) )
+        
+
         
         FindFirstLevels()
         
