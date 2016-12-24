@@ -681,7 +681,7 @@ class GameEngine {
         
         let id = tile.GetID()
         
-        if id != TileNode.BLOCKED_ID && id != TileNode.BLOCKER_ID && id != TileNode.CHOLOLATE_ID {
+        if id != TileNode.BLOCKED_ID && id != TileNode.BLOCKER_ID && id != TileNode.CHOLOLATE_ID && id != TileNode.HAND_SAW_ID{
             if !tile.GetFlag(flag: TileNode.IS_LOCKED) {
                 if  !tile.RemoveCoverB() {
                     if ( tile.GetClusterType() == TileNode.ClusterType.None ){
