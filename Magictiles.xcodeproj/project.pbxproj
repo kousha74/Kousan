@@ -35,6 +35,7 @@
 		84A88E5E1D94AB06006D1C57 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84A88E5C1D94AB06006D1C57 /* LaunchScreen.storyboard */; };
 		84A88E691D94AB06006D1C57 /* StickytilesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A88E681D94AB06006D1C57 /* StickytilesTests.swift */; };
 		84A88E741D94ACB1006D1C57 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A88E731D94ACB1006D1C57 /* HomeViewController.swift */; };
+		84CC291F1E12050A00D9B497 /* GameSamples.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CC291E1E12050A00D9B497 /* GameSamples.swift */; };
 		84D086FB1DB0965C009B7EF4 /* IAPHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D086F91DB0965C009B7EF4 /* IAPHelper.swift */; };
 		84D086FC1DB0965C009B7EF4 /* GameProducts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D086FA1DB0965C009B7EF4 /* GameProducts.swift */; };
 		84D500321D9DE26700A701D5 /* TileNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D500311D9DE26700A701D5 /* TileNode.swift */; };
@@ -89,6 +90,7 @@
 		84A88E681D94AB06006D1C57 /* StickytilesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickytilesTests.swift; sourceTree = "<group>"; };
 		84A88E6A1D94AB06006D1C57 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		84A88E731D94ACB1006D1C57 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		84CC291E1E12050A00D9B497 /* GameSamples.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameSamples.swift; sourceTree = "<group>"; };
 		84D086F91DB0965C009B7EF4 /* IAPHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IAPHelper.swift; sourceTree = "<group>"; };
 		84D086FA1DB0965C009B7EF4 /* GameProducts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameProducts.swift; sourceTree = "<group>"; };
 		84D500311D9DE26700A701D5 /* TileNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TileNode.swift; sourceTree = "<group>"; };
@@ -204,6 +206,7 @@
 				84D500331D9DF19600A701D5 /* GameEngine.swift */,
 				841DCC8A1DE52784008B7995 /* Constants.swift */,
 				84F08E4F1DE756E900244E0C /* PopUps.swift */,
+				84CC291E1E12050A00D9B497 /* GameSamples.swift */,
 			);
 			name = Magictiles;
 			path = Stickytiles;
@@ -351,6 +354,7 @@
 				84D086FC1DB0965C009B7EF4 /* GameProducts.swift in Sources */,
 				84A88E4E1D94AB06006D1C57 /* AppDelegate.swift in Sources */,
 				845F2D8B1D9C8AF70039C9AD /* gameModel.swift in Sources */,
+				84CC291F1E12050A00D9B497 /* GameSamples.swift in Sources */,
 				841DCC8B1DE52784008B7995 /* Constants.swift in Sources */,
 				84F08E501DE756E900244E0C /* PopUps.swift in Sources */,
 				84D500321D9DE26700A701D5 /* TileNode.swift in Sources */,
