@@ -461,6 +461,9 @@ class GameEngine {
                                     gameModel.SoundChime()
                                     specialClusterFound = true
                                     tile2.SetClusterType(type: clusterType)
+                                    
+                                    //TBD bas design, delete coveres for neighbors
+                                    TileWillBeDeleted(tile: tile2)
                                     //this tile must be locked, so it won't be removed immediately
                                     tile2.SetFlag(flag: TileNode.IS_LOCKED, isSet: true)
                                     
