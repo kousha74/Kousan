@@ -684,6 +684,11 @@ class GameModel {
         return nil
     }
     
+    func GetBambooCount()->Int{
+        return gameEdges.count
+    }
+    
+    
     func SetFlag( flag: Int, isSet:Bool){
         for tile in gameTiles {
             tile.SetFlag(flag: flag, isSet: isSet)

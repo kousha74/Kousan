@@ -1170,6 +1170,11 @@ class GameEngine {
                     self.PushAgainstTheWall()
                     self.gameModel.SoundWoodCut(play: false)
                 }
+                //if there's no bamboo left, remove the saw
+                if self.gameModel.GetBambooCount() == 0 {
+                    self.gameModel.RemoveTile(tile: tile)
+                    tile.sprite?.removeFromParent()
+                }
             }
             tile.sprite?.run(SKAction.sequence([actionRepeat, actionDone]))
 
