@@ -919,7 +919,7 @@ class GameModel {
         maxLevelCompleted = userDefaults.integer(forKey: "maxLevelCompleted") - 1
         
         // For debugging only
-        //maxLevelCompleted = 149
+        maxLevelCompleted = 149
 
         
         var soundURL = Bundle.main.url(forResource: "bgMusic", withExtension: "wav")
@@ -4205,7 +4205,9 @@ class GameModel {
             
             [GameModel.HAND_SAW_ID,0,0],
             [GameModel.FRUIT_BASKET_ID,1,0],
-            [GameModel.FRUIT_BASKET_ID,2,0]
+            [GameModel.FRUIT_BASKET_ID,2,0],
+            [1,4,0],
+            [1,5,0]
             ],
                                         goals: [16,0,0,0,0,0,6,4]
         ) )
@@ -4325,7 +4327,11 @@ class GameModel {
             [4,4,3,1],
             [6,5,3,1],
             
-            [GameModel.HAND_SAW_ID,0,0,1]
+            [GameModel.HAND_SAW_ID,0,0,1],
+            [1,1,0],
+            [1,2,0],
+            [1,4,0],
+            [1,5,0]
             
             ],
                                         goals: [2,0,0,0,0,0,6,0]
@@ -4393,6 +4399,8 @@ class GameModel {
             [4,3,4,2],
             [2,4,4,2],
             [4,5,4,2],
+            [1,4,0],
+            [1,5,0]
             
             ],
                                         goals: [2,0,0,0,0,0,6,0]
@@ -4477,7 +4485,9 @@ class GameModel {
             [4,3,3,2],
             [2,4,3,2],
             [4,5,3,2],
-            
+            [1,4,0],
+            [1,5,0]
+           
             ],
                                         goals: [2,0,0,0,0,0,6,0]
         ) )
@@ -4550,7 +4560,9 @@ class GameModel {
             
             [6,0,1,1],
             
-            [GameModel.HAND_SAW_ID,0,0]
+            [GameModel.HAND_SAW_ID,0,0],
+            [1,4,0],
+            [1,5,0]
             
             ],
                                         goals: [2,0,0,0,0,0,6,0]
@@ -4613,7 +4625,9 @@ class GameModel {
             [2,4,4,1],
             [6,5,4,1],
             
-            [GameModel.HAND_SAW_ID,0,0]
+            [GameModel.HAND_SAW_ID,0,0],
+            [1,4,0],
+            [1,5,0]
             ],
                                         goals: [6,0,0,0,0,0,6,0]
         ) )
@@ -4677,7 +4691,7 @@ class GameModel {
                                         goals: [2,0,0,0,0,0,6,0]
         ) )
         
-        //128
+        // level 141
         gameSamples.append( GameSample( fruits:[
             [GameModel.CHOLOLATE_ID,0,5,2],
             [GameModel.EDGE_ID,0,0,0],
@@ -4719,12 +4733,14 @@ class GameModel {
             [GameModel.HAND_SAW_ID,0,0],
             [GameModel.FRUIT_BASKET_ID,1,0],
             [GameModel.FRUIT_BASKET_ID,2,0],
+            [1,4,0],
+            [1,5,0]
             
             ],
                                         goals: [2,0,0,0,0,0,6,5]
         ) )
         
-
+        // level 142
         gameSamples.append( GameSample( fruits:[
             [GameModel.CHOLOLATE_ID,0,5,2],
             [GameModel.CHOLOLATE_ID,1,5,2],
@@ -4758,11 +4774,14 @@ class GameModel {
             
             [GameModel.HAND_SAW_ID,0,0],
             [GameModel.FRUIT_BASKET_ID,1,0],
-            [GameModel.FRUIT_BASKET_ID,2,0]
+            [GameModel.FRUIT_BASKET_ID,2,0],
+            [1,4,0],
+            [1,5,0]
             ],
                                         goals: [16,0,0,0,0,0,6,4]
         ) )
         
+        //level 143
         gameSamples.append( GameSample( fruits:[
             [GameModel.CHOLOLATE_ID,0,5,2],
             [GameModel.CHOLOLATE_ID,0,4,2],
@@ -4805,6 +4824,7 @@ class GameModel {
                                         goals: [10,0,0,0,0,0,6,0]
         ) )
         
+        //level 144
         gameSamples.append( GameSample( fruits:[
             [GameModel.CHOLOLATE_ID,0,5,2],
             [GameModel.CHOLOLATE_ID,5,5,2],
@@ -4841,12 +4861,15 @@ class GameModel {
             [4,4,3,2],
             [6,5,3,2],
             
-            [GameModel.HAND_SAW_ID,0,0,1]
+            [GameModel.HAND_SAW_ID,0,0,1],
+            [1,4,0],
+            [1,5,0]
             
             ],
                                         goals: [2,0,0,0,0,0,6,0]
         ) )
         
+        //level 145
         gameSamples.append( GameSample( fruits:[
             [GameModel.CHOLOLATE_ID,0,5,1],
             [GameModel.CHOLOLATE_ID,5,5,1],
@@ -4889,6 +4912,7 @@ class GameModel {
                                         goals: [6,0,0,0,0,0,6,0]
         ) )
         
+        //level 146
         gameSamples.append( GameSample( fruits:[
             [GameModel.CHOLOLATE_ID,0,5,2],
             [GameModel.CHOLOLATE_ID,1,5,2],
@@ -4916,11 +4940,14 @@ class GameModel {
             [2,4,4,2],
             [6,5,4,2],
             
-            [GameModel.HAND_SAW_ID,0,0]
+            [GameModel.HAND_SAW_ID,0,0],
+            [1,4,0],
+            [1,5,0]
             ],
                                         goals: [6,0,0,0,0,0,6,0]
         ) )
         
+        //level 147
         gameSamples.append( GameSample( fruits:[
             [GameModel.CHOLOLATE_ID,0,5,2],
             [GameModel.CHOLOLATE_ID,5,5,2],
@@ -4941,18 +4968,13 @@ class GameModel {
             [2,1,5,2],
             [6,2,5,2],
             [4,3,5,2],
-            [5,4,5,2],
-            [4,0,4,2],
-            [2,1,4,2],
-            [6,2,4,2],
-            [4,3,4,2],
-            [5,4,4,2],
-            [4,5,4,2]
+            [5,4,5,2]
             ],
                                         goals: [2,0,0,0,0,0,6,0]
         ) )
         
-        
+
+        //level 148
         gameSamples.append( GameSample( fruits:[
             [GameModel.CHOLOLATE_ID,0,5,2],
             [GameModel.CHOLOLATE_ID,1,5,2],
@@ -4985,6 +5007,7 @@ class GameModel {
                                         goals: [6,0,0,0,0,0,6,0]
         ) )
         
+        //level 149
         gameSamples.append( GameSample( fruits:[
             [GameModel.CHOLOLATE_ID,0,5,2],
             [GameModel.CHOLOLATE_ID,5,5,2],
@@ -5005,11 +5028,22 @@ class GameModel {
             [2,1,5,2],
             [6,2,5,2],
             [4,3,5,2],
-            [5,4,5,2]
+            [5,4,5,2],
+            [4,0,4,2],
+            [2,1,4,2],
+            [6,2,4,2],
+            [4,3,4,2],
+            [5,4,4,2],
+            [4,5,4,2],
+            [1,4,0],
+            [1,5,0]
             ],
                                         goals: [2,0,0,0,0,0,6,0]
         ) )
         
+
+        
+        //level 150
         gameSamples.append( GameSample( fruits:[
             [GameModel.CHOLOLATE_ID,0,5,2],
             [GameModel.CHOLOLATE_ID,5,5,2],
