@@ -684,19 +684,17 @@ class GameEngine {
         
         let id = tile.GetID()
         
-        if id != TileNode.BLOCKED_ID && id != TileNode.BLOCKER_ID && id != TileNode.CHOLOLATE_ID && id != TileNode.HAND_SAW_ID{
+        if  tile.RemoveCoverB() {
+            gameModel.SoundGlass()
+        }
+        else if id != TileNode.BLOCKED_ID && id != TileNode.BLOCKER_ID && id != TileNode.CHOLOLATE_ID && id != TileNode.HAND_SAW_ID{
             if !tile.GetFlag(flag: TileNode.IS_LOCKED) {
-                if  !tile.RemoveCoverB() {
-                    if ( tile.GetClusterType() == TileNode.ClusterType.None ){
-                        //delete the tile
-                        DeleteTile(tile: tile )
-                    }
-                    else{
-                        tile.SetFlag(flag: TileNode.TBP, isSet: true)
-                    }
+                if ( tile.GetClusterType() == TileNode.ClusterType.None ){
+                    //delete the tile
+                    DeleteTile(tile: tile )
                 }
                 else{
-                    gameModel.SoundGlass()
+                    tile.SetFlag(flag: TileNode.TBP, isSet: true)
                 }
             }
         }
