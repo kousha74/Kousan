@@ -12,20 +12,21 @@ import AVFoundation
 import StoreKit
 
 class GameModel {
+
     
     // TBD duplicate
-    static let APPLE_ID = 1
-    static let BUBBLE_ID = 10
-    static let STAR5_ID = 11
-    static let STAR7_ID = 12
-    static let CHOLOLATE_ID = 13
-    static let BLOCKER_ID = 14
-    static let BLOCKED_ID = 15
-    static let QUESTION_ID = 16
-    static let FRUIT_BASKET_ID = 17
-    static let HAND_SAW_ID = 18
-    static let BOMB_ID = 19
-    static let EDGE_ID = 100
+    static private let APPLE_ID = 1
+    static private let BUBBLE_ID = 10
+    static private let STAR5_ID = 11
+    static private let STAR7_ID = 12
+    static private let CHOLOLATE_ID = 13
+    static private let BLOCKER_ID = 14
+    static private let BLOCKED_ID = 15
+    static private let QUESTION_ID = 16
+    static private let FRUIT_BASKET_ID = 17
+    static private let HAND_SAW_ID = 18
+    static private let BOMB_ID = 19
+    static private let EDGE_ID = 100
 
     private var currentLevel:Int = 0
     
