@@ -49,7 +49,10 @@ class LevelSelectorViewController: UIViewController {
     let gamesPerPage : Int = 25
     var currentPage : Int = 0
     var buttons = [UIButton]()
-    
+
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
